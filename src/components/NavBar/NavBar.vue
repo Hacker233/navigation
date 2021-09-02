@@ -5,15 +5,15 @@
         <i class="el-icon-menu"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-menu-item index="movie">
+      <el-menu-item index="/movie">
         <i class="el-icon-menu"></i>
         <span slot="title">影视导航</span>
       </el-menu-item>
-      <el-menu-item index="book">
+      <el-menu-item index="/book">
         <i class="el-icon-document"></i>
         <span slot="title">电子书导航</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="/4">
         <i class="el-icon-setting"></i>
         <span slot="title">动漫导航</span>
       </el-menu-item>
@@ -29,7 +29,7 @@ export default {
       if (activeMenu) {
         return activeMenu;
       }
-      return this.$route.name;
+      return this.$route.path;
     },
   },
 };
