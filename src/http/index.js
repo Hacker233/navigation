@@ -1,14 +1,13 @@
 import axios from "axios";
 import CONFIG from "../config/index";
-import { LoadingBar, Message } from "element-ui";
+import { Message } from "element-ui";
 
 const axiosService = axios.create({
   baseURL: CONFIG.serverAddress,
   timeout: 20000,
 });
-axiosService.interceptors.use(
+axiosService.interceptors.request.use(
   (req) => {
-    LoadingBar.start();
     return Promise.resolve(req);
   },
   (err) => {
@@ -25,7 +24,6 @@ axiosService.interceptors.request.use(
 );
 axiosService.interceptors.response.use(
   (response) => {
-    LoadingBar.finish();
     return response.data;
   },
   (err) => {

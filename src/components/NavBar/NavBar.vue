@@ -1,28 +1,45 @@
 <template>
   <div class="nav-bar-box">
-    <el-menu router :default-active="activeRouter" class="el-menu-vertical-demo">
-      <el-menu-item index="/">
-        <i class="el-icon-menu"></i>
-        <span slot="title">首页</span>
-      </el-menu-item>
-      <el-menu-item index="/movie">
-        <i class="el-icon-menu"></i>
-        <span slot="title">影视导航</span>
-      </el-menu-item>
-      <el-menu-item index="/book">
-        <i class="el-icon-document"></i>
-        <span slot="title">电子书导航</span>
-      </el-menu-item>
-      <el-menu-item index="/4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">动漫导航</span>
-      </el-menu-item>
+    <el-menu
+      router
+      :default-active="activeRouter"
+      class="el-menu-vertical-demo"
+    >
+      <template v-for="(item, index) of menuList">
+        <el-menu-item
+          v-if="!item.menu_child.length"
+          :key="index"
+          :index="item.menu_router"
+        >
+          <i :class="item.menu_icon"></i>
+          <span slot="title">{{ item.menu_name }}</span>
+        </el-menu-item>
+        <el-submenu v-else :key="index">
+          <template slot="title">
+            <i :class="item.menu_icon"></i>
+            <span>{{ item.menu_name }}</span>
+          </template>
+          <el-menu-item
+            v-for="(subItem, subIndex) of item.menu_child"
+            :key="subIndex"
+            :index="subItem.menu_router"
+          >
+            <i :class="subItem.menu_icon"></i>
+            <span slot="title">{{ subItem.menu_name }}</span>
+          </el-menu-item>
+        </el-submenu>
+      </template>
     </el-menu>
   </div>
 </template>
 <script>
+import { getMenu } from "@/http/api/menu";
 export default {
-  methods: {},
+  data() {
+    return {
+      menuList: [],
+    };
+  },
   computed: {
     activeRouter() {
       let activeMenu = this.$route.meta.activeMenu;
@@ -32,12 +49,23 @@ export default {
       return this.$route.path;
     },
   },
+  async mounted() {
+    // 获取导航栏信息
+    const data = await getMenu();
+    if (data.code === "00000") {
+      this.menuList = data.data;
+    } else {
+      this.$Message.error(data.message);
+    }
+  },
+  methods: {},
 };
 </script>
 <style lang="scss" scoped>
 .nav-bar-box {
   width: 180px;
   height: 100%;
+  overflow: hidden;
   position: fixed;
   left: 0;
   top: 0;
