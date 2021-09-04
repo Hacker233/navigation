@@ -15,11 +15,19 @@ export const addMenu = (data) => {
     data,
   });
 };
+// 添加二级菜单
+export const addSubMenu = (data) => {
+  return axiosService({
+    url: "/menu/addSubMenu",
+    method: "post",
+    data,
+  });
+};
 // 删除菜单
 export const deleteMenu = (params) => {
   return axiosService({
     url: "/menu/deleteMenu",
     method: "delete",
-    params
-  })
-}
+    params,
+  });
+};

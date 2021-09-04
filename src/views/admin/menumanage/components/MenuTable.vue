@@ -35,7 +35,7 @@
             v-if="scope.row.menu_level === 1"
             size="mini"
             type="primary"
-            @click="handleAddSubMenu(scope.$index, scope.row)"
+            @click="openAddSubMenuDialog(scope.$index, scope.row)"
             >新增</el-button
           >
           <el-button
@@ -47,10 +47,18 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 新增子菜单弹窗 -->
+    <add-sub-menu-dralog
+      :addSubMenudialogVisible="addSubMenudialogVisible"
+      :parentMenuId="parentMenuId"
+      @closeSubDialog="closeSubDialog"
+      @confirmSubDialog="confirmSubDialog"
+    ></add-sub-menu-dralog>
   </div>
 </template>
 <script>
 import { deleteMenu } from "@/http/api/menu";
+import AddSubMenuDralog from "./AddSubMenuDralog.vue";
 export default {
   props: {
     menuList: {
@@ -59,11 +67,35 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      addSubMenudialogVisible: false,
+      parentMenuId: 0, // 父级id
+      form: {
+        menuOrder: "", // 菜单顺序
+        menuName: "", // 菜单名称
+        menuRouter: "", // 菜单路由
+        menuRole: "", // 菜单角色
+        menuIcon: "", // 菜单图标
+      },
+    };
+  },
+  components: {
+    AddSubMenuDralog,
   },
   methods: {
-    // 新增子菜单
-    handleAddSubMenu(index, item) {},
+    // 打开新增子菜单弹窗
+    openAddSubMenuDialog(index, item) {
+      this.parentMenuId = item.menu_id;
+      this.addSubMenudialogVisible = true;
+    },
+    // 取消新增子菜单弹窗
+    closeSubDialog() {
+      this.addSubMenudialogVisible = false;
+    },
+    // 提交新增子菜单按钮
+    confirmSubDialog() {
+      this.addSubMenudialogVisible = false;
+    },
     // 删除菜单
     async handleDelete(index, item) {
       let params = {
@@ -76,7 +108,8 @@ export default {
           message: "删除成功",
           type: "success",
         });
-        this.$parent.getMenu();
+        // 更新导航栏信息
+        this.$store.dispatch("getMenu");
       } else {
         this.$message({
           message: data.message,

@@ -3,6 +3,7 @@
     <!-- 头部 -->
     <div class="menu-manage-title">
       <el-button type="primary" @click="openFirstDialog">新增菜单</el-button>
+      <!-- 添加一级菜单弹窗 -->
       <add-first-menu-dialog
         :addFirtstMenudialogVisible="addFirtstMenudialogVisible"
         @closeFirstDialog="closeFirstDialog"
@@ -16,11 +17,9 @@
 <script>
 import MenuTable from "./components/MenuTable.vue"; // 表格组件
 import AddFirstMenuDialog from "./components/AddFirstMenuDialog.vue";
-import { getMenu } from "@/http/api/menu";
 export default {
   data() {
     return {
-      menuList: [], // 菜单列表
       addFirtstMenudialogVisible: false, // 添加一级菜单弹窗
     };
   },
@@ -28,20 +27,13 @@ export default {
     MenuTable,
     AddFirstMenuDialog,
   },
-  mounted() {
-    this.getMenu();
+  mounted() {},
+  computed: {
+    menuList() {
+      return this.$store.state.menuList;
+    },
   },
   methods: {
-    // 获取菜单信息
-    async getMenu() {
-      // 获取导航栏信息
-      const data = await getMenu();
-      if (data.code === "00000") {
-        this.menuList = data.data;
-      } else {
-        this.$Message.error(data.message);
-      }
-    },
     // 打开新增一级菜单弹窗
     openFirstDialog() {
       this.addFirtstMenudialogVisible = true;
@@ -52,7 +44,7 @@ export default {
     },
     // 点击确定关闭增加一级菜单弹窗
     confirmFirstDialog() {
-      this.getMenu();
+      this.$store.dispatch("getMenu");
       this.addFirtstMenudialogVisible = false;
     },
   },

@@ -33,12 +33,9 @@
   </div>
 </template>
 <script>
-import { getMenu } from "@/http/api/menu";
 export default {
   data() {
-    return {
-      menuList: [],
-    };
+    return {};
   },
   computed: {
     activeRouter() {
@@ -48,15 +45,13 @@ export default {
       }
       return this.$route.path;
     },
+    menuList() {
+      return this.$store.state.menuList;
+    },
   },
   async mounted() {
     // 获取导航栏信息
-    const data = await getMenu();
-    if (data.code === "00000") {
-      this.menuList = data.data;
-    } else {
-      this.$Message.error(data.message);
-    }
+    this.$store.dispatch("getMenu");
   },
   methods: {},
 };
