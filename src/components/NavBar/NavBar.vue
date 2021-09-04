@@ -14,7 +14,7 @@
           <i :class="item.menu_icon"></i>
           <span slot="title">{{ item.menu_name }}</span>
         </el-menu-item>
-        <el-submenu v-else :key="index">
+        <el-submenu v-else :key="index" :index="item.menu_router">
           <template slot="title">
             <i :class="item.menu_icon"></i>
             <span>{{ item.menu_name }}</span>
