@@ -51,6 +51,7 @@
     <add-sub-menu-dralog
       :addSubMenudialogVisible="addSubMenudialogVisible"
       :parentMenuId="parentMenuId"
+      :baseInfo="baseInfo"
       @closeSubDialog="closeSubDialog"
       @confirmSubDialog="confirmSubDialog"
     ></add-sub-menu-dralog>
@@ -68,15 +69,9 @@ export default {
   },
   data() {
     return {
-      addSubMenudialogVisible: false,
-      parentMenuId: 0, // 父级id
-      form: {
-        menuOrder: "", // 菜单顺序
-        menuName: "", // 菜单名称
-        menuRouter: "", // 菜单路由
-        menuRole: "", // 菜单角色
-        menuIcon: "", // 菜单图标
-      },
+      addSubMenudialogVisible: false, // 控制新增子菜单弹窗
+      parentMenuId: "", // 父级id // 父级id
+      baseInfo: "", // 说是打开编辑页面,则是基础信息
     };
   },
   components: {
@@ -90,11 +85,25 @@ export default {
     },
     // 取消新增子菜单弹窗
     closeSubDialog() {
+      this.baseInfo = "";
       this.addSubMenudialogVisible = false;
     },
     // 提交新增子菜单按钮
     confirmSubDialog() {
       this.addSubMenudialogVisible = false;
+    },
+    // 编辑菜单
+    handleEdit(index, item) {
+      this.parentMenuId = item.parent_menu_id;
+      this.baseInfo = {
+        parentMenuId: item.parent_menu_id, // 父级id
+        menuOrder: item.menu_order, // 菜单顺序
+        menuName: item.menu_name, // 菜单名称
+        menuRouter: item.menu_router, // 菜单路由
+        menuRole: item.menu_role, // 菜单角色
+        menuIcon: item.menu_icon, // 菜单图标
+      };
+      this.addSubMenudialogVisible = true;
     },
     // 删除菜单
     async handleDelete(index, item) {

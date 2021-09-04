@@ -31,3 +31,11 @@ export const deleteMenu = (params) => {
     params,
   });
 };
+// 修改菜单
+export const updateMenu = (data) => {
+  return axiosService({
+    url: "/menu/updateMenu",
+    method: "put",
+    data,
+  });
+};

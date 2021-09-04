@@ -2,10 +2,11 @@
   <el-dialog
     title="添加子菜单"
     :visible.sync="addSubMenudialogVisible"
+    :show-close="false"
     width="30%"
   >
     <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="父级Id">
+      <el-form-item label="父级Id" v-if="parentMenuId">
         <el-input :placeholder="parentMenuId" disabled></el-input>
       </el-form-item>
       <el-form-item label="菜单顺序">
@@ -34,16 +35,20 @@
   </el-dialog>
 </template>
 <script>
-import { addSubMenu } from "@/http/api/menu";
+import { addSubMenu, updateMenu } from "@/http/api/menu";
 export default {
   props: {
     addSubMenudialogVisible: {
       type: Boolean,
       default: false,
     },
+    // 父级ID
     parentMenuId: {
-      type: Number,
-      default: 0,
+      default: "",
+    },
+    // 回显信息
+    baseInfo: {
+      default: "",
     },
   },
   data() {
@@ -57,13 +62,41 @@ export default {
       },
     };
   },
+  watch: {
+    // 如果有回显信息,则赋值给form
+    baseInfo(newVal, oldVal) {
+      if (newVal) {
+        this.form = this.baseInfo;
+      } else {
+        console.log(oldVal);
+      }
+    },
+  },
+  mounted() {
+    console.log("mounted");
+  },
   methods: {
     // 取消新增
     closeSubDialog() {
+      (this.form = {
+        menuOrder: "", // 菜单顺序
+        menuName: "", // 菜单名称
+        menuRouter: "", // 菜单路由
+        menuRole: "", // 菜单角色
+        menuIcon: "", // 菜单图标
+      }),
       this.$emit("closeSubDialog");
     },
-    // 新增二级级菜单
+    // 点击确认按钮
     async confirmSubDialog() {
+      if (this.baseInfo) {
+        this.updateMenu();
+      } else {
+        this.addSubMenu();
+      }
+    },
+    // 新增二级级菜单
+    async addSubMenu() {
       let params = {
         parentMenuId: this.parentMenuId,
         menuOrder: this.form.menuOrder,
@@ -76,6 +109,32 @@ export default {
       if (data.code === "00000") {
         this.$message({
           message: "添加成功",
+          type: "success",
+        });
+        this.$emit("confirmSubDialog");
+        // 更新导航栏信息
+        this.$store.dispatch("getMenu");
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
+    // 更新菜单
+    async updateMenu() {
+      let params = {
+        parentMenuId: this.parentMenuId,
+        menuOrder: this.form.menuOrder,
+        menuName: this.form.menuName,
+        menuRouter: this.form.menuRouter,
+        menuRole: this.form.menuRole,
+        menuIcon: this.form.menuIcon,
+      };
+      const data = await updateMenu(params);
+      if (data.code === "00000") {
+        this.$message({
+          message: "更新成功",
           type: "success",
         });
         this.$emit("confirmSubDialog");

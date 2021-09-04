@@ -2,6 +2,7 @@
   <el-dialog
     title="新增一级菜单"
     :visible.sync="addFirtstMenudialogVisible"
+		:show-close="false"
     width="30%"
   >
     <el-form ref="form" :model="form" label-width="80px">
