@@ -97,6 +97,7 @@ export default {
       this.parentMenuId = item.parent_menu_id;
       this.baseInfo = {
         parentMenuId: item.parent_menu_id, // 父级id
+        menuId: item.menu_id, // 菜单id
         menuOrder: item.menu_order, // 菜单顺序
         menuName: item.menu_name, // 菜单名称
         menuRouter: item.menu_router, // 菜单路由

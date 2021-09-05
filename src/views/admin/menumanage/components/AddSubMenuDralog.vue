@@ -54,6 +54,7 @@ export default {
   data() {
     return {
       form: {
+        menuId: "",
         menuOrder: "", // 菜单顺序
         menuName: "", // 菜单名称
         menuRouter: "", // 菜单路由
@@ -78,13 +79,13 @@ export default {
   methods: {
     // 取消新增
     closeSubDialog() {
-      (this.form = {
+      this.form = {
         menuOrder: "", // 菜单顺序
         menuName: "", // 菜单名称
         menuRouter: "", // 菜单路由
         menuRole: "", // 菜单角色
         menuIcon: "", // 菜单图标
-      }),
+      };
       this.$emit("closeSubDialog");
     },
     // 点击确认按钮
@@ -125,6 +126,7 @@ export default {
     async updateMenu() {
       let params = {
         parentMenuId: this.parentMenuId,
+        menuId: this.form.menuId, // 菜单id
         menuOrder: this.form.menuOrder,
         menuName: this.form.menuName,
         menuRouter: this.form.menuRouter,
