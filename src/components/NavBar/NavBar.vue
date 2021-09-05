@@ -40,6 +40,7 @@ export default {
   computed: {
     activeRouter() {
       let activeMenu = this.$route.meta.activeMenu;
+      console.log(activeMenu)
       if (activeMenu) {
         return activeMenu;
       }

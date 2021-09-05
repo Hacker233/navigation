@@ -5,6 +5,8 @@ const Home = () => import("@/views/home/home.vue"); // 首页
 const Movie = () => import("@/views/movie/index.vue"); // 影视导航
 const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
 const MenuManage = () => import("@/views/admin/menumanage/menuManage.vue"); // 菜单管理
+const WebsiteManage = () =>
+  import("@/views/admin/websiteManage/websiteManage.vue"); // 网站管理
 
 Vue.use(VueRouter);
 
@@ -32,12 +34,21 @@ const routes = [
       activeMenu: "/admin",
     },
     children: [
+      // 菜单管理
       {
         path: "menumanage",
         name: "menumanage",
         component: MenuManage,
         meta: {
           activeMenu: "/admin/menumanage",
+        },
+      },
+      {
+        path: "websitemanage",
+        name: "websitemanage",
+        component: WebsiteManage,
+        meta: {
+          activeMenu: "/admin/websitemanage",
         },
       },
     ],
