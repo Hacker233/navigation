@@ -80,7 +80,7 @@ export default {
         websiteMenuName: this.form.menuInfo.menu_name, // 网站所属菜单名称
         websiteParentMenuId: this.form.menuInfo.parent_menu_id, // 网站所属于菜单的父级id
         websiteMenuId: this.form.menuInfo.menu_id, // 网站所属菜单id
-        websitecCategory: this.form.websiteCategory, // 网站分类
+        websiteCategory: this.form.websiteCategory, // 网站分类
         websiteLink: this.form.websiteLink, // 网站链接
         websiteAbstract: this.form.websiteAbstract, // 网站简介
         websiteTags: this.form.websiteTags, // 网站标签

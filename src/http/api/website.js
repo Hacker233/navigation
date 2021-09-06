@@ -7,3 +7,11 @@ export const addWebsite = (data) => {
     data,
   });
 };
+// 查询网站
+export const queryWebsite = (params) => {
+  return axiosService({
+    url: "/website/queryWebsite",
+    method: "get",
+    params,
+  });
+};
