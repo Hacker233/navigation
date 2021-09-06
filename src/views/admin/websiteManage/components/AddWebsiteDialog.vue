@@ -2,6 +2,7 @@
   <el-dialog
     title="添加站点"
     :visible.sync="addWebsiteDialogVisible"
+    :close-on-click-modal="false"
     :show-close="false"
     width="30%"
   >

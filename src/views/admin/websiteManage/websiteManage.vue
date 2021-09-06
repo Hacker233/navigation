@@ -8,12 +8,14 @@
       <!-- 新增网站弹窗 -->
       <add-website-dialog
         :addWebsiteDialogVisible="addWebsiteDialogVisible"
+        @closeAddWebsiteDialog="closeAddWebsiteDialog"
+        @confirmAddWebsiteDialog="confirmAddWebsiteDialog"
       ></add-website-dialog>
     </div>
   </div>
 </template>
 <script>
-import AddWebsiteDialog from "./components/AddWebsiteDialog.vue"; // 添加站点弹窗
+import AddWebsiteDialog from "./components/AddWebsiteDialog"; // 添加站点弹窗
 export default {
   data() {
     return {
@@ -31,6 +33,7 @@ export default {
     // 点击取消按钮
     closeAddWebsiteDialog() {
       this.addWebsiteDialogVisible = false;
+      console.log(this.addWebsiteDialogVisible)
     },
     // 点击确定按钮
     confirmAddWebsiteDialog() {

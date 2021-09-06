@@ -2,6 +2,7 @@
   <el-dialog
     title="添加子菜单"
     :visible.sync="addSubMenudialogVisible"
+    :close-on-click-modal="false"
     :show-close="false"
     width="30%"
   >
