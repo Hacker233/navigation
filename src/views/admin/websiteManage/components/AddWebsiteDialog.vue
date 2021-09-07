@@ -124,7 +124,7 @@ export default {
         if (valid) {
           // 添加站点
           if (!this.baseInfo) {
-            this.closeAddWebsiteDialog();
+            this.confirmAddWebsiteDialog();
           } else {
             // 更新站点
             this.updataWebsite();

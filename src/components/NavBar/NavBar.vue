@@ -10,6 +10,7 @@
           v-if="!item.menu_child.length"
           :key="index"
           :index="item.menu_router"
+          :route="{ path: item.menu_router, query: { menuId: item.menu_id } }"
         >
           <i :class="item.menu_icon"></i>
           <span slot="title">{{ item.menu_name }}</span>
@@ -23,6 +24,7 @@
             v-for="(subItem, subIndex) of item.menu_child"
             :key="subIndex"
             :index="subItem.menu_router"
+            :route="{ path: subItem.menu_router, query: { menuId: subItem.menu_id } }"
           >
             <i :class="subItem.menu_icon"></i>
             <span slot="title">{{ subItem.menu_name }}</span>
@@ -40,7 +42,6 @@ export default {
   computed: {
     activeRouter() {
       let activeMenu = this.$route.meta.activeMenu;
-      console.log(activeMenu)
       if (activeMenu) {
         return activeMenu;
       }

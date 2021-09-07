@@ -16,10 +16,36 @@
 <script>
 import LinkCard from "@/components/LinkCard/LinkCard.vue"; // 链接卡片
 import LinkTitle from "@/components/LinkTitle/LinkTitle.vue"; // 标题
+import { queryMenuWebsite } from "@/http/api/website";
 export default {
   components: {
     LinkCard,
     LinkTitle,
+  },
+  data() {
+    return {
+      websitList: [],
+    };
+  },
+  mounted() {
+    this.queryMenuWebsite();
+  },
+  methods: {
+    // 获取所有站点
+    async queryMenuWebsite() {
+      let params = {
+        menuId: this.$route.query.menuId,
+      };
+      const data = await queryMenuWebsite(params);
+      if (data.code === "00000") {
+        this.websitList = data.data;
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
   },
 };
 </script>

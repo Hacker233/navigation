@@ -41,3 +41,12 @@ export const updataWebsite = (data) => {
     data,
   });
 };
+
+// 点击菜单查询网站
+export const queryMenuWebsite = (params) => {
+  return axiosService({
+    url: "/website/queryMenuWebsite",
+    method: "get",
+    params,
+  });
+};
