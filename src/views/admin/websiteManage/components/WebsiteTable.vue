@@ -39,9 +39,18 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 编辑网站弹窗 -->
+    <add-website-dialog
+      :addWebsiteDialogVisible="editWebsiteDialogVisible"
+      :baseInfo="baseInfo"
+      @closeAddWebsiteDialog="closeAddWebsiteDialog"
+      @updataWebsiteConfirm="updataWebsiteConfirm"
+    ></add-website-dialog>
   </div>
 </template>
 <script>
+import AddWebsiteDialog from "./AddWebsiteDialog"; // 添加站点弹窗
+
 export default {
   props: {
     websiteList: {
@@ -52,7 +61,40 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      editWebsiteDialogVisible: false,
+      baseInfo: "",
+    };
+  },
+  components: {
+    AddWebsiteDialog,
+  },
+  methods: {
+    // 打开编辑弹窗
+    handleEdit(index, item) {
+      this.editWebsiteDialogVisible = true;
+      this.baseInfo = {
+        websiteId: item.website_id,
+        websiteCategory: item.website_category,
+        websiteLink: item.website_link,
+        websiteAbstract: item.website_abstract,
+        websiteTags: item.website_tags,
+      };
+    },
+    // 删除网站
+    handleDelete(index, item) {
+      this.$emit("deleteWebsite", item.website_id);
+    },
+    // 取消
+    closeAddWebsiteDialog() {
+      this.editWebsiteDialogVisible = false;
+    },
+    // 更新菜单确认
+    updataWebsiteConfirm() {
+      this.baseInfo = "";
+      this.editWebsiteDialogVisible = false;
+      this.$emit("updataWebsiteConfirm");
+    },
   },
 };
 </script>

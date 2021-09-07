@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="添加子菜单"
+    :title="title"
     :visible.sync="addSubMenudialogVisible"
     :close-on-click-modal="false"
     :show-close="false"
@@ -63,6 +63,11 @@ export default {
         menuIcon: "", // 菜单图标
       },
     };
+  },
+  computed: {
+    title() {
+      return this.baseInfo ? "更新菜单" : "添加子菜单";
+    },
   },
   watch: {
     // 如果有回显信息,则赋值给form
