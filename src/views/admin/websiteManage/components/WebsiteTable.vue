@@ -19,6 +19,8 @@
       <el-table-column prop="website_link" label="网站链接"> </el-table-column>
       <el-table-column prop="website_abstract" label="网站简介">
       </el-table-column>
+      <el-table-column prop="website_create_time" label="网站新增时间">
+      </el-table-column>
       <el-table-column label="网站图标">
         <template slot-scope="scope">
           <img :src="scope.row.website_favicon" alt="" srcset="" />

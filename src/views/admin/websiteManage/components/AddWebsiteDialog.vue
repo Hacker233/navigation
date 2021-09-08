@@ -152,6 +152,13 @@ export default {
           message: "添加成功",
           type: "success",
         });
+        this.form = {
+          menuInfo: [], // 所属菜单相关信息
+          websiteCategory: "", // 网站分类
+          websiteLink: "", // 网站链接
+          websiteAbstract: "", // 网站简介
+          websiteTags: "", // 网站标签
+        };
         this.$emit("confirmAddWebsiteDialog");
       } else {
         this.$message({

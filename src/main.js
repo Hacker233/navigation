@@ -6,6 +6,7 @@ import ElementUI from "element-ui";
 import "./styles.scss";
 import "@/styles/normalize.css";
 import login from "./common/LoginDialog"; // 登录弹窗全局组件
+import "./common/auth"; // 权限检测
 
 Vue.use(ElementUI);
 

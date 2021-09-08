@@ -20,7 +20,7 @@
       <el-table-column prop="menu_router" label="菜单路由"> </el-table-column>
       <el-table-column prop="menu_icon" label="图标">
         <template slot-scope="scope">
-          <i :class="scope.row.menu_icon"></i>
+          <i class="iconfont" :class="scope.row.menu_icon"></i>
         </template>
       </el-table-column>
       <el-table-column prop="menu_name" label="菜单名称"> </el-table-column>

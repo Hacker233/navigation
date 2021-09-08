@@ -62,7 +62,7 @@ export default {
       display: flex;
     }
     .movie-card {
-      display: grid;
+      display: flex;
       grid-template-columns: repeat(auto-fit, minmax(257px, 1fr));
       grid-row-gap: 40px;
       grid-column-gap: 25px;

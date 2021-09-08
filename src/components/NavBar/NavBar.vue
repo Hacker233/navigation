@@ -12,12 +12,12 @@
           :index="item.menu_router"
           :route="{ path: item.menu_router, query: { menuId: item.menu_id } }"
         >
-          <i :class="item.menu_icon"></i>
+          <i :class="['iconfont',item.menu_icon]"></i>
           <span slot="title">{{ item.menu_name }}</span>
         </el-menu-item>
         <el-submenu v-else :key="index" :index="item.menu_router">
           <template slot="title">
-            <i :class="item.menu_icon"></i>
+            <i :class="['iconfont',item.menu_icon]"></i>
             <span>{{ item.menu_name }}</span>
           </template>
           <el-menu-item
@@ -29,7 +29,7 @@
               query: { menuId: subItem.menu_id },
             }"
           >
-            <i :class="subItem.menu_icon"></i>
+            <i :class="['iconfont',subItem.menu_icon]"></i>
             <span slot="title">{{ subItem.menu_name }}</span>
           </el-menu-item>
         </el-submenu>
@@ -38,6 +38,7 @@
   </div>
 </template>
 <script>
+import { getUserInfo } from "@/http/api/user";
 export default {
   data() {
     return {};
@@ -54,11 +55,26 @@ export default {
       return this.$store.state.menuList;
     },
   },
-  async mounted() {
-    // 获取导航栏信息
-    this.$store.dispatch("getMenu");
+  mounted() {
+    this.init();
+    this.getUserInfo();
   },
-  methods: {},
+  methods: {
+    init() {
+      // 获取导航栏信息
+      this.$store.dispatch("getMenu");
+    },
+    // 查询用户信息
+    async getUserInfo() {
+      const data = await getUserInfo();
+      if (data.code === "00000") {
+        this.userInfo = data.data;
+        this.$store.commit("setUserInfo", this.userInfo);
+      } else {
+        this.userInfo = "";
+      }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -2,13 +2,27 @@
   <div class="right-title-box">
     <div class="left"></div>
     <div class="person-box">
-      <span @click="openLoginDialog">登录</span>
+      <el-button v-if="!userInfo" type="text" @click="openLoginDialog"
+        >登录/注册</el-button
+      >
+      <el-dropdown v-else>
+        <el-avatar class="avatar" :src="userInfo.avatar"></el-avatar>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="loginOut">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
   </div>
 </template>
 <script>
 export default {
   inject: ["reload"],
+  computed: {
+    userInfo() {
+      console.log("获取用户信息", this.$store.getters.getUserInfo);
+      return this.$store.getters.getUserInfo;
+    },
+  },
   methods: {
     // 打开登录注册弹窗
     openLoginDialog() {
@@ -24,6 +38,13 @@ export default {
           }
         },
       });
+    },
+    // 退出登录
+    loginOut() {
+      localStorage.removeItem("token");
+      this.$router.push("/");
+      this.$store.commit("setUserInfo", "");
+      this.refresh();
     },
     // 刷新页面,不会重载页面
     refresh() {

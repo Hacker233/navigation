@@ -18,6 +18,7 @@ const routes = [
     component: Home,
     meta: {
       showRightTitle: true,
+      auth: false
     },
   },
   // 影视导航
@@ -28,6 +29,7 @@ const routes = [
     meta: {
       activeMenu: "/movie",
       showRightTitle: true,
+      auth: false
     },
   },
   //影视内嵌网页
@@ -38,6 +40,7 @@ const routes = [
     meta: {
       activeMenu: "/movie",
       showRightTitle: false,
+      auth: false
     },
   },
   // 管理菜单
@@ -48,6 +51,7 @@ const routes = [
     meta: {
       activeMenu: "/admin",
       showRightTitle: true,
+      auth: true
     },
     children: [
       // 菜单管理
@@ -58,6 +62,7 @@ const routes = [
         meta: {
           activeMenu: "/admin/menumanage",
           showRightTitle: true,
+          auth: true
         },
       },
       {
@@ -67,6 +72,7 @@ const routes = [
         meta: {
           activeMenu: "/admin/websitemanage",
           showRightTitle: true,
+          auth: true
         },
       },
     ],
