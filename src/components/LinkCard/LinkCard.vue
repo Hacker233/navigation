@@ -1,29 +1,45 @@
 <template>
-  <div class="link-card-box">
+  <div class="link-card-box" @click="toIframeWeb">
     <div class="card-top">
       <div class="favicon">
-        <img src="../../assets/logo.png" alt="" />
+        <img :src="websiteInfo.website_favicon" alt="" />
       </div>
       <div class="movie-title">
-        <h1>腾讯视频</h1>
-        <a href="http://localhost:8080/">跳转网站</a>
+        <h1>{{ websiteInfo.website_title }}</h1>
+        <a :href="websiteInfo.website_link" target="blank">直达网站</a>
       </div>
     </div>
     <!-- 网站简介 -->
     <div class="movie-abstract">
       <div class="content">
-        <p>
-          <span>简介：</span
-          >我是简介我我是简介我是简介我是简介我是简介是简介我是简介我是简介
-        </p>
+        <p><span>简介：</span>{{ websiteInfo.website_abstract }}</p>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    websiteInfo: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
   data() {
     return {};
+  },
+  methods: {
+    // 跳转到内嵌网页
+    toIframeWeb() {
+      this.$router.push({
+        path: "/moviewweb",
+        query: {
+          url: this.websiteInfo.website_link,
+        },
+      });
+    },
   },
 };
 </script>
@@ -34,7 +50,7 @@ export default {
   border: 1px solid #ccc;
   // margin-bottom: 40px;
   border-radius: 5px;
-	cursor: pointer;
+  cursor: pointer;
   &:hover {
     box-shadow: 0px 0px 6px rgba($color: #000000, $alpha: 0.5);
   }
@@ -66,6 +82,10 @@ export default {
       padding-right: 10px;
       h1 {
         font-size: 14px;
+        width: 155px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       a {
         font-size: 12px;

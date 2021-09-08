@@ -5,11 +5,12 @@ import store from "./store";
 import ElementUI from "element-ui";
 import "./styles.scss";
 import "@/styles/normalize.css";
+import login from "./common/LoginDialog"; // 登录弹窗全局组件
 
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
-
+Vue.prototype.$login = login.install;
 new Vue({
   router,
   store,

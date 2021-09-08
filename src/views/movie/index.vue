@@ -1,14 +1,14 @@
 <template>
   <div class="movie-box">
     <!-- 网站推荐盒子 -->
-    <div class="movie-list-mox" v-for="(item, index) of 9" :key="index">
+    <div class="movie-list-mox" v-for="(item, index) of websitList" :key="index">
       <!-- 链接标题 -->
       <div class="link-title-content">
-        <link-title></link-title>
+        <link-title :category="item.website_category"></link-title>
       </div>
       <!-- 链接列表 -->
       <div class="movie-card">
-        <Link-card v-for="(item, index) of 17" :key="index"></Link-card>
+        <Link-card v-for="(subItem, subIndex) of item.list" :key="subIndex" :websiteInfo="subItem"></Link-card>
       </div>
     </div>
   </div>

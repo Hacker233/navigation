@@ -24,7 +24,10 @@
             v-for="(subItem, subIndex) of item.menu_child"
             :key="subIndex"
             :index="subItem.menu_router"
-            :route="{ path: subItem.menu_router, query: { menuId: subItem.menu_id } }"
+            :route="{
+              path: subItem.menu_router,
+              query: { menuId: subItem.menu_id },
+            }"
           >
             <i :class="subItem.menu_icon"></i>
             <span slot="title">{{ subItem.menu_name }}</span>
