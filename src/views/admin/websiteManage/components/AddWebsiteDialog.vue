@@ -13,10 +13,20 @@
           v-model="form.menuInfo"
           :options="menuListOptions"
           :show-all-levels="false"
+          @change="queryCategory"
         ></el-cascader>
       </el-form-item>
       <el-form-item label="网站分类" prop="websiteCategory">
-        <el-input v-model="form.websiteCategory"></el-input>
+        <el-input v-model.trim="form.websiteCategory"> </el-input>
+        <div class="website_tags" v-if="tags.length">
+          <el-tag
+            v-for="(item, index) of tags"
+            type="success"
+            :key="index"
+            @click="selectTags"
+            >{{ item }}</el-tag
+          >
+        </div>
       </el-form-item>
       <el-form-item label="网站链接">
         <el-input v-model="form.websiteLink"></el-input>
@@ -35,7 +45,7 @@
   </el-dialog>
 </template>
 <script>
-import { addWebsite, updataWebsite } from "@/http/api/website";
+import { addWebsite, updataWebsite, queryCategory } from "@/http/api/website";
 export default {
   props: {
     // 显示或隐藏弹窗
@@ -57,6 +67,8 @@ export default {
         websiteAbstract: "", // 网站简介
         websiteTags: "", // 网站标签
       },
+      selectMenuInfo: [],
+      tags: [],
       rules: {
         menuInfo: [{ required: true, message: "请选择菜单", trigger: "blur" }],
         websiteCategory: [
@@ -134,6 +146,36 @@ export default {
         }
       });
     },
+    // 查询当前菜单的分类列表
+    async queryCategory() {
+      this.selectCategory = ""; // 先清空分类
+      let websiteMenuId = JSON.parse(this.filterMenu());
+      let params = {
+        websiteMenuId: websiteMenuId.menu_id,
+      };
+      const data = await queryCategory(params);
+      if (data.code === "00000") {
+        this.tags = data.data;
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
+    // 选择标签
+    selectTags(e) {
+      if (this.form.websiteCategory) {
+        this.$message({
+          message: "只能选择一个标签",
+          type: "error",
+        });
+        return;
+      } else {
+        let value = e.target.innerText;
+        this.form.websiteCategory = value;
+      }
+    },
     // 添加站点
     async confirmAddWebsiteDialog() {
       let menuInfo = JSON.parse(this.filterMenu());
@@ -197,3 +239,12 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.website_tags {
+  width: 100%;
+  span {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}
+</style>

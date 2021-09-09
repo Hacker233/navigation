@@ -8,6 +8,7 @@ const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
 const MenuManage = () => import("@/views/admin/menumanage/menuManage.vue"); // 菜单管理
 const WebsiteManage = () =>
   import("@/views/admin/websiteManage/websiteManage.vue"); // 网站管理
+const UserManage = () => import("@/views/admin/usermanage/usermanage.vue"); // 用户管理
 
 Vue.use(VueRouter);
 
@@ -18,7 +19,7 @@ const routes = [
     component: Home,
     meta: {
       showRightTitle: true,
-      auth: false
+      auth: false,
     },
   },
   // 影视导航
@@ -29,7 +30,7 @@ const routes = [
     meta: {
       activeMenu: "/movie",
       showRightTitle: true,
-      auth: false
+      auth: false,
     },
   },
   //影视内嵌网页
@@ -40,7 +41,7 @@ const routes = [
     meta: {
       activeMenu: "/movie",
       showRightTitle: false,
-      auth: false
+      auth: false,
     },
   },
   // 管理菜单
@@ -51,7 +52,7 @@ const routes = [
     meta: {
       activeMenu: "/admin",
       showRightTitle: true,
-      auth: true
+      auth: true,
     },
     children: [
       // 菜单管理
@@ -62,9 +63,10 @@ const routes = [
         meta: {
           activeMenu: "/admin/menumanage",
           showRightTitle: true,
-          auth: true
+          auth: true,
         },
       },
+      // 网站管理
       {
         path: "websitemanage",
         name: "websitemanage",
@@ -72,7 +74,18 @@ const routes = [
         meta: {
           activeMenu: "/admin/websitemanage",
           showRightTitle: true,
-          auth: true
+          auth: true,
+        },
+      },
+      // 用户管理
+      {
+        path: "usermanage",
+        name: "usermanage",
+        component: UserManage,
+        meta: {
+          activeMenu: "/admin/usermanage",
+          showRightTitle: true,
+          auth: true,
         },
       },
     ],

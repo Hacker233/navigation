@@ -19,7 +19,6 @@ export default {
   inject: ["reload"],
   computed: {
     userInfo() {
-      console.log("获取用户信息", this.$store.getters.getUserInfo);
       return this.$store.getters.getUserInfo;
     },
   },
@@ -57,10 +56,14 @@ export default {
 .right-title-box {
   width: 100%;
   height: 50px;
-  box-shadow: 0px 0px 6px rgba($color: #000000, $alpha: 0.5);
+  box-shadow: 2px 4px 4px #b9b9b9;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: #fff;
   .person-box {
     padding: 0 40px 0 0;
     span {

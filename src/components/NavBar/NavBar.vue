@@ -78,6 +78,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.iconfont {
+  margin-right: 10px;
+}
 .nav-bar-box {
   width: 180px;
   height: 100%;

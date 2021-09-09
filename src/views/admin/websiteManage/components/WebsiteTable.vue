@@ -27,7 +27,7 @@
         </template>
       </el-table-column>
       <!-- 操作列 -->
-      <el-table-column label="操作" width="220">
+      <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button

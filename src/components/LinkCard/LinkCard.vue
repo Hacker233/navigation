@@ -1,18 +1,31 @@
 <template>
-  <div class="link-card-box" @click="toIframeWeb">
+  <div class="link-card-box">
     <div class="card-top">
       <div class="favicon">
         <img :src="websiteInfo.website_favicon" alt="" />
       </div>
       <div class="movie-title">
-        <h1>{{ websiteInfo.website_title }}</h1>
-        <a :href="websiteInfo.website_link" target="blank">直达网站</a>
+        <el-tooltip
+          class="tool-item"
+          effect="light"
+          :content="websiteInfo.website_title"
+        >
+          <h1>{{ websiteInfo.website_title }}</h1>
+        </el-tooltip>
+        <div class="tags-link">
+          <el-tag type="success" size="mini">{{
+            websiteInfo.website_tags
+          }}</el-tag>
+          <a :href="websiteInfo.website_link" target="blank">直达网站</a>
+        </div>
       </div>
     </div>
     <!-- 网站简介 -->
     <div class="movie-abstract">
       <div class="content">
-        <p><span>简介：</span>{{ websiteInfo.website_abstract }}</p>
+        <p @click="toIframeWeb">
+          <span>简介：</span>{{ websiteInfo.website_abstract }}
+        </p>
       </div>
     </div>
   </div>
@@ -46,16 +59,16 @@ export default {
 <style lang="scss" scoped>
 .link-card-box {
   width: 250px;
-  height: 110px;
+  height: 100px;
   border: 1px solid #ccc;
-  // margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
   border-radius: 5px;
-  cursor: pointer;
   &:hover {
     box-shadow: 0px 0px 6px rgba($color: #000000, $alpha: 0.5);
   }
   .card-top {
-    height: 50%;
+    height: 56%;
     width: 100%;
     display: flex;
     .favicon {
@@ -65,10 +78,8 @@ export default {
       align-items: center;
       justify-content: center;
       img {
-        width: 40px;
-        height: 40px;
+        max-width: 40px;
         border-radius: 50%;
-        border: 1px solid #ccc;
         display: flex;
         align-items: center;
       }
@@ -77,31 +88,51 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: space-around;
       align-items: flex-end;
       padding-right: 10px;
+      .tool-item {
+        border: none;
+      }
       h1 {
         font-size: 14px;
-        width: 155px;
+        min-width: 10px;
+        max-width: 155px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
-      a {
-        font-size: 12px;
-        text-decoration: none;
-        color: rgb(172, 172, 238);
+      .tags-link {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        a {
+          font-size: 12px;
+          text-decoration: none;
+          color: rgb(172, 172, 238);
+        }
       }
     }
   }
   .movie-abstract {
     width: 100%;
+    flex: 1 auto;
+    display: flex;
+    align-items: center;
     .content {
       display: flex;
       padding: 4px 10px;
       p {
         font-size: 12px;
         color: rgb(150, 148, 148);
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        cursor: pointer;
+        &:hover {
+          color: rgb(187, 178, 238);
+        }
       }
     }
   }
