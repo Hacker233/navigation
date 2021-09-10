@@ -5,12 +5,17 @@
       <el-button v-if="!userInfo" type="text" @click="openLoginDialog"
         >登录/注册</el-button
       >
-      <el-dropdown v-else>
-        <el-avatar class="avatar" :src="userInfo.avatar"></el-avatar>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item @click.native="loginOut">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+      <template v-else>
+        <span class="username">Hi {{ userInfo.username }}</span>
+        <el-dropdown>
+          <el-avatar class="avatar" :src="userInfo.avatar"></el-avatar>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="loginOut"
+              >退出登录</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
+      </template>
     </div>
   </div>
 </template>
@@ -66,13 +71,19 @@ export default {
   background: #fff;
   .person-box {
     padding: 0 40px 0 0;
-    span {
+    display: flex;
+    align-items: center;
+    button {
       font-size: 14px;
       cursor: pointer;
       user-select: none;
       &:hover {
         color: royalblue;
       }
+    }
+    .username {
+      margin: 0 20px;
+      font-size: 14px;
     }
   }
 }

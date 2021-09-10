@@ -31,7 +31,11 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="user-manage-avatar" />
+          <img
+            v-if="form.avatar"
+            :src="form.avatar"
+            class="user-manage-avatar"
+          />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -46,6 +50,7 @@
 import { updateUser } from "@/http/api/user";
 import env from "@/config/index";
 export default {
+  inject: ["reload"],
   props: {
     editUserDialogVisible: {
       type: Boolean,
@@ -66,7 +71,6 @@ export default {
         role: "", // 角色
         avatar: "", // 头像
       },
-      imageUrl: "",
     };
   },
   watch: {
@@ -74,7 +78,6 @@ export default {
     baseInfo(newVal, oldVal) {
       if (newVal) {
         this.form = this.baseInfo;
-        this.imageUrl = this.baseInfo.avatar;
       } else {
         console.log(oldVal);
       }
@@ -115,23 +118,33 @@ export default {
     uploadAddress() {
       return env.serverAddress + "/upload";
     },
-    handleAvatarSuccess(response, file) {
+    // 上传成功后
+    handleAvatarSuccess(response) {
       this.form.avatar = response.data.fileUrl;
-      this.imageUrl = URL.createObjectURL(file.raw);
+      this.$message({
+        message: "头像修改成功",
+        type: "success",
+      });
     },
     beforeAvatarUpload(file) {
-      console.log(file);
+      const isLt4M = file.size / 1024 / 1024 < 4;
+      if (!isLt4M) {
+        this.$message.error("上传头像图片大小不能超过 4MB!");
+      }
+      return isLt4M;
     },
   },
 };
 </script>
 <style>
+.avatar-uploader {
+  line-height: 0;
+}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
 }
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
@@ -139,13 +152,13 @@ export default {
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 48px;
-  height: 48px;
-  line-height: 48px;
+  width: 78px;
+  height: 78px;
+  line-height: 78px;
   text-align: center;
 }
 .user-manage-avatar {
-  height: 48px;
-  width: 48px;
+  height: 78px;
+  width: 78px;
 }
 </style>
