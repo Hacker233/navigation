@@ -8,13 +8,31 @@
   >
     <el-form ref="ruleForm" :rules="rules" :model="form" label-width="80px">
       <el-form-item label="菜单顺序" prop="menuOrder">
-        <el-input v-model="form.menuOrder"></el-input>
+        <el-input
+          v-model="form.menuOrder"
+          clearable
+          placeholder="请输入菜单顺序"
+          :maxlength="2"
+          show-word-limit
+        ></el-input>
       </el-form-item>
       <el-form-item label="菜单名称" prop="menuName">
-        <el-input v-model="form.menuName"></el-input>
+        <el-input
+          v-model="form.menuName"
+          clearable
+          placeholder="请输入菜单名称"
+          :maxlength="4"
+          show-word-limit
+        ></el-input>
       </el-form-item>
       <el-form-item label="菜单路由" prop="menuRouter">
-        <el-input v-model="form.menuRouter"></el-input>
+        <el-input
+          v-model="form.menuRouter"
+          clearable
+          placeholder="请输入菜单路由"
+          :maxlength="40"
+          show-word-limit
+        ></el-input>
       </el-form-item>
       <el-form-item label="菜单角色" prop="menuRole">
         <el-select v-model="form.menuRole" placeholder="请选择菜单角色">
@@ -23,7 +41,11 @@
         </el-select>
       </el-form-item>
       <el-form-item label="菜单图标" prop="menuIcon">
-        <el-input v-model="form.menuIcon"></el-input>
+        <el-input
+          v-model="form.menuIcon"
+          :maxlength="40"
+          show-word-limit
+        ></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">

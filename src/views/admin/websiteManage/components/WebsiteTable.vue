@@ -8,20 +8,48 @@
       stripe
       default-expand-all
     >
-      <el-table-column prop="website_id" label="网站ID" sortable>
+      <el-table-column prop="website_id" label="网站ID" sortable width="100">
       </el-table-column>
-      <el-table-column prop="website_menu_name" label="网站所属菜单">
+      <el-table-column prop="website_menu_name" label="所属菜单" width="100">
       </el-table-column>
-      <el-table-column prop="website_title" label="网站标题"> </el-table-column>
-      <el-table-column prop="website_category" label="网站分类" sortable>
+      <el-table-column prop="website_title" label="网站标题" width="200">
+        <template slot-scope="scope">
+          <el-tooltip
+            popper-class="website-abstract-tool"
+            effect="light"
+            :content="scope.row.website_title"
+          >
+            <p class="website_title-p">
+              {{ scope.row.website_title }}
+            </p>
+          </el-tooltip>
+        </template>
       </el-table-column>
-      <el-table-column prop="website_tags" label="网站标签"> </el-table-column>
+      <el-table-column prop="website_category" label="网站分类" sortable width="120">
+      </el-table-column>
+      <el-table-column prop="website_tags" label="网站标签" width="100">
+      </el-table-column>
       <el-table-column prop="website_link" label="网站链接"> </el-table-column>
-      <el-table-column prop="website_abstract" label="网站简介">
+      <el-table-column label="网站简介">
+        <template slot-scope="scope">
+          <el-tooltip
+            popper-class="website-abstract-tool"
+            effect="light"
+            :content="scope.row.website_abstract"
+          >
+            <p class="website-abstract-p">
+              {{ scope.row.website_abstract }}
+            </p>
+          </el-tooltip>
+        </template>
       </el-table-column>
-      <el-table-column prop="website_create_time" label="网站新增时间">
+      <el-table-column
+        prop="website_create_time"
+        label="网站新增时间"
+        width="180"
+      >
       </el-table-column>
-      <el-table-column label="网站图标">
+      <el-table-column label="网站图标" width="100">
         <template slot-scope="scope">
           <img :src="scope.row.website_favicon" alt="" srcset="" />
         </template>
@@ -100,3 +128,42 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.website-table-box {
+  .website-abstract-p {
+    overflow: hidden;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .website_title-p {
+    overflow: hidden;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+</style>
+<style>
+.website-abstract-tool {
+  min-width: 20px;
+  max-width: 200px;
+  line-height: 20px;
+}
+</style>
+
+
+docker run -d \
+--name minio \
+--restart=always \
+-p 9000:9000 \
+-e "MINIO_ACCESS_KEY=lanyuan" \
+-e "MINIO_SECRET_KEY=20153106l" \
+-v /www/docker/minio/config:/root/.minio \
+-v /www/docker/minio/data:/data \
+minio/minio \
+server /data --console-address ":9000" --address ":9090"
+
+

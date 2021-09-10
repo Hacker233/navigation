@@ -23,7 +23,17 @@
         </el-select>
       </el-form-item>
       <el-form-item label="头像">
-        <el-input v-model="form.avatar"></el-input>
+        <el-upload
+          class="avatar-uploader"
+          :action="uploadAddress()"
+          :headers="{ Authorization: $store.state.token }"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="user-manage-avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -34,6 +44,7 @@
 </template>
 <script>
 import { updateUser } from "@/http/api/user";
+import env from "@/config/index";
 export default {
   props: {
     editUserDialogVisible: {
@@ -55,6 +66,7 @@ export default {
         role: "", // 角色
         avatar: "", // 头像
       },
+      imageUrl: "",
     };
   },
   watch: {
@@ -62,6 +74,7 @@ export default {
     baseInfo(newVal, oldVal) {
       if (newVal) {
         this.form = this.baseInfo;
+        this.imageUrl = this.baseInfo.avatar;
       } else {
         console.log(oldVal);
       }
@@ -98,6 +111,41 @@ export default {
         });
       }
     },
+    // 上传头像等方法
+    uploadAddress() {
+      return env.serverAddress + "/upload";
+    },
+    handleAvatarSuccess(response, file) {
+      this.form.avatar = response.data.fileUrl;
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      console.log(file);
+    },
   },
 };
 </script>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+}
+.user-manage-avatar {
+  height: 48px;
+  width: 48px;
+}
+</style>

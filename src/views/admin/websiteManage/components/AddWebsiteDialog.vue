@@ -17,7 +17,14 @@
         ></el-cascader>
       </el-form-item>
       <el-form-item label="网站分类" prop="websiteCategory">
-        <el-input v-model.trim="form.websiteCategory"> </el-input>
+        <el-input
+          v-model.trim="form.websiteCategory"
+          clearable
+          placeholder="请输入网站分类"
+          :maxlength="6"
+          show-word-limit
+        >
+        </el-input>
         <div class="website_tags" v-if="tags.length">
           <el-tag
             v-for="(item, index) of tags"
@@ -28,14 +35,32 @@
           >
         </div>
       </el-form-item>
-      <el-form-item label="网站链接">
-        <el-input v-model="form.websiteLink"></el-input>
+      <el-form-item label="网站链接" prop="websiteLink">
+        <el-input
+          v-model="form.websiteLink"
+          clearable
+          placeholder="请输入网站链接"
+          :maxlength="30"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-      <el-form-item label="网站简介">
-        <el-input v-model="form.websiteAbstract"></el-input>
+      <el-form-item label="网站简介" prop="websiteAbstract">
+        <el-input
+          v-model="form.websiteAbstract"
+          clearable
+          placeholder="请输入网站简介"
+          :maxlength="50"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-      <el-form-item label="网站标签">
-        <el-input v-model="form.websiteTags"></el-input>
+      <el-form-item label="网站标签" prop="websiteTags">
+        <el-input
+          v-model="form.websiteTags"
+          clearable
+          placeholder="请输入网站标签"
+          :maxlength="5"
+          show-word-limit
+        ></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -73,6 +98,15 @@ export default {
         menuInfo: [{ required: true, message: "请选择菜单", trigger: "blur" }],
         websiteCategory: [
           { required: true, message: "请填写分类", trigger: "blur" },
+        ],
+        websiteLink: [
+          { required: true, message: "请输入网站链接", trigger: "blur" },
+        ],
+        websiteAbstract: [
+          { required: true, message: "请输入网站简介", trigger: "blur" },
+        ],
+        websiteTags: [
+          { required: true, message: "请输入网站标签", trigger: "blur" },
         ],
       },
     };

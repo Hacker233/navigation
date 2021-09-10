@@ -5,13 +5,9 @@
         <img :src="websiteInfo.website_favicon" alt="" />
       </div>
       <div class="movie-title">
-        <el-tooltip
-          class="tool-item"
-          effect="light"
-          :content="websiteInfo.website_title"
-        >
-          <h1>{{ websiteInfo.website_title }}</h1>
-        </el-tooltip>
+        <h1 :title="websiteInfo.website_title">
+          {{ websiteInfo.website_title }}
+        </h1>
         <div class="tags-link">
           <el-tag type="success" size="mini">{{
             websiteInfo.website_tags
@@ -23,7 +19,7 @@
     <!-- 网站简介 -->
     <div class="movie-abstract">
       <div class="content">
-        <p @click="toIframeWeb">
+        <p @click="toIframeWeb" :title="websiteInfo.website_abstract">
           <span>简介：</span>{{ websiteInfo.website_abstract }}
         </p>
       </div>
@@ -47,7 +43,7 @@ export default {
     // 跳转到内嵌网页
     toIframeWeb() {
       this.$router.push({
-        path: "/moviewweb",
+        path: "/iframewweb",
         query: {
           url: this.websiteInfo.website_link,
         },
@@ -64,7 +60,9 @@ export default {
   display: flex;
   flex-direction: column;
   border-radius: 5px;
+  transition: all 0.5s;
   &:hover {
+    transform: scale(1.001);
     box-shadow: 0px 0px 6px rgba($color: #000000, $alpha: 0.5);
   }
   .card-top {

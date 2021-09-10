@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 const Home = () => import("@/views/home/home.vue"); // 首页
 const Movie = () => import("@/views/movie/index.vue"); // 影视导航
+const Book = () => import("@/views/book/index.vue"); // 书籍导航
 const IframeWeb = () => import("@/components/IframeWeb/IframeWeb.vue"); // 内嵌网页
 const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
 const MenuManage = () => import("@/views/admin/menumanage/menuManage.vue"); // 菜单管理
@@ -33,13 +34,24 @@ const routes = [
       auth: false,
     },
   },
+  // 书籍导航
+  {
+    path: "/book",
+    name: "book",
+    component: Book,
+    meta: {
+      activeMenu: "/book",
+      showRightTitle: true,
+      auth: false,
+    },
+  },
   //影视内嵌网页
   {
-    path: "/moviewweb",
-    name: "moviewweb",
+    path: "/iframewweb",
+    name: "iframewweb",
     component: IframeWeb,
     meta: {
-      activeMenu: "/movie",
+      // activeMenu: "/movie",
       showRightTitle: false,
       auth: false,
     },

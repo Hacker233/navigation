@@ -6,32 +6,52 @@
     :show-close="false"
     width="30%"
   >
-    <el-form ref="form" :model="form" label-width="80px">
+    <el-form ref="ruleForm" :rules="rules" :model="form" label-width="80px">
       <el-form-item label="父级Id" v-if="parentMenuId">
         <el-input :placeholder="parentMenuId" disabled></el-input>
       </el-form-item>
-      <el-form-item label="菜单顺序">
-        <el-input v-model="form.menuOrder"></el-input>
+      <el-form-item label="菜单顺序" prop="menuOrder">
+        <el-input
+          v-model="form.menuOrder"
+          placeholder="请输入菜单顺序"
+          clearable
+          :maxlength="2"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-      <el-form-item label="菜单名称">
-        <el-input v-model="form.menuName"></el-input>
+      <el-form-item label="菜单名称" prop="menuName">
+        <el-input
+          v-model="form.menuName"
+          placeholder="请输入菜单名称"
+          clearable
+          :maxlength="4"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-      <el-form-item label="菜单路由">
-        <el-input v-model="form.menuRouter"></el-input>
+      <el-form-item label="菜单路由" prop="menuRouter">
+        <el-input
+          v-model="form.menuRouter"
+          placeholder="请输入菜单路由"
+          clearable
+          :maxlength="40"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-      <el-form-item label="菜单角色">
+      <el-form-item label="菜单角色" prop="menuRole">
         <el-select v-model="form.menuRole" placeholder="请选择菜单角色">
           <el-option label="user" value="user"></el-option>
           <el-option label="admin" value="admin"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="菜单图标">
-        <el-input v-model="form.menuIcon"></el-input>
+      <el-form-item label="菜单图标" prop="menuIcon">
+        <el-input v-model="form.menuIcon" clearable :maxlength="40"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeSubDialog">取 消</el-button>
-      <el-button type="primary" @click="confirmSubDialog">确 定</el-button>
+      <el-button type="primary" @click="confirmSubDialog('ruleForm')"
+        >确 定</el-button
+      >
     </span>
   </el-dialog>
 </template>
@@ -61,6 +81,21 @@ export default {
         menuRouter: "", // 菜单路由
         menuRole: "", // 菜单角色
         menuIcon: "", // 菜单图标
+      },
+      rules: {
+        menuOrder: [
+          { required: true, message: "请填写菜单顺序", trigger: "blur" },
+        ],
+        menuName: [
+          { required: true, message: "请输入菜单名称", trigger: "blur" },
+        ],
+        menuRouter: [
+          { required: true, message: "请输入路由地址", trigger: "blur" },
+        ],
+        menuRole: [{ required: true, message: "请选择角色", trigger: "blur" }],
+        menuIcon: [
+          { required: true, message: "请输入菜单图标", trigger: "blur" },
+        ],
       },
     };
   },
@@ -95,12 +130,19 @@ export default {
       this.$emit("closeSubDialog");
     },
     // 点击确认按钮
-    async confirmSubDialog() {
-      if (this.baseInfo) {
-        this.updateMenu();
-      } else {
-        this.addSubMenu();
-      }
+    async confirmSubDialog(formName) {
+      // 表单校验通过才执行
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (this.baseInfo) {
+            this.updateMenu();
+          } else {
+            this.addSubMenu();
+          }
+        } else {
+          return false;
+        }
+      });
     },
     // 新增二级级菜单
     async addSubMenu() {

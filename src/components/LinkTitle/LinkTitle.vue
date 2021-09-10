@@ -24,9 +24,16 @@ export default {
   margin: 0 0 20px 0;
   box-sizing: border-box;
   min-width: 100px;
-  border-bottom: 5px solid rgb(211, 159, 81);
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
+  &::after {
+    display: flex;
+    content: "";
+    width: 25px;
+    height: 5px;
+    background-color: green;
+  }
   .link-title {
     display: flex;
     align-items: center;
