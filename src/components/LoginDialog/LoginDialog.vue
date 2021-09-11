@@ -64,7 +64,7 @@
               </el-form-item>
               <el-form-item label="验证码" prop="code">
                 <el-input
-                  v-model.number="ruleForm.code"
+                  v-model="ruleForm.code"
                   placeholder="请输入6位数的密码"
                 ></el-input>
                 <el-button

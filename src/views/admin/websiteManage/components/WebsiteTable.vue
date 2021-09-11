@@ -51,7 +51,7 @@
       </el-table-column>
       <el-table-column label="网站图标" width="100">
         <template slot-scope="scope">
-          <img :src="scope.row.website_favicon" alt="" srcset="" />
+          <img class="website_favicon" :src="scope.row.website_favicon" alt="" srcset="" />
         </template>
       </el-table-column>
       <!-- 操作列 -->
@@ -152,18 +152,9 @@ export default {
   max-width: 200px;
   line-height: 20px;
 }
+.website_favicon {
+  max-width: 40px;
+}
 </style>
-
-
-docker run -d \
---name minio \
---restart=always \
--p 9000:9000 \
--e "MINIO_ACCESS_KEY=lanyuan" \
--e "MINIO_SECRET_KEY=20153106l" \
--v /www/docker/minio/config:/root/.minio \
--v /www/docker/minio/data:/data \
-minio/minio \
-server /data --console-address ":9000" --address ":9090"
 
 

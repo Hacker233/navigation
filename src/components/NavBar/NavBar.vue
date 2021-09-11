@@ -1,9 +1,16 @@
 <template>
   <div class="nav-bar-box">
+    <div class="index-menu" @click="toHome">
+      <i class="iconfont pig-zhu"></i>
+      <span>小猪导航</span>
+    </div>
     <el-menu
       router
       :default-active="activeRouter"
       class="el-menu-vertical-demo"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      background-color="#545c64"
     >
       <template v-for="(item, index) of menuList">
         <el-menu-item
@@ -12,12 +19,12 @@
           :index="item.menu_router"
           :route="{ path: item.menu_router, query: { menuId: item.menu_id } }"
         >
-          <i :class="['iconfont',item.menu_icon]"></i>
+          <i :class="['iconfont', item.menu_icon]"></i>
           <span slot="title">{{ item.menu_name }}</span>
         </el-menu-item>
         <el-submenu v-else :key="index" :index="item.menu_router">
           <template slot="title">
-            <i :class="['iconfont',item.menu_icon]"></i>
+            <i :class="['iconfont', item.menu_icon]"></i>
             <span>{{ item.menu_name }}</span>
           </template>
           <el-menu-item
@@ -29,7 +36,7 @@
               query: { menuId: subItem.menu_id },
             }"
           >
-            <i :class="['iconfont',subItem.menu_icon]"></i>
+            <i :class="['iconfont', subItem.menu_icon]"></i>
             <span slot="title">{{ subItem.menu_name }}</span>
           </el-menu-item>
         </el-submenu>
@@ -74,6 +81,10 @@ export default {
         this.userInfo = "";
       }
     },
+    // 跳转至首页
+    toHome() {
+      this.$router.push("/");
+    },
   },
 };
 </script>
@@ -90,6 +101,31 @@ export default {
   top: 0;
   ::v-deep .el-menu {
     height: 100%;
+  }
+  .index-menu {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 15px;
+    box-sizing: border-box;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+    user-select: none;
+    .iconfont {
+      font-size: 30px;
+    }
+    span {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-left: 5px;
+      box-sizing: border-box;
+      &:hover {
+        color: blueviolet;
+      }
+    }
   }
 }
 </style>

@@ -9,7 +9,7 @@ import login from "./common/LoginDialog"; // 登录弹窗全局组件
 import "./common/auth"; // 权限检测
 
 Vue.use(ElementUI);
-
+console.log(process);
 Vue.config.productionTip = false;
 Vue.prototype.$login = login.install;
 new Vue({

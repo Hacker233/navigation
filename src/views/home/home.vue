@@ -22,7 +22,7 @@ export default {
     // 获取所有站点
     async queryMenuWebsite() {
       let params = {
-        menuId: this.$route.query.menuId,
+        menuId: this.$route.query.menuId || 11,
       };
       const data = await queryMenuWebsite(params);
       if (data.code === "00000") {
