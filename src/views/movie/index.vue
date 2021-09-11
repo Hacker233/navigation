@@ -1,14 +1,22 @@
 <template>
   <div class="movie-box">
     <!-- 网站推荐盒子 -->
-    <div class="movie-list-mox" v-for="(item, index) of websitList" :key="index">
+    <div
+      class="movie-list-mox"
+      v-for="(item, index) of websitList"
+      :key="index"
+    >
       <!-- 链接标题 -->
       <div class="link-title-content">
         <link-title :category="item.website_category"></link-title>
       </div>
       <!-- 链接列表 -->
       <div class="movie-card">
-        <Link-card v-for="(subItem, subIndex) of item.list" :key="subIndex" :websiteInfo="subItem"></Link-card>
+        <Link-card
+          v-for="(subItem, subIndex) of item.list"
+          :key="subIndex"
+          :websiteInfo="subItem"
+        ></Link-card>
       </div>
     </div>
   </div>
@@ -67,6 +75,7 @@ export default {
       grid-row-gap: 40px;
       grid-column-gap: 25px;
       place-items: flex-start;
+      flex-wrap: wrap;
     }
   }
 }

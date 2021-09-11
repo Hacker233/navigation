@@ -23,7 +23,7 @@ export default {
   width: 100%;
   height: 100%;
   .back-title {
-    height: 35px;
+    height: 50px;
     display: flex;
     align-items: center;
     padding-left: 20px;

@@ -76,7 +76,8 @@ export default {
       align-items: center;
       justify-content: center;
       img {
-        max-width: 40px;
+        max-width: 45px;
+        min-width: 30px;
         border-radius: 50%;
         display: flex;
         align-items: center;

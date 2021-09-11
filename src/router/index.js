@@ -4,6 +4,8 @@ import VueRouter from "vue-router";
 const Home = () => import("@/views/home/home.vue"); // 首页
 const Movie = () => import("@/views/movie/index.vue"); // 影视导航
 const Book = () => import("@/views/book/index.vue"); // 书籍导航
+const Program = ()=> import("@/views/program/index.vue"); // 编程导航
+
 const IframeWeb = () => import("@/components/IframeWeb/IframeWeb.vue"); // 内嵌网页
 const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
 const MenuManage = () => import("@/views/admin/menumanage/menuManage.vue"); // 菜单管理
@@ -41,6 +43,17 @@ const routes = [
     component: Book,
     meta: {
       activeMenu: "/book",
+      showRightTitle: true,
+      auth: false,
+    },
+  },
+  // 编程导航
+  {
+    path: "/program",
+    name: "program",
+    component: Program,
+    meta: {
+      activeMenu: "/program",
       showRightTitle: true,
       auth: false,
     },
