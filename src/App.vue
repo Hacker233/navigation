@@ -3,7 +3,7 @@
     <nav-bar v-if="isActive"></nav-bar>
     <div class="right-content" v-if="isActive">
       <right-title v-if="$route.meta.showRightTitle"></right-title>
-      <router-view />
+      <router-view :key="$route.path"/>
     </div>
   </div>
 </template>

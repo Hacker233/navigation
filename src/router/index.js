@@ -2,9 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 const Home = () => import("@/views/home/home.vue"); // 首页
-const Movie = () => import("@/views/movie/index.vue"); // 影视导航
-const Book = () => import("@/views/book/index.vue"); // 书籍导航
-const Program = ()=> import("@/views/program/index.vue"); // 编程导航
+
+const WebSite = ()=> import("@/views/website/index.vue"); // 导航页面
 
 const IframeWeb = () => import("@/components/IframeWeb/IframeWeb.vue"); // 内嵌网页
 const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
@@ -29,7 +28,7 @@ const routes = [
   {
     path: "/movie",
     name: "movie",
-    component: Movie,
+    component: WebSite,
     meta: {
       activeMenu: "/movie",
       showRightTitle: true,
@@ -40,7 +39,7 @@ const routes = [
   {
     path: "/book",
     name: "book",
-    component: Book,
+    component: WebSite,
     meta: {
       activeMenu: "/book",
       showRightTitle: true,
@@ -51,7 +50,7 @@ const routes = [
   {
     path: "/program",
     name: "program",
-    component: Program,
+    component: WebSite,
     meta: {
       activeMenu: "/program",
       showRightTitle: true,
