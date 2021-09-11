@@ -25,7 +25,12 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="website_category" label="网站分类" sortable width="120">
+      <el-table-column
+        prop="website_category"
+        label="网站分类"
+        sortable
+        width="120"
+      >
       </el-table-column>
       <el-table-column prop="website_tags" label="网站标签" width="100">
       </el-table-column>
@@ -51,7 +56,12 @@
       </el-table-column>
       <el-table-column label="网站图标" width="100">
         <template slot-scope="scope">
-          <img class="website_favicon" :src="scope.row.website_favicon" alt="" srcset="" />
+          <img
+            class="website_favicon"
+            :src="scope.row.website_favicon"
+            alt=""
+            srcset=""
+          />
         </template>
       </el-table-column>
       <!-- 操作列 -->
@@ -109,6 +119,7 @@ export default {
         websiteLink: item.website_link,
         websiteAbstract: item.website_abstract,
         websiteTags: item.website_tags,
+        websiteTitle: item.website_title,
       };
     },
     // 删除网站

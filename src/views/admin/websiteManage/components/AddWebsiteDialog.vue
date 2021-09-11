@@ -44,6 +44,15 @@
           show-word-limit
         ></el-input>
       </el-form-item>
+      <el-form-item label="网站标题" prop="websiteTitle">
+        <el-input
+          v-model="form.websiteTitle"
+          clearable
+          placeholder="请输入网站标题"
+          :maxlength="30"
+          show-word-limit
+        ></el-input>
+      </el-form-item>
       <el-form-item label="网站简介" prop="websiteAbstract">
         <el-input
           v-model="form.websiteAbstract"
@@ -91,6 +100,7 @@ export default {
         websiteLink: "", // 网站链接
         websiteAbstract: "", // 网站简介
         websiteTags: "", // 网站标签
+        websiteTitle: "", // 网站标题
       },
       selectMenuInfo: [],
       tags: [],
@@ -107,6 +117,9 @@ export default {
         ],
         websiteTags: [
           { required: true, message: "请输入网站标签", trigger: "blur" },
+        ],
+        websiteTitle: [
+          { required: true, message: "请输入网站标题", trigger: "blur" },
         ],
       },
     };
@@ -217,6 +230,7 @@ export default {
         websiteMenuName: menuInfo.menu_name, // 网站所属菜单名称
         websiteParentMenuId: menuInfo.parent_menu_id, // 网站所属于菜单的父级id
         websiteMenuId: menuInfo.menu_id, // 网站所属菜单id
+        websiteTitle: this.form.websiteTitle, // 网站标题
         websiteCategory: this.form.websiteCategory, // 网站分类
         websiteLink: this.form.websiteLink, // 网站链接
         websiteAbstract: this.form.websiteAbstract, // 网站简介
@@ -255,6 +269,7 @@ export default {
         websiteLink: this.form.websiteLink, // 网站链接
         websiteAbstract: this.form.websiteAbstract, // 网站简介
         websiteTags: this.form.websiteTags, // 网站标签
+        websiteTitle: this.form.websiteTitle, // 网站标题
       };
       const data = await updataWebsite(params);
       if (data.code === "00000") {
