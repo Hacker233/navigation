@@ -118,7 +118,6 @@ export default {
               color: #fff;
             }
             p {
-              width: 100px;
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
