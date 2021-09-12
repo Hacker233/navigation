@@ -17,7 +17,10 @@
           v-if="!item.menu_child.length"
           :key="index"
           :index="item.menu_router"
-          :route="{ path: item.menu_router, query: { menuId: item.menu_id } }"
+          :route="{
+            path: item.menu_router,
+            query: { menuId: item.menu_id, menuIcon: item.menu_icon },
+          }"
         >
           <i :class="['iconfont', item.menu_icon]"></i>
           <span slot="title">{{ item.menu_name }}</span>
@@ -99,6 +102,7 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 99;
   ::v-deep .el-menu {
     height: 100%;
   }
@@ -113,6 +117,7 @@ export default {
     cursor: pointer;
     border-bottom: 1px solid #ccc;
     user-select: none;
+    background: #fff;
     .iconfont {
       font-size: 30px;
     }

@@ -3,7 +3,7 @@
     <nav-bar v-if="isActive"></nav-bar>
     <div class="right-content" v-if="isActive">
       <right-title v-if="$route.meta.showRightTitle"></right-title>
-      <router-view :key="$route.path"/>
+      <router-view :key="$route.path" />
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@ export default {
 #app {
   height: 100%;
   display: flex;
+  min-width: 1200px;
   .right-content {
     width: 100%;
     padding-left: 180px;

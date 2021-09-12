@@ -1,38 +1,37 @@
 <template>
-  <div class="movie-box">
-    <!-- 网站推荐盒子 -->
-    <div
-      class="movie-list-mox"
-      v-for="(item, index) of websitList"
-      :key="index"
-    >
-      <!-- 链接标题 -->
-      <div class="link-title-content">
-        <link-title :category="item.website_category"></link-title>
-      </div>
-      <!-- 链接列表 -->
-      <div class="movie-card">
-        <Link-card
-          v-for="(subItem, subIndex) of item.list"
-          :key="subIndex"
-          :websiteInfo="subItem"
-        ></Link-card>
+  <div class="website-box">
+    <div class="content">
+      <!-- 搜索区域 -->
+      <div class="search"></div>
+      <!-- 链接区域 -->
+      <div class="link-box" v-for="(item, index) of websitList" :key="index">
+        <!-- 头部 -->
+        <div class="link-title">
+          <i :class="['iconfont', title_icon]"></i>
+          <span>{{ item.website_category }}</span>
+        </div>
+        <div class="card-box">
+          <link-card
+            v-for="(subItem, subIndex) of item.list"
+            :key="subIndex"
+            :websiteInfo="subItem"
+          ></link-card>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import LinkCard from "@/components/LinkCard/LinkCard.vue"; // 链接卡片
-import LinkTitle from "@/components/LinkTitle/LinkTitle.vue"; // 标题
 import { queryMenuWebsite } from "@/http/api/website";
 export default {
   components: {
     LinkCard,
-    LinkTitle,
   },
   data() {
     return {
       websitList: [],
+      title_icon: this.$route.query.menuIcon,
     };
   },
   mounted() {
@@ -58,24 +57,48 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.movie-box {
-  flex: 1;
-  .movie-list-mox {
-    width: 100%;
-    padding: 20px 20px;
-    box-sizing: border-box;
+.website-box {
+  width: 100%;
+  padding-top: 40px;
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    .link-title-content {
-      display: flex;
-    }
-    .movie-card {
-      display: flex;
-      grid-template-columns: repeat(auto-fit, minmax(257px, 1fr));
-      grid-row-gap: 40px;
-      grid-column-gap: 25px;
-      place-items: flex-start;
-      flex-wrap: wrap;
+    .link-box {
+      width: 100%;
+      background: #fff;
+      padding: 0 20px 20px 20px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      margin-bottom: 25px;
+      .link-title {
+        border-bottom: 2px rgba(0, 0, 0, 0.02) solid;
+        height: 48px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 20px;
+        .iconfont {
+          margin-right: 15px;
+          font-size: 20px;
+        }
+        span {
+          font-size: 16px;
+          font-weight: 800;
+        }
+      }
+      .card-box {
+        display: flex;
+        grid-template-columns: repeat(auto-fit, minmax(257px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 25px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        & :last-child {
+          margin-right: auto;
+        }
+      }
     }
   }
 }
