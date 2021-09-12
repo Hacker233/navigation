@@ -50,7 +50,10 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeFirstDialog">取 消</el-button>
-      <el-button type="primary" @click="confirmFirstDialog('ruleForm')"
+      <el-button
+        type="primary"
+        @click="confirmFirstDialog('ruleForm')"
+        :loading="btnIsLoadgin"
         >确 定</el-button
       >
     </span>
@@ -74,6 +77,7 @@ export default {
         menuRole: "", // 菜单角色
         menuIcon: "", // 菜单图标
       },
+      btnIsLoadgin: false,
       rules: {
         menuOrder: [
           { required: true, message: "请填写菜单顺序", trigger: "blur" },
@@ -109,6 +113,7 @@ export default {
 
     // 新增一级菜单
     async addMenu() {
+      this.btnIsLoadgin = true;
       let params = {
         menuOrder: this.form.menuOrder,
         menuName: this.form.menuName,
@@ -123,11 +128,13 @@ export default {
           type: "success",
         });
         this.$emit("confirmFirstDialog");
+        this.btnIsLoadgin = false;
       } else {
         this.$message({
           message: data.message,
           type: "error",
         });
+        this.btnIsLoadgin = false;
       }
     },
   },

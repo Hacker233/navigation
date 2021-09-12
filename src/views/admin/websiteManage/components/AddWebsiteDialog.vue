@@ -74,7 +74,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeAddWebsiteDialog">取 消</el-button>
-      <el-button type="primary" @click="confirm('ruleForm')">确 定</el-button>
+      <el-button type="primary" @click="confirm('ruleForm')" :loading="btnIsLoadgin">确 定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -102,6 +102,7 @@ export default {
         websiteTags: "", // 网站标签
         websiteTitle: "", // 网站标题
       },
+      btnIsLoadgin: false,
       selectMenuInfo: [],
       tags: [],
       rules: {
@@ -225,6 +226,7 @@ export default {
     },
     // 添加站点
     async confirmAddWebsiteDialog() {
+      this.btnIsLoadgin = true;
       let menuInfo = JSON.parse(this.filterMenu());
       let params = {
         websiteMenuName: menuInfo.menu_name, // 网站所属菜单名称
@@ -250,11 +252,13 @@ export default {
           websiteTags: "", // 网站标签
         };
         this.$emit("confirmAddWebsiteDialog");
+        this.btnIsLoadgin = false;
       } else {
         this.$message({
           message: data.message,
           type: "error",
         });
+        this.btnIsLoadgin = false;
       }
     },
     // 更新站点

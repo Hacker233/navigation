@@ -126,7 +126,7 @@ export default {
       h1 {
         font-size: 12px;
         min-width: 90px;
-        max-width: 70%;
+        max-width: 54%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

@@ -13,7 +13,7 @@
 </template>
 <script>
 import { queryUser } from "@/http/api/user";
-import UserTable from "./components/UserTable.vue"; // 表格
+import UserTable from "./components/UserTable"; // 表格
 export default {
   data() {
     return {

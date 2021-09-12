@@ -42,7 +42,12 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeUserEditDialog">取 消</el-button>
-      <el-button type="primary" @click="confirmEditDialog">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="confirmEditDialog"
+        :loading="btnIsLoadgin"
+        >确 定</el-button
+      >
     </span>
   </el-dialog>
 </template>
@@ -64,6 +69,7 @@ export default {
   data() {
     return {
       title: "更新用户信息",
+      btnIsLoadgin: false,
       form: {
         uid: "", // 用户uid
         username: "", // 用户名
@@ -79,7 +85,7 @@ export default {
       if (newVal) {
         this.form = this.baseInfo;
       } else {
-        console.log(oldVal);
+        return oldVal;
       }
     },
   },
@@ -93,6 +99,7 @@ export default {
       this.updateUser();
     },
     async updateUser() {
+      this.btnIsLoadgin = true;
       let params = {
         uid: this.form.uid, // 用户uid
         username: this.form.username, // 用户名
@@ -107,11 +114,13 @@ export default {
           type: "success",
         });
         this.$emit("confirmEditDialog");
+        this.btnIsLoadgin = false;
       } else {
         this.$message({
           message: data.message,
           type: "error",
         });
+        this.btnIsLoadgin = false;
       }
     },
     // 上传头像等方法
