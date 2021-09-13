@@ -52,11 +52,18 @@
         @updataWebsiteConfirm="updataWebsiteConfirm"
       ></website-table>
     </div>
+    <!-- 分页 -->
+    <Pagination
+      :total="total"
+      :pageCount="pageCount"
+      @currentChange="currentChange"
+    ></Pagination>
   </div>
 </template>
 <script>
 import AddWebsiteDialog from "./components/AddWebsiteDialog"; // 添加站点弹窗
-import WebsiteTable from "./components/WebsiteTable";
+import WebsiteTable from "./components/WebsiteTable"; // 网站表格
+import Pagination from "../../../components/Pagination/Pagination"; // 分页组件
 import { queryWebsite, queryCategory, deleteWebsite } from "@/http/api/website";
 
 export default {
@@ -67,11 +74,18 @@ export default {
       selectMenuInfo: [],
       categoryList: [],
       selectCategory: "", // 选中的分类
+      pageParams: {
+        page: 1,
+        pageSize: 10,
+      },
+      total: 0, // 总条数
+      pageCount: 0, // 总页数
     };
   },
   components: {
     AddWebsiteDialog,
     WebsiteTable,
+    Pagination,
   },
   computed: {
     // 查询按钮是否可用
@@ -149,13 +163,41 @@ export default {
         });
       }
     },
+
+    // 当前页发生变化
+    currentChange(currentPage) {
+      console.log("当前页", currentPage);
+      this.pageParams.page = currentPage; // 更改查询页面
+      if (this.filterMenu()) {
+        // 有筛选条件
+        this.queryMenuCateWebsite();
+      } else {
+        this.getWebsitList();
+      }
+    },
+
+    // 点击查询按钮
+    queryBtn() {
+      this.queryMenuCateWebsite();
+      this.pageParams = {
+        page: 1,
+        pageSize: 10,
+      };
+    },
+
     // 获取所有网站列表
     async getWebsitList() {
       this.selectMenuInfo = [];
       this.selectCategory = "";
-      const data = await queryWebsite();
+      let params = {
+        page: this.pageParams.page,
+        pageSize: this.pageParams.pageSize,
+      };
+      const data = await queryWebsite(params);
       if (data.code === "00000") {
-        this.websiteList = data.data;
+        this.websiteList = data.data.data;
+        this.total = data.data.page.count; // 总条数
+        this.pageCount = data.data.page.pageCount; // 总页数
       } else {
         this.$message({
           message: data.message,
@@ -163,16 +205,21 @@ export default {
         });
       }
     },
+
     // 根据菜单和分类查询网站列表
     async queryMenuCateWebsite() {
       let menuInfo = JSON.parse(this.filterMenu());
       let params = {
         websiteMenuId: menuInfo.menu_id,
         websiteCategory: this.selectCategory,
+        page: this.pageParams.page,
+        pageSize: this.pageParams.pageSize,
       };
       const data = await queryWebsite(params);
       if (data.code === "00000") {
-        this.websiteList = data.data;
+        this.websiteList = data.data.data;
+        this.total = data.data.page.count;
+        this.pageCount = data.data.page.pageCount; // 总页数
       } else {
         this.$message({
           message: data.message,

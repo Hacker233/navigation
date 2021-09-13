@@ -66,7 +66,7 @@ export default {
 .home {
   padding-top: 40px;
   .home-content {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
