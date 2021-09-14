@@ -1,11 +1,5 @@
 <template>
   <div class="iframe-box">
-    <div class="back-title">
-      <div class="back-left" @click="goBack">
-        <i class="iconfont pig-fanhui"></i>
-        <span>返回</span>
-      </div>
-    </div>
     <iframe :src="$route.query.url" frameborder="0" scrolling="auto"></iframe>
   </div>
 </template>
@@ -22,23 +16,6 @@ export default {
 .iframe-box {
   width: 100%;
   height: 100%;
-  .back-title {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-    border-bottom: 1px solid #ccc;
-    .back-left {
-      cursor: pointer;
-      &:hover {
-        color: green;
-      }
-      span {
-        font-size: 14px;
-        margin-left: 5px;
-      }
-    }
-  }
   iframe {
     border: none;
     height: 100%;

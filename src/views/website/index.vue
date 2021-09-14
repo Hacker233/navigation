@@ -96,7 +96,7 @@ export default {
         justify-content: space-between;
         flex-wrap: wrap;
         & :last-child {
-          margin-right: auto;
+          // margin-right: auto;
         }
       }
     }

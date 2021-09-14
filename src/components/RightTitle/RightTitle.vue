@@ -1,6 +1,11 @@
 <template>
   <div class="right-title-box">
-    <div class="left"></div>
+    <div class="left">
+      <div class="back-left" @click="goBack" v-if="$route.meta.showBack">
+        <i class="iconfont pig-fanhui"></i>
+        <span>返回</span>
+      </div>
+    </div>
     <div class="person-box">
       <el-button v-if="!userInfo" type="text" @click="openLoginDialog"
         >登录/注册</el-button
@@ -10,6 +15,9 @@
         <el-dropdown>
           <el-avatar class="avatar" :src="userInfo.avatar"></el-avatar>
           <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="toPerson"
+              >个人中心</el-dropdown-item
+            >
             <el-dropdown-item @click.native="loginOut"
               >退出登录</el-dropdown-item
             >
@@ -43,6 +51,10 @@ export default {
         },
       });
     },
+    // 跳转至个人中心
+    toPerson() {
+      this.$router.push("/person");
+    },
     // 退出登录
     loginOut() {
       localStorage.removeItem("token");
@@ -53,6 +65,9 @@ export default {
     // 刷新页面,不会重载页面
     refresh() {
       this.reload();
+    },
+    goBack() {
+      this.$router.go(-1);
     },
   },
 };
@@ -69,6 +84,19 @@ export default {
   top: 0;
   z-index: 999;
   background: #fff;
+  .left {
+    padding-left: 20px;
+    .back-left {
+      cursor: pointer;
+      &:hover {
+        color: green;
+      }
+      span {
+        font-size: 14px;
+        margin-left: 5px;
+      }
+    }
+  }
   .person-box {
     padding: 0 40px 0 0;
     display: flex;
