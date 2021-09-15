@@ -25,7 +25,7 @@
 
 公共登录弹窗
 
-![image-20210915205321540](doc/images/1.png)
+![image-20210915205321540](https://github.com/Hacker233/navigation/blob/28cd498f883c1a24eaf4ebfff18f99c19e1da450/doc/images/1.png)
 
 网站导航页面
 
