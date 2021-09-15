@@ -25,7 +25,7 @@
 
 公共登录弹窗
 
-![image-20210915205321540](C:\Users\lanyuan\AppData\Roaming\Typora\typora-user-images\image-20210915205321540.png)
+![image-20210915205321540](doc/images/1.png)
 
 网站导航页面
 
