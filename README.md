@@ -25,19 +25,20 @@
 
 公共登录弹窗
 
-![image-20210915205321540](C:\Users\lanyuan\AppData\Roaming\Typora\typora-user-images\image-20210915205321540.png)
+![1](https://user-images.githubusercontent.com/28037169/133439869-f20bc15a-7ad5-406d-a41b-7c3b6f44097a.png)
+
 
 网站导航页面
 
-![image-20210915205354754](C:\Users\lanyuan\AppData\Roaming\Typora\typora-user-images\image-20210915205354754.png)
+![2](https://user-images.githubusercontent.com/28037169/133439899-56d722ab-aa42-4090-b978-1952bcbb3733.png)
 
 后台管理页面
 
-![image-20210915205436750](C:\Users\lanyuan\AppData\Roaming\Typora\typora-user-images\image-20210915205436750.png)
+![3](https://user-images.githubusercontent.com/28037169/133439920-33e0e84c-4a87-42e1-b3ee-32053b561f90.png)
 
-![image-20210915205450144](C:\Users\lanyuan\AppData\Roaming\Typora\typora-user-images\image-20210915205450144.png)
+![4](https://user-images.githubusercontent.com/28037169/133439937-c8d85383-de7c-41a2-8eb6-6617a9e61f27.png)
 
-![image-20210915205501096](C:\Users\lanyuan\AppData\Roaming\Typora\typora-user-images\image-20210915205501096.png)
+![5](https://user-images.githubusercontent.com/28037169/133439952-0d01572a-0449-4526-9aaf-200a995bfc76.png)
 
-![image-20210915205510418](C:\Users\lanyuan\AppData\Roaming\Typora\typora-user-images\image-20210915205510418.png)
+![6](https://user-images.githubusercontent.com/28037169/133439967-b56aa6b2-ad07-4417-96bc-297702edcd29.png)
 
