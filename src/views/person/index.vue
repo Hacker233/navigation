@@ -6,17 +6,23 @@
         <left-menu></left-menu>
       </div>
       <!-- 中间内容区域 -->
-      <div class="center"></div>
+      <div class="center">
+        <router-view></router-view>
+      </div>
       <!-- 右侧区域 -->
-      <div class="right"></div>
+      <div class="right">
+        <person-card></person-card>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import LeftMenu from "./components/LeftMenu.vue";
+import LeftMenu from "./components/LeftMenu.vue"; // 左侧菜单
+import PersonCard from "./components/PersonCard.vue"; // 个人卡片
 export default {
   components: {
     LeftMenu,
+    PersonCard,
   },
 };
 </script>
@@ -41,6 +47,8 @@ export default {
       width: 650px;
       background: #fff;
       min-height: 500px;
+      padding: 20px 20px;
+      box-sizing: border-box;
     }
     .right {
       background: #fff;

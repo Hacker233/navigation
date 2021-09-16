@@ -4,7 +4,9 @@ import VueRouter from "vue-router";
 const Home = () => import("@/views/home/home.vue"); // 首页
 const WebSite = () => import("@/views/website/index.vue"); // 导航页面
 const IframeWeb = () => import("@/components/IframeWeb/IframeWeb.vue"); // 内嵌网页
+
 const Person = () => import("@/views/person/index.vue"); // 个人中心
+const PersonData = () => import("@/views/person/components/PersonData.vue"); // 个人资料
 
 /**************管理员操作菜单******************/
 const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
@@ -36,6 +38,18 @@ const routes = [
       showBack: true,
       auth: true,
     },
+    children: [
+      {
+        path: "personData",
+        name: "personData",
+        component: PersonData,
+        meta: {
+          showRightTitle: true,
+          showBack: true,
+          auth: true,
+        },
+      },
+    ],
   },
   // 影视导航
   {
