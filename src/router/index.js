@@ -14,6 +14,7 @@ const MenuManage = () => import("@/views/admin/menumanage/menuManage.vue"); // �
 const WebsiteManage = () =>
   import("@/views/admin/websiteManage/websiteManage.vue"); // 网站管理
 const UserManage = () => import("@/views/admin/usermanage/usermanage.vue"); // 用户管理
+const PersonMenu = () => import("@/views/admin/personmenu/personmenu.vue"); // 用户菜单管理
 
 Vue.use(VueRouter);
 
@@ -141,6 +142,18 @@ const routes = [
         component: UserManage,
         meta: {
           activeMenu: "/admin/usermanage",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+        },
+      },
+      // 用户菜单管理
+      {
+        path: "personmenu",
+        name: "personmenu",
+        component: PersonMenu,
+        meta: {
+          activeMenu: "/admin/personmenu",
           showRightTitle: true,
           showBack: false,
           auth: true,
