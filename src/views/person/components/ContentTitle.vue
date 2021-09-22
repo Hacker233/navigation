@@ -20,6 +20,8 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
+  height: 50px;
+  border-bottom: 1px solid #ccc;
   .left {
     height: 100%;
     display: flex;

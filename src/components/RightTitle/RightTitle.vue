@@ -53,7 +53,7 @@ export default {
     },
     // 跳转至个人中心
     toPerson() {
-      this.$router.push("/person");
+      this.$router.push("/person/personData");
     },
     // 退出登录
     loginOut() {
