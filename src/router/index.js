@@ -15,6 +15,7 @@ const WebsiteManage = () =>
   import("@/views/admin/websiteManage/websiteManage.vue"); // 网站管理
 const UserManage = () => import("@/views/admin/usermanage/usermanage.vue"); // 用户管理
 const PersonMenu = () => import("@/views/admin/personmenu/personmenu.vue"); // 用户菜单管理
+const Iconfont = () => import("@/views/admin/iconfont/iconfont.vue"); // 图标管理
 
 Vue.use(VueRouter);
 
@@ -159,6 +160,18 @@ const routes = [
           auth: true,
         },
       },
+      // 图标管理
+      {
+        path: "iconfont",
+        name: "iconfont",
+        component: Iconfont,
+        meta: {
+          activeMenu: "/admin/iconfont",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+        },
+      }
     ],
   },
 ];

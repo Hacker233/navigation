@@ -5,7 +5,10 @@
       <el-button type="primary" @click="openAddDialog">新增用户菜单</el-button>
     </div>
     <!-- 表格 -->
-    <person-menu-table :menuList="userMenuList"></person-menu-table>
+    <person-menu-table
+      :menuList="userMenuList"
+      @deleteSuccess="deleteSuccess"
+    ></person-menu-table>
     <!-- 新增菜单弹窗 -->
     <add-menu-dialog
       :addMenuDialogVisible="addMenuDialogVisible"
@@ -57,6 +60,10 @@ export default {
     confirmFirstDialog() {
       this.init();
       this.addMenuDialogVisible = false;
+    },
+    // 删除成功
+    deleteSuccess() {
+      this.init();
     },
   },
 };

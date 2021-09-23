@@ -38,6 +38,7 @@
   </div>
 </template>
 <script>
+import { deleteUsermenu } from "@/http/api/usermenu";
 export default {
   props: {
     menuList: {
@@ -48,7 +49,25 @@ export default {
 
   methods: {
     handleEdit() {},
-    handleDelete() {},
+    // 删除菜单
+    async handleDelete(index, row) {
+      let params = {
+        usermenuId: row.usermenu_id,
+      };
+      const data = await deleteUsermenu(params);
+      if (data.code === "00000") {
+        this.$message({
+          message: "删除成功",
+          type: "success",
+        });
+        this.$emit("deleteSuccess");
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
   },
 };
 </script>

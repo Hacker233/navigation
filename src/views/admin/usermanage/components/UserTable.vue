@@ -11,6 +11,7 @@
       <el-table-column prop="username" label="用户名"> </el-table-column>
       <el-table-column prop="email" label="邮箱地址"> </el-table-column>
       <el-table-column prop="role" label="角色"> </el-table-column>
+      <el-table-column prop="signature" label="个性签名"> </el-table-column>
       <el-table-column prop="avatar" label="用户头像">
         <template slot-scope="scope">
           <el-avatar class="avatar" :src="scope.row.avatar"></el-avatar>

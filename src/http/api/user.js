@@ -41,5 +41,21 @@ export const deleteUser = (params) => {
     url: "/user/deleteUser",
     method: "delete",
     params,
-  })
-}
+  });
+};
+// 更改个人签名
+export const updateSignature = (data) => {
+  return axiosService({
+    url: "/person/updateSignature",
+    method: "put",
+    data,
+  });
+};
+// 更改用户头像
+export const updateAvatar = (data) => {
+  return axiosService({
+    url: "/person/updateAvatar",
+    method: "put",
+    data,
+  });
+};

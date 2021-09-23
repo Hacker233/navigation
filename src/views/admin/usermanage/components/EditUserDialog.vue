@@ -114,6 +114,7 @@ export default {
           type: "success",
         });
         this.$emit("confirmEditDialog");
+        this.$store.dispatch("getUserInfo"); // 更新用户信息
         this.btnIsLoadgin = false;
       } else {
         this.$message({

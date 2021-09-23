@@ -48,7 +48,6 @@
   </div>
 </template>
 <script>
-import { getUserInfo } from "@/http/api/user";
 export default {
   data() {
     return {};
@@ -67,22 +66,12 @@ export default {
   },
   mounted() {
     this.init();
-    this.getUserInfo();
   },
   methods: {
     init() {
       // 获取导航栏信息
       this.$store.dispatch("getMenu");
-    },
-    // 查询用户信息
-    async getUserInfo() {
-      const data = await getUserInfo();
-      if (data.code === "00000") {
-        this.userInfo = data.data;
-        this.$store.commit("setUserInfo", this.userInfo);
-      } else {
-        this.userInfo = "";
-      }
+      this.$store.dispatch("getUserInfo"); // 获取用户信息
     },
     // 跳转至首页
     toHome() {

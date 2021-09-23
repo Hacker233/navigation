@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { getMenu } from "@/http/api/menu"; // 请求菜单接口
+import { getUserInfo } from "@/http/api/user"; // 请求用户信息
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -38,6 +39,17 @@ export default new Vuex.Store({
       if (data.code === "00000") {
         menuList = data.data;
         context.commit("setMenuList", menuList);
+      } else {
+        this.$Message.error(data.message);
+      }
+    },
+    // 查询用户信息
+    async getUserInfo(context) {
+      let userInfo = [];
+      const data = await getUserInfo();
+      if (data.code === "00000") {
+        userInfo = data.data;
+        context.commit("setUserInfo", userInfo);
       } else {
         this.$Message.error(data.message);
       }

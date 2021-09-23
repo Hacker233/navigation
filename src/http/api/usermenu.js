@@ -15,3 +15,11 @@ export const addUsermenu = (data) => {
     data,
   });
 };
+// 删除菜单
+export const deleteUsermenu = (params) => {
+  return axiosService({
+    url: "/person/deleteUsermenu",
+    method: "delete",
+    params,
+  });
+};
