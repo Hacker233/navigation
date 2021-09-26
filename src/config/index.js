@@ -4,5 +4,5 @@ const CONFIG = {
   useTokenAuthentication: true,
   projectName: name,
 };
-CONFIG.serverAddress = 'http://139.9.219.136:3000'; // 服务器
+// CONFIG.serverAddress = 'http://139.9.219.136:3000'; // 服务器
 export default CONFIG;
