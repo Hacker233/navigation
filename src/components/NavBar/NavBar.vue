@@ -94,6 +94,7 @@ export default {
   z-index: 99;
   ::v-deep .el-menu {
     height: 100%;
+    overflow: hidden;
   }
   .index-menu {
     width: 100%;

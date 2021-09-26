@@ -154,7 +154,6 @@ export default {
     confirmIconDialog(iconfontInfo) {
       this.form.usermenuIcon = iconfontInfo.iconfont_class;
       this.iconPanelDialogVisible = false;
-      this.$forceUpdate();
     },
     confirmFirstDialog(formName) {
       // 表单校验通过才执行

@@ -1,65 +1,79 @@
 <template>
-  <el-dialog
-    :title="title"
-    :visible.sync="addSubMenudialogVisible"
-    :close-on-click-modal="false"
-    :show-close="false"
-    width="30%"
-  >
-    <el-form ref="ruleForm" :rules="rules" :model="form" label-width="80px">
-      <el-form-item label="父级Id" v-if="parentMenuId">
-        <el-input :placeholder="parentMenuId" disabled></el-input>
-      </el-form-item>
-      <el-form-item label="菜单顺序" prop="menuOrder">
-        <el-input
-          v-model="form.menuOrder"
-          placeholder="请输入菜单顺序"
-          clearable
-          :maxlength="2"
-          show-word-limit
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="菜单名称" prop="menuName">
-        <el-input
-          v-model="form.menuName"
-          placeholder="请输入菜单名称"
-          clearable
-          :maxlength="4"
-          show-word-limit
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="菜单路由" prop="menuRouter">
-        <el-input
-          v-model="form.menuRouter"
-          placeholder="请输入菜单路由"
-          clearable
-          :maxlength="40"
-          show-word-limit
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="菜单角色" prop="menuRole">
-        <el-select v-model="form.menuRole" placeholder="请选择菜单角色">
-          <el-option label="user" value="user"></el-option>
-          <el-option label="admin" value="admin"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="菜单图标" prop="menuIcon">
-        <el-input v-model="form.menuIcon" clearable :maxlength="40"></el-input>
-      </el-form-item>
-    </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="closeSubDialog">取 消</el-button>
-      <el-button
-        type="primary"
-        @click="confirmSubDialog('ruleForm')"
-        :loading="btnIsLoadgin"
-        >确 定</el-button
-      >
-    </span>
-  </el-dialog>
+  <div>
+    <el-dialog
+      :title="title"
+      :visible.sync="addSubMenudialogVisible"
+      :close-on-click-modal="false"
+      :show-close="false"
+      width="30%"
+    >
+      <el-form ref="ruleForm" :rules="rules" :model="form" label-width="80px">
+        <el-form-item label="父级Id" v-if="parentMenuId">
+          <el-input :placeholder="parentMenuId" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="菜单顺序" prop="menuOrder">
+          <el-input
+            v-model="form.menuOrder"
+            placeholder="请输入菜单顺序"
+            clearable
+            :maxlength="2"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="菜单名称" prop="menuName">
+          <el-input
+            v-model="form.menuName"
+            placeholder="请输入菜单名称"
+            clearable
+            :maxlength="4"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="菜单路由" prop="menuRouter">
+          <el-input
+            v-model="form.menuRouter"
+            placeholder="请输入菜单路由"
+            clearable
+            :maxlength="40"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="菜单角色" prop="menuRole">
+          <el-select v-model="form.menuRole" placeholder="请选择菜单角色">
+            <el-option label="user" value="user"></el-option>
+            <el-option label="admin" value="admin"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="菜单图标" prop="menuIcon">
+          <div class="menu-icon-box">
+            <i
+              v-if="form.menuIcon"
+              :class="['menu-icon iconfont', form.menuIcon]"
+            ></i>
+            <el-button type="text" @click="selectIconfont">选择图标</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeSubDialog">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="confirmSubDialog('ruleForm')"
+          :loading="btnIsLoadgin"
+          >确 定</el-button
+        >
+      </span>
+    </el-dialog>
+    <icon-panel
+      :iconPanelDialogVisible="iconPanelDialogVisible"
+      @cancelIconDialog="cancelIconDialog"
+      @confirmIconDialog="confirmIconDialog"
+    ></icon-panel>
+  </div>
 </template>
 <script>
 import { addSubMenu, updateMenu } from "@/http/api/menu";
+import IconPanel from "@/components/IconPanel/IconPanel"; // 菜单选择弹窗
 export default {
   props: {
     addSubMenudialogVisible: {
@@ -75,8 +89,12 @@ export default {
       default: "",
     },
   },
+  components: {
+    IconPanel,
+  },
   data() {
     return {
+      iconPanelDialogVisible: false, // 图标选择弹窗
       form: {
         menuId: "",
         menuOrder: "", // 菜单顺序
@@ -122,6 +140,19 @@ export default {
     console.log("mounted");
   },
   methods: {
+    // 打开图标选择弹窗
+    selectIconfont() {
+      this.iconPanelDialogVisible = true;
+    },
+    // 取消图标选择弹窗
+    cancelIconDialog() {
+      this.iconPanelDialogVisible = false;
+    },
+    // 确定图标选择弹窗
+    confirmIconDialog(iconfontInfo) {
+      this.form.menuIcon = iconfontInfo.iconfont_class;
+      this.iconPanelDialogVisible = false;
+    },
     // 取消新增
     closeSubDialog() {
       this.form = {
@@ -207,3 +238,13 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.menu-icon-box {
+  display: flex;
+  align-items: center;
+  .menu-icon {
+    margin-right: 20px;
+    font-size: 30px;
+  }
+}
+</style>
