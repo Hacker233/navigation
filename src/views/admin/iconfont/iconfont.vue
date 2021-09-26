@@ -83,6 +83,9 @@ export default {
   .iconfont-card-wraper {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
   }
 }
 </style>

@@ -8,6 +8,7 @@
     <person-menu-table
       :menuList="userMenuList"
       @deleteSuccess="deleteSuccess"
+      @updateSuccess="updateSuccess"
     ></person-menu-table>
     <!-- 新增菜单弹窗 -->
     <add-menu-dialog
@@ -65,6 +66,10 @@ export default {
     deleteSuccess() {
       this.init();
     },
+    // 编辑成功
+    updateSuccess(){
+      this.init();
+    }
   },
 };
 </script>

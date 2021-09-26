@@ -23,3 +23,11 @@ export const deleteUsermenu = (params) => {
     params,
   });
 };
+// 更新菜单
+export const updateUsermenu = (data) => {
+  return axiosService({
+    url: "/person/updateUsermenu",
+    method: "put",
+    data,
+  });
+};

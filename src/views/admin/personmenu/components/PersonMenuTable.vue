@@ -35,10 +35,19 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 编辑弹窗 -->
+    <add-menu-dialog
+      :addMenuDialogVisible="addMenuDialogVisible"
+      :baseInfo="baseInfo"
+      title="编辑用户菜单"
+      @closeFirstDialog="closeFirstDialog"
+      @confirmUpdateDialog="confirmUpdateDialog"
+    ></add-menu-dialog>
   </div>
 </template>
 <script>
 import { deleteUsermenu } from "@/http/api/usermenu";
+import AddMenuDialog from "./AddMenuDialog";
 export default {
   props: {
     menuList: {
@@ -46,9 +55,39 @@ export default {
       default: () => [],
     },
   },
-
+  components: {
+    AddMenuDialog,
+  },
+  data() {
+    return {
+      addMenuDialogVisible: false,
+      baseInfo: "",
+    };
+  },
   methods: {
-    handleEdit() {},
+    // 编辑菜单
+    handleEdit(index, row) {
+      this.baseInfo = {
+        usermenuId: row.usermenu_id, // 菜单id
+        usermenuOrder: row.usermenu_order, // 菜单顺序
+        usermenuName: row.usermenu_name, // 菜单名称
+        usermenuRouter: row.usermenu_router, // 菜单路由
+        usermenuRole: row.usermenu_role, // 菜单角色
+        usermenuIcon: row.usermenu_icon, // 菜单图标
+      };
+      this.addMenuDialogVisible = true;
+    },
+    // 弹窗取消
+    closeFirstDialog() {
+      this.baseInfo = "";
+      this.addMenuDialogVisible = false;
+    },
+    // 弹窗确认
+    confirmUpdateDialog() {
+      this.$emit("updateSuccess");
+      this.baseInfo = "";
+      this.addMenuDialogVisible = false;
+    },
     // 删除菜单
     async handleDelete(index, row) {
       let params = {
