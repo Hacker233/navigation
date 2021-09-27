@@ -126,7 +126,7 @@ export default {
     },
     // 上传头像等方法
     uploadAddress() {
-      return env.serverAddress + "/upload";
+      return env.serverAddress + "/api/upload";
     },
     // 上传成功后
     handleAvatarSuccess(response) {
