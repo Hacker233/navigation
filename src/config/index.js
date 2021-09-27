@@ -4,5 +4,5 @@ const CONFIG = {
   useTokenAuthentication: true,
   projectName: name,
 };
-CONFIG.serverAddress = 'http://smallpig.site:3000'; // 服务器 
+CONFIG.serverAddress = 'https://smallpig.site'; // 服务器 
 export default CONFIG;
