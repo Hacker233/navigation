@@ -11,9 +11,7 @@
         >登录/注册</el-button
       >
       <template v-else>
-        <span class="username"
-          >Hi {{ userInfo.username }}{{ userInfo.avatar }}</span
-        >
+        <span class="username">Hi {{ userInfo.username }}</span>
         <el-dropdown>
           <el-avatar class="avatar" :src="userInfo.avatar"></el-avatar>
           <el-dropdown-menu slot="dropdown">
