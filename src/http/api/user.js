@@ -1,28 +1,28 @@
 import axiosService from "../index";
 // 登录
 export const userLogin = (data) => {
-  return axiosService.post("/user/login", data);
+  return axiosService.post("/api/user/login", data);
 };
 
 // 注册用户
 export const userRegister = (data) => {
-  return axiosService.post("/user/register", data);
+  return axiosService.post("/api/user/register", data);
 };
 
 // 查询用户信息
 export const getUserInfo = () => {
-  return axiosService.get("/user/userInfo");
+  return axiosService.get("/api/user/userInfo");
 };
 
 // 获取邮箱验证码
 export const emailCode = (data) => {
-  return axiosService.post("/user/emailCode", data);
+  return axiosService.post("/api/user/emailCode", data);
 };
 
 // 查询用户列表
 export const queryUser = (params) => {
   return axiosService({
-    url: "/user/queryUser",
+    url: "/api/user/queryUser",
     method: "get",
     params,
   });
@@ -30,7 +30,7 @@ export const queryUser = (params) => {
 // 更新用户信息
 export const updateUser = (data) => {
   return axiosService({
-    url: "/user/updateUser",
+    url: "/api/user/updateUser",
     method: "put",
     data,
   });
@@ -38,7 +38,7 @@ export const updateUser = (data) => {
 // 删除用户
 export const deleteUser = (params) => {
   return axiosService({
-    url: "/api/user/deleteUser",
+    url: "/api/api/user/deleteUser",
     method: "delete",
     params,
   });
