@@ -38,7 +38,7 @@ export const updateUser = (data) => {
 // 删除用户
 export const deleteUser = (params) => {
   return axiosService({
-    url: "/user/deleteUser",
+    url: "/api/user/deleteUser",
     method: "delete",
     params,
   });
@@ -46,7 +46,7 @@ export const deleteUser = (params) => {
 // 更改个人签名
 export const updateSignature = (data) => {
   return axiosService({
-    url: "/person/updateSignature",
+    url: "/api/person/updateSignature",
     method: "put",
     data,
   });
@@ -54,7 +54,7 @@ export const updateSignature = (data) => {
 // 更改用户头像
 export const updateAvatar = (data) => {
   return axiosService({
-    url: "/person/updateAvatar",
+    url: "/api/person/updateAvatar",
     method: "put",
     data,
   });

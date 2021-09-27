@@ -2,7 +2,7 @@ import axiosService from "../index";
 // 获取菜单
 export const getMenu = (params) => {
   return axiosService({
-    url: "/menu/getMenu",
+    url: "/api/menu/getMenu",
     method: "get",
     params,
   });
@@ -10,7 +10,7 @@ export const getMenu = (params) => {
 // 新增一级菜单
 export const addMenu = (data) => {
   return axiosService({
-    url: "/menu/addMenu",
+    url: "/api/menu/addMenu",
     method: "post",
     data,
   });
@@ -18,7 +18,7 @@ export const addMenu = (data) => {
 // 添加二级菜单
 export const addSubMenu = (data) => {
   return axiosService({
-    url: "/menu/addSubMenu",
+    url: "/api/menu/addSubMenu",
     method: "post",
     data,
   });
@@ -26,7 +26,7 @@ export const addSubMenu = (data) => {
 // 删除菜单
 export const deleteMenu = (params) => {
   return axiosService({
-    url: "/menu/deleteMenu",
+    url: "/api/menu/deleteMenu",
     method: "delete",
     params,
   });
@@ -34,7 +34,7 @@ export const deleteMenu = (params) => {
 // 修改菜单
 export const updateMenu = (data) => {
   return axiosService({
-    url: "/menu/updateMenu",
+    url: "/api/menu/updateMenu",
     method: "put",
     data,
   });

@@ -2,7 +2,7 @@ import axiosService from "../index";
 // 新增网站
 export const addWebsite = (data) => {
   return axiosService({
-    url: "/website/addWebsite",
+    url: "/api/website/addWebsite",
     method: "post",
     data,
   });
@@ -10,7 +10,7 @@ export const addWebsite = (data) => {
 // 查询网站
 export const queryWebsite = (params) => {
   return axiosService({
-    url: "/website/queryWebsite",
+    url: "/api/website/queryWebsite",
     method: "get",
     params,
   });
@@ -19,7 +19,7 @@ export const queryWebsite = (params) => {
 // 查询当前菜单的分类列表
 export const queryCategory = (params) => {
   return axiosService({
-    url: "/website/queryCategory",
+    url: "/api/website/queryCategory",
     method: "get",
     params,
   });
@@ -27,7 +27,7 @@ export const queryCategory = (params) => {
 // 删除网站
 export const deleteWebsite = (params) => {
   return axiosService({
-    url: "/website/deleteWebsite",
+    url: "/api/website/deleteWebsite",
     method: "delete",
     params,
   });
@@ -36,7 +36,7 @@ export const deleteWebsite = (params) => {
 // 更新站点
 export const updataWebsite = (data) => {
   return axiosService({
-    url: "/website/updataWebsite",
+    url: "/api/website/updataWebsite",
     method: "put",
     data,
   });
@@ -45,7 +45,7 @@ export const updataWebsite = (data) => {
 // 点击菜单查询网站
 export const queryMenuWebsite = (params) => {
   return axiosService({
-    url: "/website/queryMenuWebsite",
+    url: "/api/website/queryMenuWebsite",
     method: "get",
     params,
   });
