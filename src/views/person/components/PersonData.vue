@@ -23,10 +23,12 @@
           <span class="update-email" @click="updateEmail">更改邮箱</span>
         </el-form-item>
       </el-form>
-      <div class="form-footer">
+      <!-- <div class="form-footer">
         <el-button type="primary">更新</el-button>
-      </div>
+      </div> -->
     </div>
+    <!-- 更改邮箱弹窗 -->
+    
   </div>
 </template>
 <script>

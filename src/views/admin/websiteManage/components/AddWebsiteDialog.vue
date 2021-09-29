@@ -40,7 +40,7 @@
           v-model="form.websiteLink"
           clearable
           placeholder="请输入网站链接"
-          :maxlength="30"
+          :maxlength="230"
           show-word-limit
         ></el-input>
       </el-form-item>
@@ -58,7 +58,7 @@
           v-model="form.websiteAbstract"
           clearable
           placeholder="请输入网站简介"
-          :maxlength="50"
+          :maxlength="350"
           show-word-limit
         ></el-input>
       </el-form-item>
