@@ -67,7 +67,7 @@
           v-model="form.websiteTags"
           clearable
           placeholder="请输入网站标签"
-          :maxlength="5"
+          :maxlength="10"
           show-word-limit
         ></el-input>
       </el-form-item>
