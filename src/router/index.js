@@ -8,6 +8,8 @@ const IframeWeb = () => import("@/components/IframeWeb/IframeWeb.vue"); // 内�
 const Person = () => import("@/views/person/index.vue"); // 个人中心
 const PersonData = () => import("@/views/person/components/PersonData.vue"); // 个人资料
 
+const SoftWare = () => import("@/views/software/index.vue"); // 软件下载
+
 /**************管理员操作菜单******************/
 const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
 const MenuManage = () => import("@/views/admin/menumanage/menuManage.vue"); // 菜单管理
@@ -16,6 +18,11 @@ const WebsiteManage = () =>
 const UserManage = () => import("@/views/admin/usermanage/usermanage.vue"); // 用户管理
 const PersonMenu = () => import("@/views/admin/personmenu/personmenu.vue"); // 用户菜单管理
 const Iconfont = () => import("@/views/admin/iconfont/iconfont.vue"); // 图标管理
+const TopMenu = () => import("@/views/admin/topMenu/topmenu.vue"); // 顶部菜单管理
+
+/****************内容管理菜单*****************/
+const Content = () => import("@/views/content/index.vue"); // 内容管理菜单
+const Publish = () => import("@/views/content/publish/index.vue"); // 发布内容
 
 Vue.use(VueRouter);
 
@@ -25,9 +32,9 @@ const routes = [
     name: "index",
     component: Home,
     meta: {
-      showRightTitle: true,
-      showBack: false,
-      auth: false,
+      showRightTitle: true, // 是否显示右侧标题
+      showBack: false, // 是否显示返回按钮
+      auth: false, // 是否需要权限
     },
   },
   // 个人中心
@@ -89,6 +96,18 @@ const routes = [
       auth: false,
     },
   },
+  // 设计导航
+  {
+    path: "/ui",
+    name: "ui",
+    component: WebSite,
+    meta: {
+      activeMenu: "/ui",
+      showRightTitle: true,
+      showBack: false,
+      auth: false,
+    },
+  },
   //影视内嵌网页
   {
     path: "/iframewweb",
@@ -100,6 +119,19 @@ const routes = [
       auth: false,
     },
   },
+  // 软件下载
+  {
+    path: "/software",
+    name: "software",
+    component: SoftWare,
+    meta: {
+      activeMenu: "/software",
+      showRightTitle: true,
+      showBack: false,
+      auth: false,
+    },
+  },
+
   // 管理菜单
   {
     path: "/admin",
@@ -171,7 +203,45 @@ const routes = [
           showBack: false,
           auth: true,
         },
-      }
+      },
+      // 顶部菜单管理
+      {
+        path: "topmenu",
+        name: "topmenu",
+        component: TopMenu,
+        meta: {
+          activeMenu: "/admin/topmenu",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+        },
+      },
+    ],
+  },
+  // 内容管理
+  {
+    path: "/content",
+    name: "content",
+    component: Content,
+    meta: {
+      activeMenu: "/content",
+      showRightTitle: true,
+      showBack: false,
+      auth: true,
+    },
+    children: [
+      // 菜单管理
+      {
+        path: "publish",
+        name: "publish",
+        component: Publish,
+        meta: {
+          activeMenu: "/content/publish",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+        },
+      },
     ],
   },
 ];
@@ -181,10 +251,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-const originalPush = VueRouter.prototype.push
+const originalPush = VueRouter.prototype.push;
 
 VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+  return originalPush.call(this, location).catch((err) => err);
+};
 
 export default router;

@@ -6,6 +6,48 @@
         <span>返回</span>
       </div>
     </div>
+    <!-- 中间菜单 -->
+    <div class="menu-center-box">
+      <el-menu
+        router
+        :default-active="activeRouter"
+        class="el-menu-demo"
+        mode="horizontal"
+      >
+        <template v-for="(item, index) of topmenuList">
+          <el-menu-item
+            v-if="!item.topmenu_child.length"
+            :key="index"
+            :index="item.topmenu_router"
+            :route="{
+              path: item.topmenu_router,
+              query: { menuId: item.topmenu_id, menuIcon: item.topmenu_icon },
+            }"
+          >
+            <i :class="['iconfont', item.topmenu_icon]"></i>
+            <span slot="title">{{ item.topmenu_name }}</span>
+          </el-menu-item>
+          <el-submenu v-else :key="index" :index="item.topmenu_router">
+            <template slot="title">
+              <i :class="['iconfont', item.topmenu_icon]"></i>
+              <span>{{ item.topmenu_name }}</span>
+            </template>
+            <el-menu-item
+              v-for="(subItem, subIndex) of item.topmenu_child"
+              :key="subIndex"
+              :index="subItem.topmenu_router"
+              :route="{
+                path: subItem.topmenu_router,
+                query: { menuId: subItem.topmenu_id },
+              }"
+            >
+              <i :class="['iconfont', subItem.topmenu_icon]"></i>
+              <span slot="title">{{ subItem.topmenu_name }}</span>
+            </el-menu-item>
+          </el-submenu>
+        </template>
+      </el-menu>
+    </div>
     <div class="person-box">
       <el-button v-if="!userInfo" type="text" @click="openLoginDialog"
         >登录/注册</el-button
@@ -30,9 +72,24 @@
 <script>
 export default {
   inject: ["reload"],
+  data() {
+    return {
+      activeIndex: "",
+    };
+  },
   computed: {
     userInfo() {
       return this.$store.getters.getUserInfo;
+    },
+    activeRouter() {
+      let activeMenu = this.$route.meta.activeMenu;
+      if (activeMenu) {
+        return activeMenu;
+      }
+      return this.$route.path;
+    },
+    topmenuList() {
+      return this.$store.state.topmenuList;
     },
   },
   methods: {
@@ -73,10 +130,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.iconfont {
+  margin-right: 10px;
+}
 .right-title-box {
   width: 100%;
   height: 50px;
-  box-shadow: 2px 4px 4px #b9b9b9;
+  // box-shadow: 2px 4px 4px #b9b9b9;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,8 +144,10 @@ export default {
   top: 0;
   z-index: 999;
   background: #fff;
+  border-bottom: 1px solid #eee;
   .left {
     padding-left: 20px;
+    min-width: 70px;
     .back-left {
       cursor: pointer;
       &:hover {
@@ -95,6 +157,25 @@ export default {
         font-size: 14px;
         margin-left: 5px;
       }
+    }
+  }
+  .menu-center-box {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    ::v-deep .el-menu-item {
+      line-height: 50px;
+      height: 50px;
+      color: green;
+      &:hover {
+        background-color: #67696b;
+        color: #fff;
+      }
+    }
+    ::v-deep .is-active {
+      background-color: #67696b !important;
+      color: #fff !important;
     }
   }
   .person-box {

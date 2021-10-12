@@ -4,47 +4,49 @@
       <i class="iconfont pig-zhu"></i>
       <span>小猪导航</span>
     </div>
-    <el-menu
-      router
-      :default-active="activeRouter"
-      class="el-menu-vertical-demo"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-      background-color="#545c64"
-    >
-      <template v-for="(item, index) of menuList">
-        <el-menu-item
-          v-if="!item.menu_child.length"
-          :key="index"
-          :index="item.menu_router"
-          :route="{
-            path: item.menu_router,
-            query: { menuId: item.menu_id, menuIcon: item.menu_icon },
-          }"
-        >
-          <i :class="['iconfont', item.menu_icon]"></i>
-          <span slot="title">{{ item.menu_name }}</span>
-        </el-menu-item>
-        <el-submenu v-else :key="index" :index="item.menu_router">
-          <template slot="title">
-            <i :class="['iconfont', item.menu_icon]"></i>
-            <span>{{ item.menu_name }}</span>
-          </template>
+    <div class="menu-box">
+      <el-menu
+        router
+        :default-active="activeRouter"
+        class="el-menu-vertical-demo"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+        background-color="#545c64"
+      >
+        <template v-for="(item, index) of menuList">
           <el-menu-item
-            v-for="(subItem, subIndex) of item.menu_child"
-            :key="subIndex"
-            :index="subItem.menu_router"
+            v-if="!item.menu_child.length"
+            :key="index"
+            :index="item.menu_router"
             :route="{
-              path: subItem.menu_router,
-              query: { menuId: subItem.menu_id },
+              path: item.menu_router,
+              query: { menuId: item.menu_id, menuIcon: item.menu_icon },
             }"
           >
-            <i :class="['iconfont', subItem.menu_icon]"></i>
-            <span slot="title">{{ subItem.menu_name }}</span>
+            <i :class="['iconfont', item.menu_icon]"></i>
+            <span slot="title">{{ item.menu_name }}</span>
           </el-menu-item>
-        </el-submenu>
-      </template>
-    </el-menu>
+          <el-submenu v-else :key="index" :index="item.menu_router">
+            <template slot="title">
+              <i :class="['iconfont', item.menu_icon]"></i>
+              <span>{{ item.menu_name }}</span>
+            </template>
+            <el-menu-item
+              v-for="(subItem, subIndex) of item.menu_child"
+              :key="subIndex"
+              :index="subItem.menu_router"
+              :route="{
+                path: subItem.menu_router,
+                query: { menuId: subItem.menu_id },
+              }"
+            >
+              <i :class="['iconfont', subItem.menu_icon]"></i>
+              <span slot="title">{{ subItem.menu_name }}</span>
+            </el-menu-item>
+          </el-submenu>
+        </template>
+      </el-menu>
+    </div>
   </div>
 </template>
 <script>
@@ -71,6 +73,8 @@ export default {
     init() {
       // 获取导航栏信息
       this.$store.dispatch("getMenu");
+      // 获取顶部菜单
+      this.$store.dispatch("getTopmenu");
       this.$store.dispatch("getUserInfo"); // 获取用户信息
     },
     // 跳转至首页
@@ -92,9 +96,18 @@ export default {
   left: 0;
   top: 0;
   z-index: 99;
+  display: flex;
+  flex-direction: column;
   ::v-deep .el-menu {
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
+    .el-menu-item {
+      min-width: 100px;
+    }
+  }
+  .menu-box {
+    flex: 1;
+    overflow: auto;
   }
   .index-menu {
     width: 100%;

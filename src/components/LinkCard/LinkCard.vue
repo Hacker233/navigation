@@ -107,6 +107,7 @@ export default {
       img {
         max-width: 30px;
         min-width: 30px;
+        max-height: 30px;
         border-radius: 50%;
         display: flex;
         align-items: center;
