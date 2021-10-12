@@ -2,7 +2,13 @@
   <div class="iconfont-card-box">
     <div class="iconfont-top">
       <i :class="['iconfont', iconfontInfo.iconfont_class]"></i>
-      <span class="iconfont-class">{{ iconfontInfo.iconfont_class }}</span>
+      <el-tooltip
+        popper-class="website-abstract-tool"
+        effect="light"
+        :content="iconfontInfo.iconfont_class"
+      >
+        <p class="iconfont-class">{{ iconfontInfo.iconfont_class }}</p>
+      </el-tooltip>
     </div>
     <div class="iconfont-bottom">
       <div
@@ -97,6 +103,10 @@ export default {
       font-size: 14px;
       margin-top: 10px;
       color: green;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 90%;
     }
   }
   .iconfont-bottom {

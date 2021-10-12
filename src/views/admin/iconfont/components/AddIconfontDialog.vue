@@ -12,7 +12,7 @@
           v-model="form.iconfontClass"
           clearable
           placeholder="请输入图标类名"
-          :maxlength="20"
+          :maxlength="60"
           show-word-limit
         ></el-input>
       </el-form-item>
