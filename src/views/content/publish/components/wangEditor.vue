@@ -241,7 +241,7 @@ export default {
               message: "文章标题不能为空",
               type: "error",
             });
-          } else if (this.content) {
+          } else if (!this.content) {
             this.$message({
               message: "文章内容不能为空",
               type: "error",
