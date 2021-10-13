@@ -165,6 +165,7 @@ export default {
 }
 .website_favicon {
   max-width: 40px;
+  max-height: 40px;
 }
 </style>
 

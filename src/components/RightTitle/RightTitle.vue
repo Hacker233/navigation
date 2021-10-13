@@ -168,6 +168,7 @@ export default {
       line-height: 50px;
       height: 50px;
       color: green;
+      transition: all 0.3s;
       &:hover {
         background-color: #67696b;
         color: #fff;
@@ -193,6 +194,9 @@ export default {
     .username {
       margin: 0 20px;
       font-size: 14px;
+      .avatar {
+        cursor: pointer;
+      }
     }
   }
 }

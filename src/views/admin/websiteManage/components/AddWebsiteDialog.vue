@@ -103,7 +103,6 @@ export default {
         websiteTitle: "", // 网站标题
       },
       btnIsLoadgin: false,
-      selectMenuInfo: [],
       tags: [],
       rules: {
         menuInfo: [{ required: true, message: "请选择菜单", trigger: "blur" }],
