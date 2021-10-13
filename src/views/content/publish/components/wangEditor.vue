@@ -14,7 +14,7 @@
     <div class="pig-editor-container">
       <div class="editor-box">
         <div class="title-container">
-          <input type="text" v-model="title" placeholder="请输入标题" />
+          <input type="text" v-model.trim="title" placeholder="请输入标题" />
         </div>
         <Editor
           class="editor-container"
@@ -105,7 +105,7 @@
               </template>
             </el-form-item>
 
-            <el-form-item label="文章封面:" prop="cover">
+            <el-form-item label="文章封面:">
               <el-upload
                 class="avatar-uploader"
                 :action="uploadAddress()"
@@ -143,6 +143,7 @@
 <script>
 import "@wangeditor/editor/dist/css/style.css";
 import env from "@/config/index";
+import { publishArticle } from "@/http/api/article";
 import {
   Editor,
   Toolbar,
@@ -191,9 +192,6 @@ export default {
         dynamicTags: [
           { required: true, message: "请添加标签", trigger: "change" },
         ],
-        cover: [
-          { required: true, message: "请上传文章封面", trigger: "change" },
-        ],
         abstract: [
           { required: true, message: "请编写文章摘要", trigger: "change" },
         ],
@@ -238,12 +236,58 @@ export default {
     publishArticle(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          if (!this.title) {
+            this.$message({
+              message: "文章标题不能为空",
+              type: "error",
+            });
+          } else if (this.content) {
+            this.$message({
+              message: "文章内容不能为空",
+              type: "error",
+            });
+          } else {
+            this.publishArticleAsync(); // 发布文章
+          }
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    // 所属菜单——筛选选中得值
+    filterMenu() {
+      return this.form.menuInfo.length > 1
+        ? this.form.menuInfo[1]
+        : this.form.menuInfo[0];
+    },
+    // 发布文章请求
+    async publishArticleAsync() {
+      let menuInfo = JSON.parse(this.filterMenu());
+      let params = {
+        articleTitle: this.title, // 文章标题
+        articleContent: this.content, // 文章内容
+        articleHtmlContent: this.htmlContent, // 文章HTML内容
+        articleCategory: this.form.category, // 文章分类
+        articleMenuName: menuInfo.topmenu_name, // 文章所属菜单名称
+        articleParentMenuId: menuInfo.parent_topmenu_id, // 文章所属于菜单的父级id
+        articleMenuId: menuInfo.topmenu_id, // 文章所属菜单id
+        articleTags: this.form.dynamicTags, // 文章标签
+        articleCover: this.form.imageUrl, // 文章封面地址
+        articleAbstract: this.form.abstract, // 文章摘要
+      };
+      const data = await publishArticle(params);
+      if (data.code === "00000") {
+        this.$message({
+          message: "发布成功",
+          type: "success",
+        });
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
     },
     /*********添加分类**********/
     // 选择分类
@@ -263,12 +307,6 @@ export default {
     /*********所属菜单**********/
     changeOwnMenu(value) {
       console.log(value);
-    },
-    // 筛选选中得值
-    filterMenu() {
-      return this.form.menuInfo.length > 1
-        ? this.form.menuInfo[1]
-        : this.form.menuInfo[0];
     },
     /*********文章封面**********/
     // 上传封面地址
@@ -388,6 +426,15 @@ export default {
       width: 800px;
       min-height: 700px;
       background-color: #fff;
+      ::v-deep .w-e-text-container {
+        min-height: 700px;
+        .w-e-scroll {
+          min-height: 700px;
+          #w-e-textarea-1 {
+            min-height: 700px;
+          }
+        }
+      }
     }
     .publish-setting-box {
       width: 390px;
