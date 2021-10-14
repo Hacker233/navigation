@@ -46,16 +46,16 @@
           >
             <el-form-item label="文章分类:" prop="category">
               <el-tag
-                v-for="item of 7"
-                :key="item"
+                v-for="(item, index) of categoryList"
+                :key="index"
                 size="medium"
                 :hit="false"
                 :class="[
                   'category-tag',
-                  { 'category-tag-active': form.category === item },
+                  { 'category-tag-active': form.category === item.category_name },
                 ]"
-                @click="chooseCatefory(item)"
-                >标签一</el-tag
+                @click="chooseCatefory(item.category_name)"
+                >{{ item.category_name }}</el-tag
               >
             </el-form-item>
 
@@ -146,6 +146,7 @@
 import "@wangeditor/editor/dist/css/style.css";
 import env from "@/config/index";
 import { publishArticle } from "@/http/api/article";
+import { getCategory } from "@/http/api/category";
 import {
   Editor,
   Toolbar,
@@ -205,6 +206,7 @@ export default {
       },
       mode: "default", // or 'simple'
       curContent: [],
+
       // 用户产生的数据
       title: "",
       content: "",
@@ -215,6 +217,11 @@ export default {
         abstract: "", // 摘要
         imageUrl: "", // 封面图
         dynamicTags: [], // 标签
+      },
+      categoryList: [], // 分类列表
+      pageParams: {
+        page: 1,
+        pageSize: 10,
       },
       inputVisible: false,
       inputValue: "", // 标签输入框的值
@@ -268,7 +275,9 @@ export default {
       return options;
     },
   },
-
+  mounted() {
+    this.getCategory(); // 获取分类
+  },
   methods: {
     // 发表文章
     publishArticle(name) {
@@ -342,6 +351,22 @@ export default {
     // 选择分类
     chooseCatefory(item) {
       this.form.category = item;
+    },
+    // 获取分类
+    async getCategory() {
+      let params = {
+        page: this.pageParams.page,
+        pageSize: this.pageParams.pageSize,
+      };
+      const data = await getCategory(params);
+      if (data.code === "00000") {
+        this.categoryList = data.data.data;
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
     },
     /*********添加标签**********/
     handleClose(tag) {

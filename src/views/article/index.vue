@@ -10,12 +10,15 @@
 import ArticleContent from "./components/ArticleContent";
 export default {
   components: {
-    ArticleContent
+    ArticleContent,
   },
 };
 </script>
 <style lang="scss" scoped>
 .article-content-index-box {
   padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 </style>

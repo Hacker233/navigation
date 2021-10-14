@@ -75,19 +75,35 @@ export default {
   data() {
     return {
       activeIndex: "",
+      activeRouter: "",
     };
+  },
+  watch: {
+    "$route.meta.activeMenu": {
+      handler(newVal, oldVal) {
+        console.log("oldVal", oldVal);
+        console.log("newVal",newVal)
+        if (newVal) {
+          this.activeRouter = newVal;
+        } else {
+          this.activeRouter = this.$route.path;
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   computed: {
     userInfo() {
       return this.$store.getters.getUserInfo;
     },
-    activeRouter() {
-      let activeMenu = this.$route.meta.activeMenu;
-      if (activeMenu) {
-        return activeMenu;
-      }
-      return this.$route.path;
-    },
+    // activeRouter() {
+    //   let activeMenu = this.$route.meta.activeMenu;
+    //   if (activeMenu) {
+    //     return activeMenu;
+    //   }
+    //   return this.$route.path;
+    // },
     topmenuList() {
       return this.$store.state.topmenuList;
     },

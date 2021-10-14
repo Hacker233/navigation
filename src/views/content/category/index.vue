@@ -13,22 +13,26 @@
       border
       stripe
     >
-      <el-table-column prop="uid" label="分ID" sortable> </el-table-column>
+      <el-table-column prop="category_id" label="分类ID" sortable>
+      </el-table-column>
+      <el-table-column prop="category_name" label="分类名称"> </el-table-column>
       <!-- 操作列 -->
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-            >编辑</el-button
-          >
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
+          <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)"
             >删除</el-button
           >
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 分页 -->
+    <Pagination
+      :total="total"
+      :pageCount="pageCount"
+      @currentChange="currentChange"
+    ></Pagination>
 
     <!-- 弹窗 -->
     <el-dialog
@@ -62,6 +66,13 @@
   </div>
 </template>
 <script>
+import {
+  getCategory,
+  addCategory,
+  updateCategory,
+  deleteCategory,
+} from "@/http/api/category";
+import Pagination from "../../../components/Pagination/Pagination"; // 分页组件
 export default {
   data() {
     return {
@@ -69,6 +80,12 @@ export default {
       modelTitle: "新增",
       categoryDialogVisible: false,
       btnIsLoadgin: false,
+      pageParams: {
+        page: 1,
+        pageSize: 10,
+      },
+      total: 0, // 总条数
+      pageCount: 0, // 总页数
       form: {
         categoryName: "",
       },
@@ -79,7 +96,31 @@ export default {
       },
     };
   },
+  components: {
+    Pagination,
+  },
+  mounted() {
+    this.init();
+  },
   methods: {
+    // 初始化表格
+    async init() {
+      let params = {
+        page: this.pageParams.page,
+        pageSize: this.pageParams.pageSize,
+      };
+      const data = await getCategory(params);
+      if (data.code === "00000") {
+        this.categoryList = data.data.data;
+        this.total = data.data.page.count; // 总条数
+        this.pageCount = data.data.page.pageCount; // 总页数
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
     addCategory() {
       this.categoryDialogVisible = true;
     },
@@ -92,11 +133,100 @@ export default {
       // 表单校验通过才执行
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.addIconfont();
+          if (this.modelTitle === "新增") {
+            this.addCategoryAsync();
+          } else {
+            this.updateCategoryAsync();
+          }
         } else {
           return false;
         }
       });
+    },
+    // 当前页发生变化
+    currentChange(currentPage) {
+      this.pageParams.page = currentPage; // 更改查询页面
+      this.init();
+    },
+    // 新增分类
+    async addCategoryAsync() {
+      this.btnIsLoadgin = true;
+      let parasm = {
+        categoryName: this.form.categoryName,
+      };
+      const data = await addCategory(parasm);
+      if (data.code === "00000") {
+        this.$message({
+          message: "添加成功",
+          type: "success",
+        });
+        this.btnIsLoadgin = false;
+        this.init();
+        this.categoryDialogVisible = false;
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+        this.btnIsLoadgin = false;
+        this.init();
+        this.categoryDialogVisible = false;
+      }
+    },
+    // 编辑
+    handleEdit(row) {
+      this.modelTitle = "编辑";
+      this.categoryDialogVisible = true;
+      this.form = {
+        categoryId: row.category_id,
+        categoryName: row.category_name,
+      };
+    },
+    // 更新请求
+    async updateCategoryAsync() {
+      this.btnIsLoadgin = true;
+      let parasm = {
+        categoryId: this.form.categoryId,
+        categoryName: this.form.categoryName,
+      };
+      const data = await updateCategory(parasm);
+      if (data.code === "00000") {
+        this.$message({
+          message: "修改",
+          type: "success",
+        });
+        this.btnIsLoadgin = false;
+        this.init();
+        this.categoryDialogVisible = false;
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+        this.btnIsLoadgin = false;
+        this.init();
+        this.categoryDialogVisible = false;
+      }
+    },
+    // 删除
+    async handleDelete(row) {
+      let parasm = {
+        categoryId: row.category_id,
+      };
+      const data = await deleteCategory(parasm);
+      if (data.code === "00000") {
+        this.$message({
+          message: "删除成功",
+          type: "success",
+        });
+        this.init();
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+        this.init();
+      }
     },
   },
 };

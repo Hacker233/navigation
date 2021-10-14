@@ -39,6 +39,10 @@ export default {
   },
   mounted() {
     this.init();
+
+    this.$route.meta.activeMenu = "/software";
+
+    console.log("this.$route", this.$route);
   },
   methods: {
     // 初始化
@@ -70,7 +74,7 @@ export default {
   box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
   padding: 0 50px 50px 50px;
   .auther-title {
-    height: 70px;
+    height: 100px;
     width: 100%;
     border-bottom: 1px solid #ccc;
     display: flex;

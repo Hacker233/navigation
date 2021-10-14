@@ -8,7 +8,7 @@ const IframeWeb = () => import("@/components/IframeWeb/IframeWeb.vue"); // 内�
 const Person = () => import("@/views/person/index.vue"); // 个人中心
 const PersonData = () => import("@/views/person/components/PersonData.vue"); // 个人资料
 
-const SoftWare = () => import("@/views/software/index.vue"); // 软件下载
+const ArticleList = () => import("@/views/articleList/index.vue"); // 文章列表
 const Article = () => import("@/views/article/index.vue"); // 文章详情页面
 
 const PublishComplete = () =>
@@ -65,6 +65,9 @@ const routes = [
       },
     ],
   },
+  
+  /***********************************左侧菜单菜单路由**************************************/
+
   // 影视导航
   {
     path: "/movie",
@@ -124,11 +127,14 @@ const routes = [
       auth: false,
     },
   },
+
+  /***********************************顶部菜单路由**************************************/
+
   // 软件下载
   {
     path: "/software",
     name: "software",
-    component: SoftWare,
+    component: ArticleList,
     meta: {
       activeMenu: "/software",
       showRightTitle: true,
@@ -143,12 +149,14 @@ const routes = [
     name: "article",
     component: Article,
     meta: {
-      activeMenu: "",
+      activeMenu: "/",
       showRightTitle: true,
       showBack: true,
       auth: false,
     },
   },
+
+  /***********************************管理菜单路由**************************************/
 
   // 管理菜单
   {
