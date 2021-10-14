@@ -9,6 +9,10 @@ const Person = () => import("@/views/person/index.vue"); // 个人中心
 const PersonData = () => import("@/views/person/components/PersonData.vue"); // 个人资料
 
 const SoftWare = () => import("@/views/software/index.vue"); // 软件下载
+const Article = () => import("@/views/article/index.vue"); // 文章详情页面
+
+const PublishComplete = () =>
+  import("@/views/content/publish/components/PublishComplete.vue"); // 文章发布成功页面
 
 /**************管理员操作菜单******************/
 const Admin = () => import("@/views/admin/index.vue"); // 管理菜单
@@ -23,6 +27,7 @@ const TopMenu = () => import("@/views/admin/topMenu/topmenu.vue"); // 顶部菜�
 /****************内容管理菜单*****************/
 const Content = () => import("@/views/content/index.vue"); // 内容管理菜单
 const Publish = () => import("@/views/content/publish/index.vue"); // 发布内容
+const Category = () => import("@/views/content/category/index.vue"); // 分类管理
 
 Vue.use(VueRouter);
 
@@ -132,6 +137,19 @@ const routes = [
     },
   },
 
+  // 文章详情页面
+  {
+    path: "/article",
+    name: "article",
+    component: Article,
+    meta: {
+      activeMenu: "",
+      showRightTitle: true,
+      showBack: true,
+      auth: false,
+    },
+  },
+
   // 管理菜单
   {
     path: "/admin",
@@ -230,13 +248,37 @@ const routes = [
       auth: true,
     },
     children: [
-      // 菜单管理
+      // 发布内容
       {
         path: "publish",
         name: "publish",
         component: Publish,
         meta: {
           activeMenu: "/content/publish",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+        },
+      },
+      // 文章发布成功页面
+      {
+        path: "publishComplete",
+        name: "publishComplete",
+        component: PublishComplete,
+        meta: {
+          activeMenu: "",
+          showRightTitle: true,
+          showBack: true,
+          auth: false,
+        },
+      },
+      // 分类管理
+      {
+        path: "category",
+        name: "category",
+        component: Category,
+        meta: {
+          activeMenu: "/content/category",
           showRightTitle: true,
           showBack: false,
           auth: true,

@@ -28,7 +28,6 @@
           @onFocus="onFocus"
           @onBlur="onBlur"
           @customAlert="customAlert"
-          @customPaste="customPaste"
         />
       </div>
       <!-- 发布设置 -->
@@ -132,8 +131,11 @@
           </el-form>
         </div>
         <div class="publish-button-box">
-          <el-button type="primary" @click="publishArticle('ruleForm')"
-            >发布</el-button
+          <el-button
+            type="primary"
+            @click="publishArticle('ruleForm')"
+            :loading="btnIsLoadgin"
+            >{{ btnMessage }}</el-button
           >
         </div>
       </div>
@@ -164,8 +166,42 @@ export default {
       editorConfig: {
         placeholder: "开始你的创作吧",
         scroll: false,
-        // 其他编辑器配置
-        // 菜单配置
+        MENU_CONF: {
+          uploadImage: {
+            server: env.serverAddress + "/api/upload",
+            // form-data fieldName ，默认值 'wangeditor-uploaded-file'
+            fieldName: "file",
+            // 选择文件时的类型限制，默认为 ['image/*'] 。如不想限制，则设置为 []
+            allowedFileTypes: ["image/*"],
+            // 将 meta 拼接到 url 参数中，默认 false
+            metaWithUrl: false,
+            // 自定义增加 http  header
+            headers: {
+              Authorization: this.$store.state.token,
+            },
+            // 超时时间，默认为 10 秒
+            timeout: 5 * 1000, // 5 秒
+            // 小于 xx 就插入 base64 格式（而不上传），默认为 0
+            base64LimitKB: 2 * 1024, // 5kb
+            // 自定义插入图片
+            customInsert(res, insertFn) {
+              let url = res.data.fileUrl;
+              let alt = res.data.fieldName;
+              let href = res.data.fileUrl;
+              // res 即服务端的返回结果
+              console.log("服务端返回结果", res);
+              // 从 res 中找到 url alt href ，然后插图图片
+              insertFn(url, alt, href);
+            },
+            // 单个文件上传失败
+            onFailed(file) {
+              this.$message({
+                message: `${file.name} 上传失败`,
+                type: "error",
+              });
+            },
+          },
+        },
       },
       mode: "default", // or 'simple'
       curContent: [],
@@ -182,6 +218,8 @@ export default {
       },
       inputVisible: false,
       inputValue: "", // 标签输入框的值
+      btnMessage: "发布",
+      btnIsLoadgin: false,
       rules: {
         category: [
           { required: true, message: "请选择分类", trigger: "change" },
@@ -241,11 +279,6 @@ export default {
               message: "文章标题不能为空",
               type: "error",
             });
-          } else if (!this.content) {
-            this.$message({
-              message: "文章内容不能为空",
-              type: "error",
-            });
           } else {
             this.publishArticleAsync(); // 发布文章
           }
@@ -276,17 +309,33 @@ export default {
         articleCover: this.form.imageUrl, // 文章封面地址
         articleAbstract: this.form.abstract, // 文章摘要
       };
+      this.btnMessage = "发布中";
+      this.btnIsLoadgin = true;
       const data = await publishArticle(params);
       if (data.code === "00000") {
         this.$message({
           message: "发布成功",
           type: "success",
         });
+        this.btnMessage = "发布";
+        this.btnIsLoadgin = false;
+        // 发布成功跳转至发布结果页面
+        let articleParams = {
+          articleId: data.data.article_id,
+          articleMenuId: data.data.article_menu_id,
+          articleParentMenuId: data.data.article_parent_menu_id,
+        };
+        this.$router.push({
+          name: "publishComplete",
+          query: articleParams,
+        });
       } else {
         this.$message({
           message: data.message,
           type: "error",
         });
+        this.btnMessage = "发布";
+        this.btnIsLoadgin = false;
       }
     },
     /*********添加分类**********/
@@ -317,16 +366,11 @@ export default {
       this.form.imageUrl = res.data.fileUrl;
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+      const isLt10M = file.size / 1024 / 1024 < 10;
+      if (!isLt10M) {
+        this.$message.error("上传头像图片大小不能超过 10MB!");
       }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
+      return isLt10M;
     },
     handleInputConfirm() {
       let inputValue = this.inputValue;
@@ -336,15 +380,12 @@ export default {
       this.inputVisible = false;
       this.inputValue = "";
     },
-
-    onCreated(editor) {
-      console.log("onCreated", editor);
-    },
+    // 编辑创建
+    onCreated() {},
     onChange(editor) {
-      this.content = JSON.stringify(editor.children);
+      // this.content = JSON.stringify(editor.children);
       this.htmlContent = editor.getHtml();
-      this.curContent = editor.children;
-      console.log("this.curContent", this.curContent);
+      // this.curContent = editor.children;
     },
     onDestroyed(editor) {
       console.log("onDestroyed", editor);
@@ -359,13 +400,6 @@ export default {
     },
     customAlert(info, type) {
       window.alert(`customAlert in Vue demo\n${type}:\n${info}`);
-    },
-    customPaste(editor, event, callback) {
-      console.log("ClipboardEvent 粘贴事件对象", event);
-
-      // 返回值（注意，vue 事件的返回值，不能用 return）
-      callback(false); // 返回 false ，阻止默认粘贴行为
-      // callback(true) // 返回 true ，继续默认的粘贴行为
     },
   },
 
@@ -407,6 +441,7 @@ export default {
     align-items: flex-start;
     .editor-box {
       background-color: #fff;
+      width: 900px;
       padding: 20px 50px 50px 50px;
       border: 1px solid #e8e8e8;
       box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
