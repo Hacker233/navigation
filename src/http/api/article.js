@@ -1,4 +1,12 @@
 import axiosService from "../index";
+// 根据所属菜单id获取文章列表
+export const getArticleList = (params) => {
+  return axiosService({
+    url: "/api/article/getArticleList",
+    method: "get",
+    params,
+  });
+};
 // 发布文章
 export const publishArticle = (data) => {
   return axiosService({
@@ -14,4 +22,4 @@ export const getArticle = (params) => {
     method: "get",
     params,
   });
-}
+};

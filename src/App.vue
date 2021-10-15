@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar v-if="isActive"></nav-bar>
-    <div class="right-content" v-if="isActive">
+    <div class="right-content" v-if="isActive" v-infinite-scroll="load">
       <right-title v-if="$route.meta.showRightTitle"></right-title>
       <router-view :key="$route.path" />
     </div>
@@ -37,6 +37,9 @@ export default {
         this.isActive = true;
       });
     },
+    load() {
+      console.log("发起请求");
+    },
   },
 };
 </script>
@@ -50,6 +53,7 @@ export default {
     width: 100%;
     padding-left: 180px;
     box-sizing: border-box;
+    overflow: auto;
   }
 }
 </style>

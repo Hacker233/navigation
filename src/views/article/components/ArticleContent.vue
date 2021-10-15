@@ -18,7 +18,7 @@
     <div class="wang-editor-content">
       <!-- 封面图 -->
       <div class="cover">
-        <el-image :src="articleInfo.article_cover" lazy fit="fill"></el-image>
+        <img :src="articleInfo.article_cover" />
       </div>
       <!-- 标题 -->
       <div class="title">
@@ -39,10 +39,8 @@ export default {
   },
   mounted() {
     this.init();
-
-    this.$route.meta.activeMenu = "/software";
-
-    console.log("this.$route", this.$route);
+    // 设置选中菜单
+    this.setRouterMeta();
   },
   methods: {
     // 初始化
@@ -60,6 +58,23 @@ export default {
           type: "error",
         });
       }
+    },
+    // 设置选中菜单
+    setRouterMeta() {
+      let topmenuList = this.$store.state.topmenuList;
+      let topmenuId = this.$route.query.articleMenuId;
+      topmenuList.forEach((item) => {
+        if (item.topmenu_id == topmenuId) {
+          this.$route.meta.activeMenu = item.topmenu_router;
+        } else if (item.topmenu_child.lenth) {
+          item.topmenu_child.forEach((itemChild) => {
+            if (itemChild.topmenu_id == topmenuId) {
+              this.$route.meta.activeMenu = itemChild.topmenu_router;
+            }
+          });
+        }
+      });
+      console.log("this.$route.meta.activeMenu", this.$route.meta.activeMenu);
     },
   },
 };
@@ -112,6 +127,13 @@ export default {
       margin-bottom: 20px;
       h1 {
         font-size: 30px;
+      }
+    }
+    .cover {
+      display: flex;
+      justify-content: center;
+      img {
+        max-width: 100%;
       }
     }
     ::v-deep .wang-content {

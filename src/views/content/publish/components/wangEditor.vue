@@ -123,7 +123,7 @@
                 v-model="form.abstract"
                 placeholder="请输入内容"
                 type="textarea"
-                maxlength="50"
+                maxlength="100"
                 :show-word-limit="true"
                 :autosize="{ minRows: 4, maxRows: 8 }"
               ></el-input>
