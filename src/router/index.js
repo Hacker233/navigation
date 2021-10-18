@@ -65,7 +65,7 @@ const routes = [
       },
     ],
   },
-  
+
   /***********************************左侧菜单菜单路由**************************************/
 
   // 影视导航
@@ -124,6 +124,18 @@ const routes = [
     meta: {
       showRightTitle: true,
       showBack: true,
+      auth: false,
+    },
+  },
+  // 下载导航
+  {
+    path: "/download",
+    name: "download",
+    component: WebSite,
+    meta: {
+      activeMenu: "/download",
+      showRightTitle: true,
+      showBack: false,
       auth: false,
     },
   },
