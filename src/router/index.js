@@ -138,7 +138,7 @@ const routes = [
     meta: {
       activeMenu: "/software",
       showRightTitle: true,
-      showBack: true,
+      showBack: false,
       auth: false,
     },
   },

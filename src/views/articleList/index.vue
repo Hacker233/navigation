@@ -61,6 +61,7 @@ export default {
     // 当前页发生变化
     currentChange(currentPage) {
       this.pageParams.page = currentPage; // 更改查询页面
+      this.articleList = [];
       this.getArticleListAsync();
     },
   },
@@ -82,6 +83,8 @@ export default {
     width: 300px;
     min-height: 300px;
     background-color: #fff;
+    position: sticky;
+    top: 70px;
   }
 }
 </style>

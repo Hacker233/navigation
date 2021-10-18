@@ -16,10 +16,23 @@
     </div>
     <!-- 内容区域 -->
     <div class="bottom-content" @click="toArticleDetail">
+      <!-- 摘要区域 -->
       <div class="left">
         <h1>{{ articleInfo.article_title }}</h1>
         <div class="abstract">
           <p>{{ articleInfo.article_abstract }}</p>
+        </div>
+        <div class="like-views-collection">
+          <!-- 浏览量 -->
+          <div class="views">
+            <i class="iconfont pig-liulan"></i>
+            <span>{{ articleInfo.article_views }}</span>
+          </div>
+          <!-- 点赞量 -->
+          <div class="likes">
+            <i class="iconfont pig-changyong_dianzan"></i>
+            <span>{{ articleInfo.article_likes }}</span>
+          </div>
         </div>
       </div>
       <!-- 文章封面 -->
@@ -118,11 +131,36 @@ export default {
         -webkit-line-clamp: 1;
       }
       .abstract {
+        flex: 1;
         p {
           font-weight: 400;
           font-size: 13px;
           line-height: 22px;
           color: #86909c;
+        }
+      }
+      // 文章点赞量区域
+      .like-views-collection {
+        height: 30px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        .views {
+          margin-right: 20px;
+          display: flex;
+          align-items: center;
+        }
+        .likes {
+          display: flex;
+          align-items: center;
+        }
+        .iconfont {
+          color: #4e5969;
+          margin-right: 3px;
+        }
+        span {
+          font-size: 12px;
+          color: #4e5969;
         }
       }
     }

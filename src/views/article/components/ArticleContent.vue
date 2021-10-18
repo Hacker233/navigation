@@ -10,7 +10,13 @@
         ></el-avatar>
         <div class="userInfo">
           <span class="username">{{ articleInfo.article_auther }}</span>
-          <span class="create-date">{{ articleInfo.article_date }}</span>
+          <div class="create-date">
+            {{ articleInfo.article_date }}
+            <span>阅读&nbsp;{{ articleInfo.article_views }}</span>
+            <el-tag size="medium" :hit="false" type="success">{{
+              articleInfo.article_category
+            }}</el-tag>
+          </div>
         </div>
       </div>
     </div>
@@ -26,15 +32,40 @@
       </div>
       <div class="wang-content" v-html="articleInfo.article_html_content"></div>
     </div>
+    <!-- 文章标签 -->
+    <div class="article-tags-box">
+      <span class="tag-group__title">文章标签:</span>
+      <el-tag
+        v-for="(item, index) in articleInfo.article_tags"
+        size="small"
+        :key="index"
+        type="danger"
+      >
+        {{ item }}
+      </el-tag>
+    </div>
+    <!-- 点赞区域 -->
+    <div class="likes-box">
+      <div class="likes">
+        <i
+          class="iconfont pig-changyong_dianzan"
+          :class="[{ isLike: isLike }]"
+          @click="likeArticle"
+        ></i>
+        <span>{{ articleLikes }}</span>
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { getArticle } from "@/http/api/article";
+import { getArticle, likeArticle, cancelLikeArticle } from "@/http/api/article";
 export default {
   data() {
     return {
-      articleInfo: "",
-      autherInfo: "",
+      articleInfo: "", // 文章信息
+      autherInfo: "", // 作者信息
+      isLike: false, // 是否点赞
+      articleLikes: 0, // 点赞数
     };
   },
   mounted() {
@@ -50,8 +81,10 @@ export default {
       };
       const data = await getArticle(params);
       if (data.code === "00000") {
-        this.articleInfo = data.data;
-        this.autherInfo = data.data.auther;
+        this.articleInfo = data.data; // 文章信息
+        this.autherInfo = data.data.auther; // 文章作者
+        this.articleLikes = data.data.article_likes; // 点赞量
+        this.isLike = data.data.isLike; // 是否点赞了该文章
       } else {
         this.$message({
           message: data.message,
@@ -76,13 +109,55 @@ export default {
       });
       console.log("this.$route.meta.activeMenu", this.$route.meta.activeMenu);
     },
+    // 点赞或者取消文章
+    likeArticle() {
+      if (this.isLike) {
+        this.cancelLikeArticleAsync();
+      } else {
+        this.likeArticleAsync();
+      }
+    },
+    // 点赞请求
+    async likeArticleAsync() {
+      let params = {
+        articleId: this.$route.query.articleId,
+      };
+      const data = await likeArticle(params);
+      if (data.code === "00000") {
+        this.isLike = true;
+        this.articleLikes += 1;
+        this.init();
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
+    // 取消点赞
+    async cancelLikeArticleAsync() {
+      let params = {
+        articleId: this.$route.query.articleId,
+      };
+      const data = await cancelLikeArticle(params);
+      if (data.code === "00000") {
+        this.isLike = false;
+        this.articleLikes -= 1;
+        this.init();
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 @import url("../../../styles/article.css");
 .article-content-box {
-  width: 900px;
+  width: 850px;
   min-height: 500px;
   background-color: #fff;
   border: 1px solid #e8e8e8;
@@ -113,6 +188,13 @@ export default {
         .create-date {
           font-size: 13px;
           color: #909090;
+          display: flex;
+          align-items: center;
+          span {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+          }
         }
       }
     }
@@ -134,6 +216,7 @@ export default {
       justify-content: center;
       img {
         max-width: 100%;
+        min-width: 100%;
       }
     }
     ::v-deep .wang-content {
@@ -187,6 +270,56 @@ export default {
         border: 0;
         height: 1px;
         background-color: #ccc;
+      }
+    }
+  }
+  // 标签
+  .article-tags-box {
+    width: 100%;
+    height: 70px;
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    .tag-group__title {
+      margin-right: 20px;
+      font-size: 14px;
+    }
+    ::v-deep .el-tag {
+      margin-right: 10px;
+    }
+  }
+  .likes-box {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .likes {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .iconfont {
+        font-size: 30px;
+        color: #a5a5a5;
+        cursor: pointer;
+        padding: 12px;
+        border: 1px solid #eee;
+        border-radius: 50%;
+        transition: all 0.3s;
+        &:hover {
+          background-color: #67696b;
+          color: #fff;
+        }
+      }
+      .isLike {
+        background-color: #67696b;
+        color: #fff;
+      }
+      span {
+        color: #a5a5a5;
+        font-size: 16px;
+        margin-top: 10px;
       }
     }
   }

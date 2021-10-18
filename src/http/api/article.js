@@ -23,3 +23,21 @@ export const getArticle = (params) => {
     params,
   });
 };
+
+// 点赞文章
+export const likeArticle = (data) => {
+  return axiosService({
+    url: "/api/article/likeArticle",
+    method: "post",
+    data,
+  });
+};
+
+// 取消点赞文章
+export const cancelLikeArticle = (data) => {
+  return axiosService({
+    url: "/api/article/cancelLikeArticle",
+    method: "put",
+    data,
+  });
+};
