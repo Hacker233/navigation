@@ -28,6 +28,7 @@
           @onFocus="onFocus"
           @onBlur="onBlur"
           @customAlert="customAlert"
+          @customPaste="customPaste"
         />
       </div>
       <!-- 发布设置 -->
@@ -52,7 +53,9 @@
                 :hit="false"
                 :class="[
                   'category-tag',
-                  { 'category-tag-active': form.category === item.category_name },
+                  {
+                    'category-tag-active': form.category === item.category_name,
+                  },
                 ]"
                 @click="chooseCatefory(item.category_name)"
                 >{{ item.category_name }}</el-tag
@@ -183,7 +186,7 @@ export default {
             // 超时时间，默认为 10 秒
             timeout: 5 * 1000, // 5 秒
             // 小于 xx 就插入 base64 格式（而不上传），默认为 0
-            base64LimitKB: 2 * 1024, // 5kb
+            // base64LimitKB: 2 * 1024, // 5kb
             // 自定义插入图片
             customInsert(res, insertFn) {
               let url = res.data.fileUrl;
@@ -425,6 +428,22 @@ export default {
     },
     customAlert(info, type) {
       window.alert(`customAlert in Vue demo\n${type}:\n${info}`);
+    },
+    customPaste() {
+      // console.log("粘贴", event);
+      // // event 是 ClipboardEvent 类型，可以拿到粘贴的数据
+      // // 可参考 https://developer.mozilla.org/zh-CN/docs/Web/API/ClipboardEvent
+
+      // // 同步
+      // editor.insertText("xxx");
+
+      // // 异步
+      // setTimeout(() => {
+      //   editor.insertText("yy");
+      // }, 1000);
+
+      // // return false; // 阻止默认的粘贴行为
+      return true // 继续执行默认的粘贴行为
     },
   },
 

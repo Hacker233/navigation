@@ -3,7 +3,12 @@
     <nav-bar v-if="isActive"></nav-bar>
     <div class="right-content" v-if="isActive" v-infinite-scroll="load">
       <right-title v-if="$route.meta.showRightTitle"></right-title>
-      <router-view :key="$route.path" />
+      <template v-if="$route.meta.keepAlive"
+        ><keep-alive> <router-view :key="$route.path" /> </keep-alive
+      ></template>
+      <template v-else>
+        <router-view :key="$route.path" />
+      </template>
     </div>
     <!-- github图标 -->
     <github-card></github-card>
@@ -28,7 +33,7 @@ export default {
   components: {
     NavBar,
     RightTitle,
-    GithubCard
+    GithubCard,
   },
   methods: {
     reload() {

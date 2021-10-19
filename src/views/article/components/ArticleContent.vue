@@ -19,6 +19,11 @@
           </div>
         </div>
       </div>
+      <div class="right-title">
+        <el-button type="primary" @click="editArticle" size="small"
+          >编辑</el-button
+        >
+      </div>
     </div>
     <!-- 内容区域 -->
     <div class="wang-editor-content">
@@ -59,6 +64,8 @@
 </template>
 <script>
 import { getArticle, likeArticle, cancelLikeArticle } from "@/http/api/article";
+import Prism from "prismjs";
+import "prismjs/themes/prism-coy.css";
 export default {
   data() {
     return {
@@ -72,6 +79,9 @@ export default {
     this.init();
     // 设置选中菜单
     this.setRouterMeta();
+    this.$nextTick(() => {
+      Prism.highlightAll();
+    });
   },
   methods: {
     // 初始化
@@ -169,6 +179,7 @@ export default {
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     .letf-title {
       height: 100%;
       display: flex;

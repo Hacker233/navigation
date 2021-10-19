@@ -40,6 +40,7 @@ const routes = [
       showRightTitle: true, // 是否显示右侧标题
       showBack: false, // 是否显示返回按钮
       auth: false, // 是否需要权限
+      keepAlive: false,
     },
   },
   // 个人中心
@@ -51,6 +52,7 @@ const routes = [
       showRightTitle: true,
       showBack: true,
       auth: true,
+      keepAlive: false,
     },
     children: [
       {
@@ -61,6 +63,7 @@ const routes = [
           showRightTitle: true,
           showBack: true,
           auth: true,
+          keepAlive: false,
         },
       },
     ],
@@ -78,6 +81,7 @@ const routes = [
       showRightTitle: true, // 是否显示右侧顶部栏
       showBack: false,
       auth: false,
+      keepAlive: false,
     },
   },
   // 书籍导航
@@ -90,6 +94,7 @@ const routes = [
       showRightTitle: true,
       showBack: false,
       auth: false,
+      keepAlive: false,
     },
   },
   // 编程导航
@@ -102,6 +107,7 @@ const routes = [
       showRightTitle: true,
       showBack: false,
       auth: false,
+      keepAlive: false,
     },
   },
   // 设计导航
@@ -115,6 +121,7 @@ const routes = [
       showBack: false,
       auth: false,
     },
+    keepAlive: false,
   },
   //影视内嵌网页
   {
@@ -125,6 +132,7 @@ const routes = [
       showRightTitle: true,
       showBack: true,
       auth: false,
+      keepAlive: false,
     },
   },
   // 下载导航
@@ -137,6 +145,7 @@ const routes = [
       showRightTitle: true,
       showBack: false,
       auth: false,
+      keepAlive: false,
     },
   },
 
@@ -152,6 +161,7 @@ const routes = [
       showRightTitle: true,
       showBack: false,
       auth: false,
+      keepAlive: false,
     },
   },
 
@@ -165,6 +175,7 @@ const routes = [
       showRightTitle: true,
       showBack: true,
       auth: false,
+      keepAlive: false,
     },
   },
 
@@ -180,6 +191,7 @@ const routes = [
       showRightTitle: true,
       showBack: false,
       auth: true,
+      keepAlive: false,
     },
     children: [
       // 菜单管理
@@ -192,6 +204,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
       // 网站管理
@@ -204,6 +217,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
       // 用户管理
@@ -216,6 +230,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
       // 用户菜单管理
@@ -228,6 +243,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
       // 图标管理
@@ -240,6 +256,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
       // 顶部菜单管理
@@ -252,6 +269,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
     ],
@@ -266,6 +284,7 @@ const routes = [
       showRightTitle: true,
       showBack: false,
       auth: true,
+      keepAlive: false,
     },
     children: [
       // 发布内容
@@ -278,6 +297,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
       // 文章发布成功页面
@@ -290,6 +310,7 @@ const routes = [
           showRightTitle: true,
           showBack: true,
           auth: false,
+          keepAlive: false,
         },
       },
       // 分类管理
@@ -302,6 +323,7 @@ const routes = [
           showRightTitle: true,
           showBack: false,
           auth: true,
+          keepAlive: false,
         },
       },
     ],

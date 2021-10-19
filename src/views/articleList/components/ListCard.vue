@@ -60,10 +60,11 @@ export default {
         articleMenuId: this.articleInfo.article_menu_id,
         articleParentMenuId: this.articleInfo.article_parent_meun_id,
       };
-      this.$router.push({
+      let newPage = this.$router.resolve({
         name: "article",
         query: params,
       });
+      window.open(newPage.href, "_blank");
     },
   },
 };
@@ -112,6 +113,7 @@ export default {
     padding: 10px 0;
     box-sizing: border-box;
     cursor: pointer;
+    flex: 1;
     .left {
       padding: 0 10px 0 0;
       flex: 1;
