@@ -184,7 +184,7 @@ export default {
               Authorization: this.$store.state.token,
             },
             // 超时时间，默认为 10 秒
-            timeout: 5 * 1000, // 5 秒
+            timeout: 20 * 1000, // 20 秒
             // 小于 xx 就插入 base64 格式（而不上传），默认为 0
             // base64LimitKB: 2 * 1024, // 5kb
             // 自定义插入图片
@@ -197,12 +197,33 @@ export default {
               // 从 res 中找到 url alt href ，然后插图图片
               insertFn(url, alt, href);
             },
+            /*******回调函数********/
+            // 上传之前触发
+            onBeforeUpload(files) {
+              // files 即选中的文件列表
+              console.log("上传之前触发", files);
+              return files;
+
+              // 返回值可选择：
+              // 1. 返回一个数组（files 或者 files 的一部分），则将上传返回结果中的文件
+              // 2. 返回 false ，则终止上传
+            },
+            // 上传进度的回调函数
+            onProgress(progress) {
+              // progress 是 0-100 的数字
+              console.log("progress", progress);
+            },
+            // 单个文件上传成功之后
+            onSuccess(file, res) {
+              console.log(`${file.name} 上传成功`, res);
+            },
             // 单个文件上传失败
-            onFailed(file) {
-              this.$message({
-                message: `${file.name} 上传失败`,
-                type: "error",
-              });
+            onFailed(file, res) {
+              console.log(`${file.name} 上传失败`, res);
+            },
+            // 上传错误，或者触发 timeout 超时
+            onError(file, err, res) {
+              console.log(`${file.name} 上传出错`, err, res);
             },
           },
         },
@@ -429,8 +450,8 @@ export default {
     customAlert(info, type) {
       window.alert(`customAlert in Vue demo\n${type}:\n${info}`);
     },
-    customPaste() {
-      // console.log("粘贴", event);
+    customPaste(event) {
+      console.log("粘贴", event);
       // // event 是 ClipboardEvent 类型，可以拿到粘贴的数据
       // // 可参考 https://developer.mozilla.org/zh-CN/docs/Web/API/ClipboardEvent
 
@@ -443,7 +464,7 @@ export default {
       // }, 1000);
 
       // // return false; // 阻止默认的粘贴行为
-      return true // 继续执行默认的粘贴行为
+      return true; // 继续执行默认的粘贴行为
     },
   },
 
