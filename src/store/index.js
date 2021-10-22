@@ -63,13 +63,17 @@ export default new Vuex.Store({
     },
     // 查询用户信息
     async getUserInfo(context) {
-      let userInfo = [];
-      const data = await getUserInfo();
-      if (data.code === "00000") {
-        userInfo = data.data;
-        context.commit("setUserInfo", userInfo);
+      if (localStorage.getItem("token")) {
+        let userInfo = [];
+        const data = await getUserInfo();
+        if (data.code === "00000") {
+          userInfo = data.data;
+          context.commit("setUserInfo", userInfo);
+        } else {
+          this.$Message.error(data.message);
+        }
       } else {
-        this.$Message.error(data.message);
+        context.commit("setUserInfo", "");
       }
     },
   },

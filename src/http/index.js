@@ -47,6 +47,7 @@ axiosService.interceptors.response.use(
     if (response.status === 200) {
       if (response.data.code === "T0001") {
         localStorage.removeItem("token");
+        location.reload();
       } else {
         // 存储token到本地
         const token = response.headers.authorization;

@@ -9,7 +9,18 @@ router.beforeEach((to, from, next) => {
     if (to.path === "/") {
       next();
     } else {
-      login.install();
+      login.install({
+        login: (data) => {
+          if (data) {
+            location.reload();
+          }
+        },
+        register: (data) => {
+          if (data) {
+            location.reload();
+          }
+        },
+      });
     }
   }
 });

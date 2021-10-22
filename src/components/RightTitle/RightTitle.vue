@@ -130,9 +130,9 @@ export default {
     },
     // 退出登录
     loginOut() {
-      localStorage.removeItem("token");
       this.$router.push("/");
-      this.$store.commit("setUserInfo", "");
+      localStorage.removeItem("token");
+      // this.$store.commit("setUserInfo", "");
       this.refresh();
     },
     // 刷新页面,不会重载页面

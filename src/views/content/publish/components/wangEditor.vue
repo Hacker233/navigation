@@ -14,7 +14,12 @@
     <div class="pig-editor-container">
       <div class="editor-box">
         <div class="title-container">
-          <input type="text" v-model.trim="title" placeholder="请输入标题" />
+          <input
+            type="text"
+            v-model.trim="title"
+            placeholder="请输入标题"
+            autocomplete="new-password"
+          />
         </div>
         <Editor
           class="editor-container"
@@ -523,7 +528,7 @@ export default {
       }
     }
     .editor-container {
-      width: 800px;
+      width: 100%;
       min-height: 700px;
       background-color: #fff;
       ::v-deep .w-e-text-container {
