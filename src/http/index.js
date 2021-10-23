@@ -6,7 +6,7 @@ import { Message } from "element-ui";
 // 创建一个axios实例
 const axiosService = axios.create({
   baseURL: env.serverAddress, // url = base url + request url
-  timeout: 10000, // 设置超时时间为5s
+  timeout: 20000, // 设置超时时间为5s
   headers: {
     dataType: "application/json",
   },
