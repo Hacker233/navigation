@@ -153,7 +153,7 @@
 <script>
 import "@wangeditor/editor/dist/css/style.css";
 import env from "@/config/index";
-import { publishArticle } from "@/http/api/article";
+import { publishArticle, getArticle } from "@/http/api/article";
 import { getCategory } from "@/http/api/category";
 import {
   Editor,
@@ -166,6 +166,7 @@ export default {
   components: { Editor, Toolbar },
   data() {
     return {
+      articleId: this.$route.query.articleId, // 文章Id
       editorId: "w-e-1",
       toolbarConfig: {
         /* 工具栏配置 */
@@ -305,9 +306,33 @@ export default {
     },
   },
   mounted() {
+    console.log("编辑的文章id", this.$route.query.articleId);
+    // 如果有文章ID，则是编辑文章
+    if (this.articleId) {
+      this.init();
+    }
     this.getCategory(); // 获取分类
   },
   methods: {
+    // 初始化文章
+    // 初始化
+    async init() {
+      let params = {
+        articleId: this.$route.query.articleId,
+      };
+      const data = await getArticle(params);
+      if (data.code === "00000") {
+        this.articleInfo = data.data; // 文章信息
+        this.autherInfo = data.data.auther; // 文章作者
+        this.articleLikes = data.data.article_likes; // 点赞量
+        this.isLike = data.data.isLike; // 是否点赞了该文章
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
+    },
     // 发表文章
     publishArticle(name) {
       this.$refs[name].validate((valid) => {

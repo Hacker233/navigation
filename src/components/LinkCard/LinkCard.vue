@@ -1,5 +1,5 @@
 <template>
-  <div class="link-card-box" @click="toIframeWeb">
+  <div class="link-card-box" @click="toLink(websiteInfo.website_link)">
     <!-- 直达链接 -->
     <span class="to-link" @click.stop="toLink(websiteInfo.website_link)">
       <i class="iconfont pig-ziyuan"></i>

@@ -68,11 +68,13 @@ export default new Vuex.Store({
         const data = await getUserInfo();
         if (data.code === "00000") {
           userInfo = data.data;
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
           context.commit("setUserInfo", userInfo);
         } else {
           this.$Message.error(data.message);
         }
       } else {
+        localStorage.setItem("userInfo", "");
         context.commit("setUserInfo", "");
       }
     },

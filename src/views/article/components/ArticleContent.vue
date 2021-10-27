@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="right-title">
+      <div class="right-title" v-if="canEdit">
         <el-button type="primary" @click="editArticle" size="small"
           >编辑</el-button
         >
@@ -75,6 +75,22 @@ export default {
       articleLikes: 0, // 点赞数
     };
   },
+  computed: {
+    // 是否可以编辑
+    canEdit() {
+      if (localStorage.getItem("userInfo")) {
+        let loginUserUid = JSON.parse(localStorage.getItem("userInfo")).uid;
+        let articleUid = this.articleInfo.article_auther_uid;
+        if (loginUserUid === articleUid) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+  },
   mounted() {
     this.init();
     // 设置选中菜单
@@ -101,6 +117,16 @@ export default {
           type: "error",
         });
       }
+    },
+    // 编辑文章
+    editArticle() {
+      let params = {
+        articleId: this.articleInfo.article_id,
+      };
+      this.$router.push({
+        path: "/content/publish",
+        query: params,
+      });
     },
     // 设置选中菜单
     setRouterMeta() {

@@ -173,7 +173,7 @@ const routes = [
     meta: {
       activeMenu: "/",
       showRightTitle: true,
-      showBack: true,
+      showBack: false,
       auth: false,
       keepAlive: false,
     },
