@@ -15,6 +15,14 @@ export const publishArticle = (data) => {
     data,
   });
 };
+// 修改文章
+export const updateArticle = (data) => {
+  return axiosService({
+    url: "/api/article/updateArticle",
+    method: "post",
+    data,
+  });
+};
 // 根据id获取文章内容
 export const getArticle = (params) => {
   return axiosService({

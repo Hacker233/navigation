@@ -22,10 +22,11 @@
           />
         </div>
         <Editor
+          v-if="defaultContent"
           class="editor-container"
           :editorId="editorId"
           :defaultConfig="editorConfig"
-          :defaultContent="getDefaultContent"
+          :defaultContent="defaultContent"
           :mode="mode"
           @onCreated="onCreated"
           @onChange="onChange"
@@ -139,12 +140,22 @@
           </el-form>
         </div>
         <div class="publish-button-box">
-          <el-button
-            type="primary"
-            @click="publishArticle('ruleForm')"
-            :loading="btnIsLoadgin"
-            >{{ btnMessage }}</el-button
-          >
+          <template v-if="!articleId">
+            <el-button
+              type="primary"
+              @click="publishArticle('ruleForm')"
+              :loading="btnIsLoadgin"
+              >{{ btnMessage }}</el-button
+            >
+          </template>
+          <template v-else>
+            <el-button
+              type="primary"
+              @click="updateArticle('ruleForm')"
+              :loading="btnIsLoadgin"
+              >{{ btnEditMessage }}</el-button
+            >
+          </template>
         </div>
       </div>
     </div>
@@ -153,7 +164,7 @@
 <script>
 import "@wangeditor/editor/dist/css/style.css";
 import env from "@/config/index";
-import { publishArticle, getArticle } from "@/http/api/article";
+import { publishArticle, updateArticle, getArticle } from "@/http/api/article";
 import { getCategory } from "@/http/api/category";
 import {
   Editor,
@@ -172,7 +183,7 @@ export default {
         /* 工具栏配置 */
         excludeKeys: ["fullScreen"], // 需要去除的菜单
       },
-      defaultContent: [],
+      defaultContent: null,
       editorConfig: {
         placeholder: "开始你的创作吧",
         scroll: false,
@@ -256,6 +267,7 @@ export default {
       inputVisible: false,
       inputValue: "", // 标签输入框的值
       btnMessage: "发布",
+      btnEditMessage: "修改",
       btnIsLoadgin: false,
       rules: {
         category: [
@@ -275,10 +287,6 @@ export default {
   },
 
   computed: {
-    // 注意，深度拷贝 content ，否则会报错
-    getDefaultContent() {
-      return cloneDeep(this.defaultContent);
-    },
     // 初始化菜单筛选下拉菜单
     menuListOptions() {
       let options = [];
@@ -306,26 +314,39 @@ export default {
     },
   },
   mounted() {
-    console.log("编辑的文章id", this.$route.query.articleId);
     // 如果有文章ID，则是编辑文章
     if (this.articleId) {
       this.init();
+    } else {
+      this.defaultContent = [];
     }
     this.getCategory(); // 获取分类
   },
   methods: {
     // 初始化文章
-    // 初始化
     async init() {
       let params = {
         articleId: this.$route.query.articleId,
       };
       const data = await getArticle(params);
       if (data.code === "00000") {
-        this.articleInfo = data.data; // 文章信息
-        this.autherInfo = data.data.auther; // 文章作者
-        this.articleLikes = data.data.article_likes; // 点赞量
-        this.isLike = data.data.isLike; // 是否点赞了该文章
+        this.title = data.data.article_title; // 文章标题
+        if (data.data.article_content) {
+          this.defaultContent = cloneDeep(
+            JSON.parse(data.data.article_content)
+          ); // 默认内容
+        } else {
+          this.defaultContent = [];
+        }
+
+        this.content = cloneDeep(JSON.parse(data.data.article_content)); // 文章内容
+        this.htmlContent = data.data.article_html_content; // 文章HTML内容
+        this.form.category = data.data.article_category; // 文章分类
+        this.form.dynamicTags = data.data.article_tags; // 文章标签
+        this.form.imageUrl = data.data.article_cover; // 文章封面
+        this.form.abstract = data.data.article_abstract; // 文章摘要
+
+        console.log("this.defaultContent", this.defaultContent);
       } else {
         this.$message({
           message: data.message,
@@ -344,6 +365,24 @@ export default {
             });
           } else {
             this.publishArticleAsync(); // 发布文章
+          }
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    // 修改文章
+    updateArticle(name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          if (!this.title) {
+            this.$message({
+              message: "文章标题不能为空",
+              type: "error",
+            });
+          } else {
+            this.updateArticleAsync(); // 更新
           }
         } else {
           console.log("error submit!!");
@@ -398,6 +437,51 @@ export default {
           type: "error",
         });
         this.btnMessage = "发布";
+        this.btnIsLoadgin = false;
+      }
+    },
+    // 更新文章请求
+    async updateArticleAsync() {
+      let menuInfo = JSON.parse(this.filterMenu());
+      let params = {
+        articleId: this.articleId, // 文章id
+        articleTitle: this.title, // 文章标题
+        articleContent: this.content, // 文章内容
+        articleHtmlContent: this.htmlContent, // 文章HTML内容
+        articleCategory: this.form.category, // 文章分类
+        articleMenuName: menuInfo.topmenu_name, // 文章所属菜单名称
+        articleParentMenuId: menuInfo.parent_topmenu_id, // 文章所属于菜单的父级id
+        articleMenuId: menuInfo.topmenu_id, // 文章所属菜单id
+        articleTags: this.form.dynamicTags, // 文章标签
+        articleCover: this.form.imageUrl, // 文章封面地址
+        articleAbstract: this.form.abstract, // 文章摘要
+      };
+      this.btnEditMessage = "修改中";
+      this.btnIsLoadgin = true;
+      const data = await updateArticle(params);
+      if (data.code === "00000") {
+        this.$message({
+          message: "修改成功",
+          type: "success",
+        });
+        this.btnMessage = "修改";
+        this.btnIsLoadgin = false;
+        // 修改成功跳转至发布结果页面
+        let articleParams = {
+          articleId: data.data.article_id,
+          articleMenuId: data.data.article_menu_id,
+          articleParentMenuId: data.data.article_parent_menu_id,
+        };
+        this.$router.push({
+          name: "publishComplete",
+          query: articleParams,
+        });
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+        this.btnMessage = "修改";
         this.btnIsLoadgin = false;
       }
     },
@@ -462,9 +546,8 @@ export default {
     // 编辑创建
     onCreated() {},
     onChange(editor) {
-      // this.content = JSON.stringify(editor.children);
+      this.content = JSON.stringify(editor.children);
       this.htmlContent = editor.getHtml();
-      // this.curContent = editor.children;
     },
     onDestroyed(editor) {
       console.log("onDestroyed", editor);
@@ -481,19 +564,7 @@ export default {
       window.alert(`customAlert in Vue demo\n${type}:\n${info}`);
     },
     customPaste(event) {
-      console.log("粘贴", event);
-      // // event 是 ClipboardEvent 类型，可以拿到粘贴的数据
-      // // 可参考 https://developer.mozilla.org/zh-CN/docs/Web/API/ClipboardEvent
-
-      // // 同步
-      // editor.insertText("xxx");
-
-      // // 异步
-      // setTimeout(() => {
-      //   editor.insertText("yy");
-      // }, 1000);
-
-      // // return false; // 阻止默认的粘贴行为
+      console.log(event);
       return true; // 继续执行默认的粘贴行为
     },
   },
