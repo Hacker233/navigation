@@ -148,6 +148,19 @@ const routes = [
       keepAlive: false,
     },
   },
+  // 工具导航
+  {
+    path: "/tool",
+    name: "tool",
+    component: WebSite,
+    meta: {
+      activeMenu: "/tool",
+      showRightTitle: true,
+      showBack: false,
+      auth: false,
+      keepAlive: false,
+    },
+  },
 
   /***********************************顶部菜单路由**************************************/
 
