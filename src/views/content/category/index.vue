@@ -122,6 +122,7 @@ export default {
       }
     },
     addCategory() {
+      this.modelTitle = "新增";
       this.categoryDialogVisible = true;
     },
     // 弹窗取消
