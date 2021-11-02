@@ -18,6 +18,8 @@ jobs:
       run: cd node_modules
     - name: sass-migrator division **/*.scss
       run: sass-migrator division **/*.scss
+    - name: install wangWditor
+      run: npm install --save @wangeditor/editor @wangeditor/editor/dist/css/style.css lodash.clonedeep prismjs prismjs/themes/prism-coy.css
     - name: npm run build
       run: npm run build
     - name: Deploy to Server
