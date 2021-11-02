@@ -28,6 +28,7 @@ const TopMenu = () => import("@/views/admin/topMenu/topmenu.vue"); // 顶部菜�
 const Content = () => import("@/views/content/index.vue"); // 内容管理菜单
 const Publish = () => import("@/views/content/publish/index.vue"); // 发布内容
 const Category = () => import("@/views/content/category/index.vue"); // 分类管理
+const ArticleManage = () => import("@/views/content/articleManage/index.vue"); // 文章管理
 
 Vue.use(VueRouter);
 
@@ -333,6 +334,19 @@ const routes = [
         component: Category,
         meta: {
           activeMenu: "/content/category",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+      // 文章管理
+      {
+        path: "articleManage",
+        name: "articleManage",
+        component: ArticleManage,
+        meta: {
+          activeMenu: "/content/articleManage",
           showRightTitle: true,
           showBack: false,
           auth: true,
