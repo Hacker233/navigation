@@ -10,15 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: npm Install
+    - name: npm install
       run: npm install
-    - name: scss answer
-      run: npm install -g sass-migrator
-    - name: cd node_modules
-      run: cd node_modules
-    - name: sass-migrator division **/*.scss
-      run: sass-migrator division **/*.scss
-    - name: install wangWditor
+    - name: install wangEditor
       run: npm install --save @wangeditor/editor
     - name: npm run build
       run: npm run build
