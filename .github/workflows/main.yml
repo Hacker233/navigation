@@ -1,0 +1,29 @@
+name: Build app and deploy to Tencent
+on:
+  #监听push操作
+  push:
+    branches:
+      # master分支，你也可以改成其他分支
+      - main
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: Install and Build
+      run: |
+        npm install
+        npm run build
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          ARGS: '-rltgoDzvO --delete'
+          SOURCE: dist # 这是要复制到阿里云静态服务器的文件夹名称
+          REMOTE_HOST: '110.42.181.210' # 你的阿里云公网地址
+          REMOTE_USER: root # 阿里云登录后默认为 root 用户，并且所在文件夹为 root
+          TARGET: /www/wwwroot/navigation/navigation # 打包后的 dist 文件夹将放在 /root/node-server
