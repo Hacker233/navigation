@@ -12,8 +12,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: npm Install
       run: npm install
-    - name: install editor
-      run: npm install @wangeditor/editor-for-vue --save
+    - name: scss answer
+      run: npm install -g sass-migrator
+    - name: cd node_modules
+      run: cd node_modules
+    - name: sass-migrator division **/*.scss
+      run: sass-migrator division **/*.scss
     - name: npm run build
       run: npm run build
     - name: Deploy to Server
