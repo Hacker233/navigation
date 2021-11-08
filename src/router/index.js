@@ -162,6 +162,19 @@ const routes = [
       keepAlive: false,
     },
   },
+  // 其它导航
+  {
+    path: "/other",
+    name: "other",
+    component: WebSite,
+    meta: {
+      activeMenu: "/other",
+      showRightTitle: true,
+      showBack: false,
+      auth: false,
+      keepAlive: false,
+    },
+  },
 
   /***********************************顶部菜单路由**************************************/
 
