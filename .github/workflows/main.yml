@@ -16,12 +16,17 @@ jobs:
       run: npm install --save @wangeditor/editor
     - name: npm run build
       run: npm run build
-    - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@v2.1.5
+    # 命名这个任务为发布Deploy
+    - name: Deploy
+      # 因为构建之后，需要把代码上传到服务器上，所以需要连接到ssh，并且做一个拷贝操作
+      uses: cross-the-world/scp-pipeline@master
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: '-rltgoDzvO --delete'
-          SOURCE: navigation # 这是要复制到阿里云静态服务器的文件夹名称
-          REMOTE_HOST: '110.42.181.210' # 你的阿里云公网地址
-          REMOTE_USER: root # 阿里云登录后默认为 root 用户，并且所在文件夹为 root
-          TARGET: /www/wwwroot/navigation/navigation # 打包后的 dist 文件夹将放在 /root/node-server
+        WELCOME: "ssh scp ssh pipelines"
+        LASTSSH: "Doing something after copying"
+      with:
+        host: ${{ secrets.USER_HOST }}
+        user: ${{ secrets.USER_NAME }}
+        pass: ${{ secrets.USER_PASS }}
+        connect_timeout: 10s
+        local: './dist/*'
+        remote: /www/wwwroot/navigation/navigation/dist
