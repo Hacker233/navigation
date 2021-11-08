@@ -1,7 +1,13 @@
 <template>
-  <div class="link-card-box" @click="toLink(websiteInfo.website_link)">
+  <div
+    class="link-card-box"
+    @click="toLink(websiteInfo.website_link, websiteInfo.website_id)"
+  >
     <!-- 直达链接 -->
-    <span class="to-link" @click.stop="toLink(websiteInfo.website_link)">
+    <span
+      class="to-link"
+      @click.stop="toLink(websiteInfo.website_link, websiteInfo.website_id)"
+    >
       <i class="iconfont pig-ziyuan"></i>
     </span>
     <!-- <a class="to-link" :href="websiteInfo.website_link" target="blank">
@@ -30,9 +36,18 @@
         </p>
       </div>
     </div>
+    <!-- 浏览量等信息 -->
+    <div class="views-box">
+      <!-- 浏览量 -->
+      <div class="views">
+        <i class="iconfont pig-liulan"></i>
+        <span>{{ websiteInfo.website_views || 0 }}</span>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import { queryWebsiteById } from "@/http/api/website";
 export default {
   props: {
     websiteInfo: {
@@ -56,8 +71,21 @@ export default {
       });
     },
     // 跳转新的标签页
-    toLink(url) {
+    async toLink(url, id) {
       window.open(url);
+      // 查询站点详细信息
+      let params = {
+        websiteId: id,
+      };
+      const data = await queryWebsiteById(params);
+      if (data.code === "00000") {
+        return;
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+      }
     },
   },
 };
@@ -67,8 +95,8 @@ export default {
   width: 22%;
   min-width: 220px;
   position: relative;
-  height: 100px;
-  padding: 10px 10px;
+  height: 120px;
+  padding: 10px 10px 0 10px;
   border-radius: 5px;
   overflow: hidden;
   background: #fafafa;
@@ -161,6 +189,22 @@ export default {
         -webkit-line-clamp: 2;
         overflow: hidden;
         cursor: pointer;
+      }
+    }
+  }
+  .views-box {
+    width: 100%;
+    flex: 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid #eee;
+    margin-top: 5px;
+    .views {
+      font-size: 13px;
+      .pig-liulan {
+        font-size: 13px;
+        margin-right: 5px;
       }
     }
   }

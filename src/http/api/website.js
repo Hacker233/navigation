@@ -50,3 +50,12 @@ export const queryMenuWebsite = (params) => {
     params,
   });
 };
+
+// 查询单个网站得详细信息
+export const queryWebsiteById = (params) => {
+  return axiosService({
+    url: "/api/website/queryWebsiteById",
+    method: "get",
+    params,
+  });
+};
