@@ -49,3 +49,21 @@ export const cancelLikeArticle = (data) => {
     data,
   });
 };
+
+// 获取所有文章列表
+export const queryAllArticleList = (params) => {
+  return axiosService({
+    url: "/api/article/queryAllArticleList",
+    method: "get",
+    params,
+  });
+};
+
+// 删除文章
+export const deleteArticleById = (params) => {
+  return axiosService({
+    url: "/api/article/deleteArticleById",
+    method: "delete",
+    params,
+  });
+};

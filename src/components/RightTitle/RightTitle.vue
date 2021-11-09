@@ -48,8 +48,18 @@
         </template>
       </el-menu>
     </div>
+    <!-- 发布文章 -->
+    <div class="publish-article">
+      <el-button type="primary" @click="toEditorPage"
+        ><i class="iconfont pig-bianji"></i>发布文章</el-button
+      >
+    </div>
     <div class="person-box">
-      <el-button v-if="!userInfo" type="text" @click="openLoginDialog"
+      <el-button
+        v-if="!userInfo"
+        type="text"
+        @click="openLoginDialog"
+        style="margin-left: 20px"
         >登录/注册</el-button
       >
       <template v-else>
@@ -82,7 +92,7 @@ export default {
     "$route.meta.activeMenu": {
       handler(newVal, oldVal) {
         console.log("oldVal", oldVal);
-        console.log("newVal",newVal)
+        console.log("newVal", newVal);
         if (newVal) {
           this.activeRouter = newVal;
         } else {
@@ -142,6 +152,26 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+    // 跳转至发布文章页面
+    toEditorPage() {
+      let token = localStorage.getItem("token");
+      if (!token) {
+        this.$login({
+          login: (data) => {
+            if (data) {
+              this.refresh();
+            }
+          },
+          register: (data) => {
+            if (data) {
+              this.refresh();
+            }
+          },
+        });
+      } else {
+        this.$router.push("/content/publish");
+      }
+    },
   },
 };
 </script>
@@ -193,6 +223,25 @@ export default {
     ::v-deep .is-active {
       background-color: #67696b !important;
       color: #fff !important;
+    }
+  }
+  .publish-article {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .iconfont {
+      font-size: 14px;
+      margin-right: 6px;
+    }
+    button {
+      height: 30px;
+      width: 100px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
     }
   }
   .person-box {
