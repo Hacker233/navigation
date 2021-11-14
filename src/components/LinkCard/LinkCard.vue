@@ -139,6 +139,7 @@ export default {
         border-radius: 50%;
         display: flex;
         align-items: center;
+        border: 1px solid #eee;
       }
     }
     .movie-title {

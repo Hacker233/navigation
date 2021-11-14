@@ -13,6 +13,16 @@
           <span class="create-date">{{ articleInfo.article_date }}</span>
         </div>
       </div>
+      <!-- 文章标签 -->
+      <div class="article-tags">
+        <el-tag
+          type="success"
+          v-for="(item, index) in articleInfo.article_tags"
+          :key="index"
+          size="mini"
+          >{{ item }}</el-tag
+        >
+      </div>
     </div>
     <!-- 内容区域 -->
     <div class="bottom-content" @click="toArticleDetail">
@@ -102,6 +112,16 @@ export default {
           font-size: 12px;
           color: #909090;
         }
+      }
+    }
+    .article-tags {
+      margin-left: 20px;
+      display: flex;
+      align-items: flex-start;
+      height: 100%;
+      padding-top: 10px;
+      span {
+        margin: 0 5px;
       }
     }
   }

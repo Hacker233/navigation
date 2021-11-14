@@ -14,12 +14,13 @@
     <div class="pig-editor-container">
       <div class="editor-box">
         <div class="title-container">
-          <input
-            type="text"
-            v-model.trim="title"
+          <el-input
+            v-model="input"
             placeholder="请输入标题"
-            autocomplete="new-password"
-          />
+            v-model.trim="title"
+            :maxlength="40"
+            show-word-limit
+          ></el-input>
         </div>
         <Editor
           v-if="defaultContent"
@@ -614,12 +615,14 @@ export default {
       .title-container {
         padding: 20px 0;
         border-bottom: 1px solid #e8e8e8;
-        input {
-          font-size: 30px;
-          border: 0;
-          outline: none;
-          width: 100%;
-          line-height: 1;
+        ::v-deep .el-input {
+          input {
+            font-size: 30px;
+            border: 0;
+            outline: none;
+            width: 100%;
+            line-height: 1;
+          }
         }
       }
     }

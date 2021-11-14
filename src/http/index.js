@@ -2,6 +2,7 @@ import axios from "axios";
 import env from "../config/index";
 import store from "../store";
 import { Message } from "element-ui";
+import login from "../common/LoginDialog"; // 登录弹窗
 
 // 创建一个axios实例
 const axiosService = axios.create({
@@ -42,12 +43,24 @@ axiosService.interceptors.request.use(
 // respone拦截器 ==> 对响应做处理
 axiosService.interceptors.response.use(
   (response) => {
+    // debugger;
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
     if (response.status === 200) {
       if (response.data.code === "T0001") {
         localStorage.removeItem("token");
-        location.reload();
+        login.install({
+          login: (data) => {
+            if (data) {
+              location.reload();
+            }
+          },
+          register: (data) => {
+            if (data) {
+              location.reload();
+            }
+          },
+        });
       } else {
         // 存储token到本地
         const token = response.headers.authorization;
@@ -72,4 +85,3 @@ axiosService.interceptors.response.use(
 
 // 将写好的axios实例暴露出去
 export default axiosService;
-

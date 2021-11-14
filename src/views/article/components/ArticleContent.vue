@@ -28,14 +28,14 @@
     <!-- 内容区域 -->
     <div class="wang-editor-content">
       <!-- 封面图 -->
-      <div class="cover">
+      <div class="cover" v-viewer>
         <img :src="articleInfo.article_cover" />
       </div>
       <!-- 标题 -->
       <div class="title">
         <h1>{{ articleInfo.article_title }}</h1>
       </div>
-      <div class="wang-content" v-html="articleInfo.article_html_content"></div>
+      <div class="wang-content" v-html="articleInfo.article_html_content" v-viewer></div>
     </div>
     <!-- 文章标签 -->
     <div class="article-tags-box">
@@ -254,6 +254,7 @@ export default {
       img {
         max-width: 100%;
         min-width: 100%;
+        cursor: pointer;
       }
     }
     ::v-deep .wang-content {

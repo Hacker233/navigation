@@ -7,7 +7,9 @@ import "./styles.scss";
 import "@/styles/normalize.css";
 import login from "./common/LoginDialog"; // 登录弹窗全局组件
 import "./common/auth"; // 权限检测
-
+import "viewerjs/dist/viewer.css"; // 图片预览
+import Viewer from "v-viewer";
+Vue.use(Viewer);
 Vue.use(ElementUI);
 console.log(process);
 Vue.config.productionTip = false;

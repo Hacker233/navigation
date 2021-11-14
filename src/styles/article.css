@@ -1,5 +1,9 @@
+.wang-content {
+  font-family: "微软雅黑";
+}
 .wang-content p {
-  line-height: 2;
+  line-height: 1.5;
+  margin: 15px 0;
 }
 .wang-content ul,
 .wang-content ol {
@@ -15,4 +19,17 @@
 }
 .wang-content img {
   max-width: 100%;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: all 0.3s;
+}
+.wang-content img:hover {
+  box-shadow: 3px 3px 3px rgba(73, 73, 73, 0.3);
+}
+.wang-content h1 {
+  line-height: 1.5;
+  margin: 20px 0;
+}
+.wang-content blockquote {
+  line-height: 2;
 }
