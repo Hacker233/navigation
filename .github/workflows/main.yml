@@ -12,8 +12,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: npm install
       run: npm install
-    - name: install wangEditor
-      run: npm install --save @wangeditor/editor
     - name: npm run build
       run: npm run build
     # 命名这个任务为发布Deploy
