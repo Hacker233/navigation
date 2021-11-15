@@ -159,6 +159,11 @@ export default {
           font-size: 13px;
           line-height: 22px;
           color: #86909c;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
         }
       }
       // 文章点赞量区域
