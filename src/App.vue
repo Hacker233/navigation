@@ -52,7 +52,7 @@ export default {
 #app {
   height: 100%;
   display: flex;
-  min-width: 1200px;
+  min-width: 1400px;
   position: relative;
   .right-content {
     width: 100%;
