@@ -50,7 +50,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #app {
-  height: 100%;
+  // height: 100%;
   display: flex;
   min-width: 1400px;
   position: relative;
