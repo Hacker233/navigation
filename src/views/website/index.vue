@@ -61,7 +61,7 @@ export default {
   width: 100%;
   padding-top: 40px;
   .content {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -91,13 +91,9 @@ export default {
       .card-box {
         display: flex;
         grid-template-columns: repeat(auto-fit, minmax(257px, 1fr));
-        grid-row-gap: 20px;
         grid-column-gap: 25px;
         justify-content: space-between;
         flex-wrap: wrap;
-        & :last-child {
-          // margin-right: auto;
-        }
       }
     }
   }

@@ -97,19 +97,31 @@ export default {
   position: relative;
   height: 120px;
   padding: 10px 10px 0 10px;
-  border-radius: 5px;
   overflow: hidden;
   background: #fafafa;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
   box-sizing: border-box;
-  transition: all 0.3s;
   cursor: pointer;
   color: #30333c;
+  border-radius: 6px;
+  border: 1px solid #e4ecf3;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 0 0 25px 0;
   &:hover {
-    background: #6b7184;
-    color: #fff;
+    transform: translateY(-6px) !important;
+    -webkit-transform: translateY(-6px) !important;
+    -moz-transform: translateY(-6px) !important;
+    box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.3);
+    -webkit-box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.3);
+    -moz-box-shadow: 0 26px 40px -24px rgba(0, 36, 100, 0.3);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
   }
   .to-link {
     font-size: 12px;

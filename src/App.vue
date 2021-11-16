@@ -54,6 +54,7 @@ export default {
   display: flex;
   min-width: 1400px;
   position: relative;
+  flex: 1;
   .right-content {
     width: 100%;
     padding-left: 180px;

@@ -193,7 +193,7 @@ export default {
 <style lang="scss" scoped>
 @import url("../../../styles/article.css");
 .article-content-box {
-  width: 850px;
+  width: 800px;
   min-height: 500px;
   background-color: #fff;
   border: 1px solid #e8e8e8;
