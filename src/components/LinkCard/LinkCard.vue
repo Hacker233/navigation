@@ -111,6 +111,9 @@ export default {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   margin: 0 0 25px 0;
+  &:last-child {
+    margin-right: auto;
+  }
   &:hover {
     transform: translateY(-6px) !important;
     -webkit-transform: translateY(-6px) !important;

@@ -91,9 +91,13 @@ export default {
       .card-box {
         display: flex;
         grid-template-columns: repeat(auto-fit, minmax(257px, 1fr));
-        grid-column-gap: 25px;
+        grid-column-gap: 40px;
         justify-content: space-between;
         flex-wrap: wrap;
+        & :after {
+          content: "";
+          flex: auto;
+        }
       }
     }
   }
