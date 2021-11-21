@@ -3,6 +3,7 @@ import env from "../config/index";
 import store from "../store";
 import { Message } from "element-ui";
 import login from "../common/LoginDialog"; // 登录弹窗
+import NProgress from "nprogress";
 
 // 创建一个axios实例
 const axiosService = axios.create({
@@ -32,10 +33,12 @@ axiosService.interceptors.request.use(
 // 处理请求content-type
 axiosService.interceptors.request.use(
   (config) => {
+    NProgress.start();
     return config;
   },
   (error) => {
     // 处理请求错误
+    NProgress.done();
     Promise.reject(error);
   }
 );
@@ -43,6 +46,7 @@ axiosService.interceptors.request.use(
 // respone拦截器 ==> 对响应做处理
 axiosService.interceptors.response.use(
   (response) => {
+    NProgress.done();
     // debugger;
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
@@ -74,6 +78,7 @@ axiosService.interceptors.response.use(
     }
   },
   (error) => {
+    NProgress.done();
     let err = error.response;
     if (!err) {
       Message.error("网络连接失败！");
