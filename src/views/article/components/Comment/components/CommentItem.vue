@@ -164,7 +164,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .comment-item {
   margin-bottom: 1.0664rem;
   &:not(:last-child) {

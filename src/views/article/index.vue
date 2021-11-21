@@ -3,7 +3,6 @@
     <!-- 文章文章内容 -->
     <div class="article-left-box">
       <article-content></article-content>
-      <!-- 评论区 -->
     </div>
     <!-- 右侧区域 -->
     <div class="right-box"></div>

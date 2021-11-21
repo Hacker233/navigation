@@ -9,7 +9,7 @@
         <div class="grow-wrap" :data-replicated-value="value">
           <textarea
             ref="input"
-            rows="1"
+            rows="3"
             :value="value"
             :placeholder="placeholder"
             @input="(e) => (value = e.target.value)"
@@ -95,7 +95,7 @@
             type="file"
             @change="handleChange"
             @click="onUpload = true"
-          >
+          />
         </div>
         <slot name="submitBtn">
           <button
@@ -112,139 +112,139 @@
 </template>
 
 <script>
-import EmojiSelector from './EmojiSelector'
+import EmojiSelector from "./EmojiSelector";
 export default {
-  name: 'CommentForm',
+  name: "CommentForm",
   components: { EmojiSelector },
   props: {
     placeholder: {
       type: String,
-      default: '输入评论...'
+      default: "输入评论...",
     },
     id: {
       type: [String, Number],
-      default: 'comment-root'
+      default: "comment-root",
     },
     comment: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     parent: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     uploadImg: {
       type: Function,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       focus: false, // * 聚焦状态
-      value: '', // * 输入框值
-      imgSrc: '', // * 粘贴的图片src
-      showEmojiSelector: false // * 表情选择框状态
-    }
+      value: "", // * 输入框值
+      imgSrc: "", // * 粘贴的图片src
+      showEmojiSelector: false, // * 表情选择框状态
+    };
   },
   computed: {
     // 是否为顶部评论表单
     isRoot() {
-      return this.id === 'comment-root'
+      return this.id === "comment-root";
     },
     // 是否为回复中的表单
     isSub() {
-      return this.id.split('-').length === 3
+      return this.id.split("-").length === 3;
     },
     className() {
       return this.isRoot
-        ? 'comment-root'
+        ? "comment-root"
         : this.isSub
-          ? 'reply sub-reply'
-          : 'reply'
-    }
+        ? "reply sub-reply"
+        : "reply";
+    },
   },
   mounted() {
-    const richInput = this.$refs.input
-    !this.isRoot && richInput.focus()
+    const richInput = this.$refs.input;
+    !this.isRoot && richInput.focus();
 
-    richInput.addEventListener('paste', this.handlePaste)
-    this.$once('hook:beforeDestroy', () =>
-      richInput.removeEventListener('paste', this.handlePaste)
-    )
+    richInput.addEventListener("paste", this.handlePaste);
+    this.$once("hook:beforeDestroy", () =>
+      richInput.removeEventListener("paste", this.handlePaste)
+    );
   },
   methods: {
     // * 选择要上传的图片
     handleChange(e) {
-      const files = e.target.files
-      if (!(files && files[0])) return
-      this.beforeSetImg(files[0])
+      const files = e.target.files;
+      if (!(files && files[0])) return;
+      this.beforeSetImg(files[0]);
     },
     // * 处理图片
     async beforeSetImg(file) {
       if (!/^image/.test(file.type)) {
-        throw new Error("file type must contain 'image'.")
+        throw new Error("file type must contain 'image'.");
       }
 
-      if (typeof this.uploadImg === 'function') {
+      if (typeof this.uploadImg === "function") {
         const callback = (src) => {
-          this.imgSrc = src
-        }
-        await this.uploadImg({ file, callback })
-        return
+          this.imgSrc = src;
+        };
+        await this.uploadImg({ file, callback });
+        return;
       }
 
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
       reader.onload = () => {
-        this.imgSrc = reader.result
-      }
+        this.imgSrc = reader.result;
+      };
       reader.onerror = () => {
         throw new Error(
           `read file errored, the error code is ${reader.error.code}.`
-        )
-      }
+        );
+      };
     },
     // * 点击图片触发上传
     triggerUpload() {
-      this.$refs.upload.click()
+      this.$refs.upload.click();
     },
     // * 点击图片上的删除按钮
     removeImg() {
-      this.imgSrc = ''
-      this.closeEmojiSelector()
+      this.imgSrc = "";
+      this.closeEmojiSelector();
     },
     // * textarea blur 事件
     handleBlur() {
-      this.showEmojiSelector = false
+      this.showEmojiSelector = false;
 
       if (this.onUpload) {
         this.$nextTick(() => {
-          this.onUpload = false
-        })
-        return
+          this.onUpload = false;
+        });
+        return;
       }
 
-      if (this.value || this.imgSrc) return
+      if (this.value || this.imgSrc) return;
 
-      this.focus = false
+      this.focus = false;
 
       if (!this.isRoot) {
-        this.close()
+        this.close();
       }
     },
     // * textarea paste 事件
     handlePaste(e) {
-      const file = e.clipboardData.files[0]
+      const file = e.clipboardData.files[0];
       if (file) {
         // 只处理复制图片
-        this.beforeSetImg(file)
-        e.preventDefault()
+        this.beforeSetImg(file);
+        e.preventDefault();
       }
     },
     // * 点击评论
     handleSubmit() {
-      if (!this.value.trim() && !this.imgSrc) return
-      const user = (this.comment && this.comment.user) || null
+      if (!this.value.trim() && !this.imgSrc) return;
+      const user = (this.comment && this.comment.user) || null;
 
       const data = {
         id: this.id,
@@ -254,50 +254,51 @@ export default {
         createAt: new Date().getTime(),
         likes: 0,
         callback: () => {
-          this.isRoot ? this.reset() : this.close()
-        }
-      }
+          this.isRoot ? this.reset() : this.close();
+        },
+      };
 
       if (!this.isSub) {
-        data.children = []
+        data.children = [];
       }
 
-      this.$emit('form-submit', { newComment: data, parent: this.parent })
+      this.$emit("form-submit", { newComment: data, parent: this.parent });
+      this.value = "";
     },
     // * 重置组件状态
     reset() {
-      this.value = ''
-      this.imgSrc = ''
-      this.$refs.input.blur()
+      this.value = "";
+      this.imgSrc = "";
+      this.$refs.input.blur();
     },
     // * 销毁组件
     close() {
-      this.$emit('form-delete', this.id)
+      this.$emit("form-delete", this.id);
     },
     // * 选择表情
     openEmojiSelector() {
-      this.showEmojiSelector = !this.showEmojiSelector
+      this.showEmojiSelector = !this.showEmojiSelector;
 
       if (document.activeElement === document.body) {
-        this.$refs.input.focus()
+        this.$refs.input.focus();
       }
       if (this.showEmojiSelector) {
         // 移动光标到末尾
-        const input = this.$refs.input
-        input.selectionStart = input.selectionEnd = this.value.length
+        const input = this.$refs.input;
+        input.selectionStart = input.selectionEnd = this.value.length;
       }
     },
     // * 关闭选择表情组件
     closeEmojiSelector() {
       if (this.showEmojiSelector) {
-        this.showEmojiSelector = false
+        this.showEmojiSelector = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .comment-form {
   max-width: 100%;
   padding: 0.8rem 1.0664rem;
@@ -318,12 +319,12 @@ export default {
       background-color: #fff;
       overflow: hidden;
       &.focus {
-        border-color: #007fff;
+        border-color: green;
       }
       .grow-wrap {
         display: grid;
         &::after {
-          content: attr(data-replicated-value) ' ';
+          content: attr(data-replicated-value) " ";
           white-space: pre-wrap;
           visibility: hidden;
         }
@@ -387,7 +388,7 @@ export default {
             height: 1.2rem;
             background-repeat: no-repeat;
             background-size: cover;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyMiIgdmlld0JveD0iMCAwIDIyIDIyIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTEgMWgyMHYyMEgxeiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiMwMjdGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTExIDE4LjQzOGE3LjQzOCA3LjQzOCAwIDEgMCAwLTE0Ljg3NiA3LjQzOCA3LjQzOCAwIDAgMCAwIDE0Ljg3NnptMCAxLjA2MmE4LjUgOC41IDAgMSAxIDAtMTcgOC41IDguNSAwIDAgMSAwIDE3ek03LjgxMiA5LjkzN2ExLjA2MiAxLjA2MiAwIDEgMCAwLTIuMTI0IDEuMDYyIDEuMDYyIDAgMCAwIDAgMi4xMjV6bTYuMzc1IDBhMS4wNjMgMS4wNjMgMCAxIDAgMC0yLjEyNSAxLjA2MyAxLjA2MyAwIDAgMCAwIDIuMTI1ek0xMSAxNi4yMzJhMy4yNyAzLjI3IDAgMCAwIDMuMjctMy4yN0g3LjczYTMuMjcgMy4yNyAwIDAgMCAzLjI3IDMuMjd6Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=');
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMiIgaGVpZ2h0PSIyMiIgdmlld0JveD0iMCAwIDIyIDIyIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTEgMWgyMHYyMEgxeiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiMwMjdGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTExIDE4LjQzOGE3LjQzOCA3LjQzOCAwIDEgMCAwLTE0Ljg3NiA3LjQzOCA3LjQzOCAwIDAgMCAwIDE0Ljg3NnptMCAxLjA2MmE4LjUgOC41IDAgMSAxIDAtMTcgOC41IDguNSAwIDAgMSAwIDE3ek03LjgxMiA5LjkzN2ExLjA2MiAxLjA2MiAwIDEgMCAwLTIuMTI0IDEuMDYyIDEuMDYyIDAgMCAwIDAgMi4xMjV6bTYuMzc1IDBhMS4wNjMgMS4wNjMgMCAxIDAgMC0yLjEyNSAxLjA2MyAxLjA2MyAwIDAgMCAwIDIuMTI1ek0xMSAxNi4yMzJhMy4yNyAzLjI3IDAgMCAwIDMuMjctMy4yN0g3LjczYTMuMjcgMy4yNyAwIDAgMCAzLjI3IDMuMjd6Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=");
           }
           &:hover {
             opacity: 0.8;
@@ -418,14 +419,14 @@ export default {
         padding: 0.4rem 1.04rem;
         font-size: 1rem;
         color: #fff;
-        background-color: #027fff;
+        background-color: green;
         border-radius: 2px;
         outline: none;
         border: none;
         cursor: pointer;
         transition: all 0.3s;
         &:hover {
-          background-color: #0371df;
+          background-color: green;
         }
         &:disabled {
           opacity: 0.4;

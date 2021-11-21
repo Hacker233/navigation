@@ -189,7 +189,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .emoji-selector {
   padding: 0.8rem;
   position: absolute;

@@ -407,9 +407,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 #comment {
-  margin-top: 20px;
   & > .comment-list {
     background-color: #fff;
   }

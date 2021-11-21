@@ -49,7 +49,7 @@
           ></list-card>
           <!-- 分页 -->
           <Pagination
-            v-if="pageCount >= 10"
+            v-if="total >= 10"
             :total="total"
             :pageCount="pageCount"
             @currentChange="currentChange"
