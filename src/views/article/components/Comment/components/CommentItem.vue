@@ -166,7 +166,6 @@ export default {
 
 <style lang="scss" scoped>
 .comment-item {
-  margin-bottom: 1.0664rem;
   &:not(:last-child) {
     .content-box {
       border-bottom: 1px solid #f1f1f1;
