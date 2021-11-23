@@ -75,10 +75,10 @@ export default {
         this.$message.error(data.message);
       }
     },
+    // 添加评论
     async submit(newCommetn, parent, add) {
       console.log("newCommetn: ", newCommetn);
       console.log("parent:", parent);
-      console.log("add:", add);
       let params = {};
       if (parent) {
         params = {
@@ -94,15 +94,15 @@ export default {
           userInfo: newCommetn.userInfo,
         };
       }
-
       const data = await addComment(params);
       if (data.code === "00000") {
         this.$message.success("评论成功");
-        this.getCommentList(); // 获取评论列表
+        add(newCommetn); // 添加评论
       } else {
         this.$message.error(data.message);
       }
     },
+    // 点赞
     async like(comment) {
       const res = await new Promise((resolve) => {
         setTimeout(() => {
@@ -112,6 +112,7 @@ export default {
 
       console.log("likeComment: ", res);
     },
+    // 上传图片
     async uploadImg({ file, callback }) {
       const res = await new Promise((resolve, reject) => {
         const reader = new FileReader();

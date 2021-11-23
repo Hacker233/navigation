@@ -43,6 +43,11 @@
             <i class="iconfont pig-changyong_dianzan"></i>
             <span>{{ articleInfo.article_likes }}</span>
           </div>
+          <!-- 评论量 -->
+          <div class="comments">
+            <i class="iconfont pig-changyong_xiaoxi"></i>
+            <span>{{ articleInfo.article_comment_num }}</span>
+          </div>
         </div>
       </div>
       <!-- 文章封面 -->
@@ -178,6 +183,11 @@ export default {
           align-items: center;
         }
         .likes {
+          margin-right: 20px;
+          display: flex;
+          align-items: center;
+        }
+        .comments {
           display: flex;
           align-items: center;
         }
