@@ -109,6 +109,7 @@ export default {
 <style lang="scss" scoped>
 .home {
   padding-top: 40px;
+  flex: 1;
   .home-content {
     max-width: 1200px;
     margin: 0 auto;

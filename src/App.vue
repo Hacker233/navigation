@@ -9,6 +9,13 @@
       <template v-else>
         <router-view :key="$route.path" />
       </template>
+      <!-- footer -->
+      <div class="footer-box">
+        <p>Copyright © 2021 小猪导航@会飞的猪</p>
+        <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank"
+          >蜀ICP备2020034752号-2</a
+        >
+      </div>
     </div>
     <!-- github图标 -->
     <github-card></github-card>
@@ -57,9 +64,52 @@ export default {
   flex: 1;
   .right-content {
     width: 100%;
-    padding-left: 180px;
+    padding-left: 179px;
     box-sizing: border-box;
     overflow: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .footer-box {
+      height: 40px;
+      background-color: rgb(84, 92, 100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      color: #fff;
+      font-size: 14px;
+      flex: none;
+      a {
+        text-decoration: none;
+        color: #fff;
+        margin-left: 30px;
+      }
+      /*包含以下五种的链接*/
+      a {
+        text-decoration: none;
+      }
+      /*正常的未被访问过的链接*/
+      a:link {
+        text-decoration: none;
+      }
+      /*已经访问过的链接*/
+      a:visited {
+        text-decoration: none;
+      }
+      /*鼠标划过(停留)的链接*/
+      a:hover {
+        text-decoration: none;
+      }
+      /* 正在点击的链接，鼠标在元素上按下还没有松开*/
+      a:active {
+        text-decoration: none;
+      }
+      /* 获得焦点的时候 鼠标松开时显示的颜色*/
+      a:focus {
+        text-decoration: none;
+      }
+    }
   }
 }
 </style>

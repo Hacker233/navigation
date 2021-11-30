@@ -188,6 +188,7 @@ export default {
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  flex: 1;
   .left-box {
     margin-right: 20px;
     .category-box {

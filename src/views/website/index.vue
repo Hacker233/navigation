@@ -60,6 +60,8 @@ export default {
 .website-box {
   width: 100%;
   padding-top: 40px;
+  flex: 1;
+  box-sizing: border-box;
   .content {
     max-width: 1100px;
     margin: 0 auto;
