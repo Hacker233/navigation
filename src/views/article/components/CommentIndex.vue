@@ -104,6 +104,7 @@ export default {
     },
     // 点赞
     async like(comment) {
+      console.log("comment", comment);
       const res = await new Promise((resolve) => {
         setTimeout(() => {
           resolve(comment);
