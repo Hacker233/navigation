@@ -63,8 +63,7 @@ export default {
   position: relative;
   flex: 1;
   .right-content {
-    width: 100%;
-    padding-left: 179px;
+    flex: 1;
     box-sizing: border-box;
     overflow: auto;
     position: relative;

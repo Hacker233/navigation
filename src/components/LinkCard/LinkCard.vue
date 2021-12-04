@@ -197,6 +197,7 @@ export default {
     display: flex;
     align-items: center;
     color: #a1a7b7;
+    overflow: hidden;
     .content {
       display: flex;
       p {

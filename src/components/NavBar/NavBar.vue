@@ -1,5 +1,16 @@
 <template>
   <div class="nav-bar-box">
+    <div
+      :class="[
+        'open-close-icon',
+        { 'close-icon': collapse },
+        { 'open-icon': !collapse },
+      ]"
+      @click="openCloseNav"
+    >
+      <img v-if="collapse" class="pig-zhankai" src="@/assets/images/open-close.svg"/>
+      <img v-else class="pig-zhankai" src="@/assets/images/open-close.svg" />
+    </div>
     <div class="index-menu" @click="toHome">
       <i class="iconfont pig-zhu"></i>
       <span>小猪导航</span>
@@ -12,6 +23,7 @@
         text-color="#fff"
         active-text-color="#ffd04b"
         background-color="#545c64"
+        :collapse="collapse"
       >
         <template v-for="(item, index) of menuList">
           <el-menu-item
@@ -52,7 +64,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      collapse: false,
+    };
   },
   computed: {
     activeRouter() {
@@ -81,6 +95,10 @@ export default {
     toHome() {
       this.$router.push("/");
     },
+    // 展开或者收起菜单
+    openCloseNav() {
+      this.collapse = !this.collapse;
+    },
   },
 };
 </script>
@@ -89,28 +107,50 @@ export default {
   margin-right: 10px;
 }
 .nav-bar-box {
-  width: 180px;
   height: 100%;
-  overflow: hidden;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 99;
   display: flex;
   flex-direction: column;
+  position: relative;
+  transition: all 0.3s;
   ::v-deep .el-menu {
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
     .el-menu-item {
       min-width: 100px;
     }
   }
+  ::v-deep .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 180px;
+  }
+  .open-close-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .pig-zhankai {
+      width: 30px;
+      cursor: pointer;
+    }
+  }
+  .open-icon {
+    transform: rotate(90deg);
+  }
+  .close-icon {
+    transform: rotate(-90deg);
+  }
   .menu-box {
     flex: 1;
     overflow: auto;
+    padding-top: 50px;
   }
   .index-menu {
-    width: 100%;
+    width: 181px;
     height: 50px;
     display: flex;
     justify-content: flex-start;
@@ -118,9 +158,12 @@ export default {
     box-sizing: border-box;
     align-items: center;
     cursor: pointer;
-    border-bottom: 1px solid #ccc;
     user-select: none;
     background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
     .iconfont {
       font-size: 30px;
     }
