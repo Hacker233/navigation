@@ -15,7 +15,11 @@
             v-for="(subItem, subIndex) of item.list"
             :key="subIndex"
             :websiteInfo="subItem"
-          ></link-card>
+          >
+            <div slot="hot-icon" class="hot-icon" v-if="subIndex <= 2">
+              <i class="iconfont pig-remen"></i>
+            </div>
+          </link-card>
         </div>
       </div>
     </div>
@@ -99,6 +103,15 @@ export default {
         & :after {
           content: "";
           flex: auto;
+        }
+        .hot-icon {
+          position: absolute;
+          top: -10px;
+          left: -10px;
+          .pig-remen {
+            color: red;
+            font-size: 25px;
+          }
         }
       }
     }

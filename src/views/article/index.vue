@@ -5,14 +5,19 @@
       <article-content></article-content>
     </div>
     <!-- 右侧区域 -->
-    <div class="right-box"></div>
+    <div class="right-box">
+      <!-- 公众号关注盒子 -->
+      <right-box></right-box>
+    </div>
   </div>
 </template>
 <script>
 import ArticleContent from "./components/ArticleContent";
+import RightBox from "./components/RightBox.vue";
 export default {
   components: {
     ArticleContent,
+    RightBox,
   },
 };
 </script>
@@ -27,8 +32,9 @@ export default {
   }
   .right-box {
     width: 300px;
-    min-height: 300px;
     background-color: #fff;
+    position: sticky;
+    top: 50px;
   }
 }
 </style>

@@ -3,6 +3,7 @@
     class="link-card-box"
     @click="toLink(websiteInfo.website_link, websiteInfo.website_id)"
   >
+    <slot name="hot-icon"></slot>
     <!-- 直达链接 -->
     <span
       class="to-link"
@@ -97,7 +98,7 @@ export default {
   position: relative;
   height: 120px;
   padding: 10px 10px 0 10px;
-  overflow: hidden;
+  // overflow: hidden;
   background: #fafafa;
   display: flex;
   flex-direction: column;
