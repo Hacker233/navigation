@@ -10,10 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: npm install
-      run: npm install
-    - name: npm install @wangeditor/editor
-      run: npm install @wangeditor/editor
+    - name: yarn install
+      run: yarn install
     - name: npm run build
       run: npm run build
     # 命名这个任务为发布Deploy
