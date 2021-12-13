@@ -31,8 +31,8 @@
             :key="index"
             :index="item.menu_router"
             :route="{
-              path: item.menu_router,
-              query: { menuId: item.menu_id, menuIcon: item.menu_icon },
+              path: item.menu_id === 11 ? '/software' : item.menu_router,
+              query: { menuId: item.menu_id === 11 ? 1 : item.menu_id, menuIcon: item.menu_icon },
             }"
           >
             <i :class="['iconfont', item.menu_icon]"></i>

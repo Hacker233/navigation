@@ -29,6 +29,16 @@
             show-word-limit
           ></el-input>
         </el-form-item>
+        <el-form-item label="菜单id" prop="menuId" v-if="title === '更新菜单'">
+          <el-input
+            v-model="form.menuId"
+            placeholder="请输入菜单Id"
+            clearable
+            :maxlength="4"
+            show-word-limit
+            disabled
+          ></el-input>
+        </el-form-item>
         <el-form-item label="菜单路由" prop="menuRouter">
           <el-input
             v-model="form.menuRouter"

@@ -11,6 +11,8 @@
     >
       <el-table-column prop="menu_order" label="菜单顺序" sortable>
       </el-table-column>
+      <el-table-column prop="menu_id" label="菜单id" sortable>
+      </el-table-column>
       <el-table-column prop="menu_level" label="菜单级别">
         <template slot-scope="scope">
           <span v-if="scope.row.menu_level === 1">一级菜单</span>
