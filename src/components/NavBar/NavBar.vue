@@ -31,8 +31,8 @@
             :key="index"
             :index="item.menu_router"
             :route="{
-              path: item.menu_id === 11 ? '/software' : item.menu_router,
-              query: { menuId: item.menu_id === 11 ? 1 : item.menu_id, menuIcon: item.menu_icon },
+              path: item.menu_router,
+              query: { menuId: item.menu_id, menuIcon: item.menu_icon },
             }"
           >
             <i :class="['iconfont', item.menu_icon]"></i>
@@ -93,7 +93,13 @@ export default {
     },
     // 跳转至首页
     toHome() {
-      this.$router.push("/");
+      this.$router.push({
+        name: 'software',
+        query: {
+          menuId: 1,
+          menuIcon: 'pig-shouye'
+        }
+      });
     },
     // 展开或者收起菜单
     openCloseNav() {
