@@ -120,6 +120,7 @@ export default {
         websiteAbstract: item.website_abstract,
         websiteTags: item.website_tags,
         websiteTitle: item.website_title,
+        websiteFavicon: item.website_favicon
       };
     },
     // 删除网站

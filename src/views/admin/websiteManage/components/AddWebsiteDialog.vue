@@ -71,15 +71,38 @@
           show-word-limit
         ></el-input>
       </el-form-item>
+      <el-form-item label="网站logo">
+        <el-upload
+          class="avatar-uploader"
+          :action="uploadAddress()"
+          :headers="{ Authorization: $store.state.token }"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img
+            v-if="form.websiteFavicon"
+            :src="form.websiteFavicon"
+            class="user-manage-avatar"
+          />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeAddWebsiteDialog">取 消</el-button>
-      <el-button type="primary" @click="confirm('ruleForm')" :loading="btnIsLoadgin">确 定</el-button>
+      <el-button
+        type="primary"
+        @click="confirm('ruleForm')"
+        :loading="btnIsLoadgin"
+        >确 定</el-button
+      >
     </span>
   </el-dialog>
 </template>
 <script>
 import { addWebsite, updataWebsite, queryCategory } from "@/http/api/website";
+import env from "@/config/index";
 export default {
   props: {
     // 显示或隐藏弹窗
@@ -101,6 +124,7 @@ export default {
         websiteAbstract: "", // 网站简介
         websiteTags: "", // 网站标签
         websiteTitle: "", // 网站标题
+        websiteFavicon: "", // 网站图标
       },
       btnIsLoadgin: false,
       tags: [],
@@ -166,6 +190,25 @@ export default {
     },
   },
   methods: {
+    // 上传头像等方法
+    uploadAddress() {
+      return env.serverAddress + "/api/upload";
+    },
+    // 上传成功后
+    handleAvatarSuccess(response) {
+      this.form.websiteFavicon = response.data.fileUrl;
+      this.$message({
+        message: "网站logo更新成功",
+        type: "success",
+      });
+    },
+    beforeAvatarUpload(file) {
+      const isLt4M = file.size / 1024 / 1024 < 4;
+      if (!isLt4M) {
+        this.$message.error("上传头像图片大小不能超过 4MB!");
+      }
+      return isLt4M;
+    },
     // 取消新增
     closeAddWebsiteDialog() {
       this.$emit("closeAddWebsiteDialog");
@@ -236,6 +279,7 @@ export default {
         websiteLink: this.form.websiteLink, // 网站链接
         websiteAbstract: this.form.websiteAbstract, // 网站简介
         websiteTags: this.form.websiteTags, // 网站标签
+        websiteFavicon: this.form.websiteFavicon, // 网站图标
       };
       const data = await addWebsite(params);
       if (data.code === "00000") {
@@ -249,6 +293,7 @@ export default {
           websiteLink: "", // 网站链接
           websiteAbstract: "", // 网站简介
           websiteTags: "", // 网站标签
+          websiteFavicon: "",
         };
         this.$emit("confirmAddWebsiteDialog");
         this.btnIsLoadgin = false;
@@ -273,6 +318,7 @@ export default {
         websiteAbstract: this.form.websiteAbstract, // 网站简介
         websiteTags: this.form.websiteTags, // 网站标签
         websiteTitle: this.form.websiteTitle, // 网站标题
+        websiteFavicon: this.form.websiteFavicon,
       };
       const data = await updataWebsite(params);
       if (data.code === "00000") {
@@ -298,5 +344,31 @@ export default {
     margin-right: 10px;
     cursor: pointer;
   }
+}
+</style>
+<style>
+.avatar-uploader {
+  line-height: 0;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 78px;
+  height: 78px;
+  line-height: 78px;
+  text-align: center;
+}
+.user-manage-avatar {
+  height: 78px;
+  width: 78px;
 }
 </style>
