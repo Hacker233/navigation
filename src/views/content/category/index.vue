@@ -17,7 +17,11 @@
       </el-table-column>
       <el-table-column prop="category_menu_id" label="所属菜单id" sortable>
       </el-table-column>
-      <el-table-column prop="category_menu_parent_id" label="所属菜单父级id" sortable>
+      <el-table-column
+        prop="category_menu_parent_id"
+        label="所属菜单父级id"
+        sortable
+      >
       </el-table-column>
       <el-table-column prop="category_menu_name" label="所属菜单名" sortable>
       </el-table-column>
@@ -48,7 +52,7 @@
       :show-close="false"
       width="30%"
     >
-      <el-form ref="ruleForm" :rules="rules" :model="form" label-width="80px">
+      <el-form ref="ruleForm" :rules="rules" :model="form" label-width="100px">
         <el-form-item label="所属菜单" prop="menuInfo">
           <el-cascader
             v-model="form.menuInfo"
@@ -62,6 +66,26 @@
             v-model="form.categoryName"
             clearable
             placeholder="请输入分类名称"
+            :maxlength="60"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="所属菜单ID" prop="categoryMenuId">
+          <el-input
+            v-model="form.categoryMenuId"
+            clearable
+            disabled
+            placeholder="所属菜单ID"
+            :maxlength="60"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="所属菜单名称" prop="categoryMenuId">
+          <el-input
+            v-model="form.categoryMenuName"
+            clearable
+            disabled
+            placeholder="所属菜单名称"
             :maxlength="60"
             show-word-limit
           ></el-input>
@@ -94,6 +118,7 @@ export default {
       modelTitle: "新增",
       categoryDialogVisible: false,
       btnIsLoadgin: false,
+      menuInfoItem: "", // 选中的菜单信息
       pageParams: {
         page: 1,
         pageSize: 10,
@@ -102,6 +127,8 @@ export default {
       pageCount: 0, // 总页数
       form: {
         categoryName: "",
+        categoryMenuId: "",
+        categoryMenuName: "",
         menuInfo: [], // 所属菜单相关信息
       },
       rules: {
@@ -168,9 +195,12 @@ export default {
     },
     /*********所属菜单**********/
     changeOwnMenu(value) {
+      this.menuInfoItem = JSON.parse(this.filterMenu());
+      this.form.categoryMenuId = this.menuInfoItem.topmenu_id; // 选中菜单，更新所属菜单id
+      this.form.categoryMenuName = this.menuInfoItem.topmenu_name; // 所属菜单名称
       console.log(value);
     },
-    
+
     addCategory() {
       this.modelTitle = "新增";
       this.categoryDialogVisible = true;
@@ -236,11 +266,14 @@ export default {
     },
     // 编辑
     handleEdit(row) {
+      console.log("row", row);
       this.modelTitle = "编辑";
       this.categoryDialogVisible = true;
       this.form = {
         categoryId: row.category_id,
         categoryName: row.category_name,
+        categoryMenuId: row.category_menu_id,
+        categoryMenuName: row.category_menu_name,
       };
     },
     // 更新请求
@@ -249,6 +282,8 @@ export default {
       let parasm = {
         categoryId: this.form.categoryId,
         categoryName: this.form.categoryName,
+        categoryMenuId: this.form.categoryMenuId,
+        categoryMenuName: this.form.categoryMenuName
       };
       const data = await updateCategory(parasm);
       if (data.code === "00000") {
