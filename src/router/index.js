@@ -30,6 +30,12 @@ const Publish = () => import("@/views/content/publish/index.vue"); // 发布内�
 const Category = () => import("@/views/content/category/index.vue"); // 分类管理
 const ArticleManage = () => import("@/views/content/articleManage/index.vue"); // 文章管理
 
+/****************资源管理菜单*****************/
+const Source = () => import("@/views/admin/source/source.vue"); // 资源管理
+const SourceManage = () =>
+  import("@/views/admin/source/sourcemanage/index.vue"); // 资源管理
+const SourceCategory = () => import("@/views/admin/source/sourcecategory/index.vue"); // 资源分类
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -360,6 +366,47 @@ const routes = [
         component: ArticleManage,
         meta: {
           activeMenu: "/content/articleManage",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+    ],
+  },
+  // 资源管理
+  {
+    path: "/source",
+    name: "source",
+    component: Source,
+    meta: {
+      activeMenu: "/source",
+      showRightTitle: true,
+      showBack: false,
+      auth: true,
+      keepAlive: false,
+    },
+    children: [
+      // 资源管理
+      {
+        path: "sourcemanage",
+        name: "sourcemanage",
+        component: SourceManage,
+        meta: {
+          activeMenu: "/source/sourcemanage",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+      // 资源分类
+      {
+        path: "sourcecategory",
+        name: "sourcecategory",
+        component: SourceCategory,
+        meta: {
+          activeMenu: "/source/sourcecategory",
           showRightTitle: true,
           showBack: false,
           auth: true,
