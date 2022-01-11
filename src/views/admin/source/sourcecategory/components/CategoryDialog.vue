@@ -17,6 +17,15 @@
             show-word-limit
           ></el-input>
         </el-form-item>
+        <el-form-item label="分类图标" prop="menuIcon">
+          <div class="menu-icon-box">
+            <i
+              v-if="form.socategoryIcon"
+              :class="['menu-icon iconfont', form.socategoryIcon]"
+            ></i>
+            <el-button type="text" @click="selectIconfont">选择图标</el-button>
+          </div>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="closeDialog">取 消</el-button>
@@ -25,10 +34,16 @@
         >
       </span>
     </el-dialog>
+    <icon-panel
+      :iconPanelDialogVisible="iconPanelDialogVisible"
+      @cancelIconDialog="cancelIconDialog"
+      @confirmIconDialog="confirmIconDialog"
+    ></icon-panel>
   </div>
 </template>
 <script>
 import { addSocategory, updateSocategory } from "@/http/api/socategory";
+import IconPanel from "@/components/IconPanel/IconPanel"; // 菜单选择弹窗
 export default {
   props: {
     categoryDialogVisible: { type: Boolean, default: false },
@@ -47,13 +62,18 @@ export default {
       form: {
         socategoryId: "",
         socategoryName: "", // 分类名称
+        socategoryIcon: "", // 分类图标
       },
+      iconPanelDialogVisible: false, // 图标选择弹窗
       rules: {
         socategoryName: [
           { required: true, message: "请输入分类名称", trigger: "blur" },
         ],
       },
     };
+  },
+  components: {
+    IconPanel,
   },
   watch: {
     // 如果有回显信息,则赋值给form
@@ -69,6 +89,19 @@ export default {
     // 取消弹窗
     closeDialog() {
       this.$emit("closeDialog");
+    },
+    // 打开图标选择弹窗
+    selectIconfont() {
+      this.iconPanelDialogVisible = true;
+    },
+    // 取消图标选择弹窗
+    cancelIconDialog() {
+      this.iconPanelDialogVisible = false;
+    },
+    // 确定图标选择弹窗
+    confirmIconDialog(iconfontInfo) {
+      this.form.socategoryIcon = iconfontInfo.iconfont_class;
+      this.iconPanelDialogVisible = false;
     },
     // 确认弹窗
     confirmDialog(formName) {
@@ -89,6 +122,7 @@ export default {
     async addSocategoryAsync() {
       let params = {
         socategoryName: this.form.socategoryName,
+        socategoryIcon: this.form.socategoryIcon
       };
       const data = await addSocategory(params);
       if (data.code === "00000") {
@@ -110,6 +144,7 @@ export default {
       let params = {
         socategoryId: this.form.socategoryId,
         socategoryName: this.form.socategoryName,
+        socategoryIcon: this.form.socategoryIcon
       };
       const data = await updateSocategory(params);
       if (data.code === "00000") {
@@ -129,3 +164,13 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.menu-icon-box {
+  display: flex;
+  align-items: center;
+  .menu-icon {
+    margin-right: 20px;
+    font-size: 30px;
+  }
+}
+</style>

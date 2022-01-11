@@ -15,6 +15,11 @@
       <el-table-column prop="socategory_id" label="分类ID"> </el-table-column>
       <el-table-column prop="socategory_name" label="分类名称">
       </el-table-column>
+      <el-table-column prop="socategory_icon" label="图标">
+        <template slot-scope="scope">
+          <i class="iconfont" :class="scope.row.socategory_icon"></i>
+        </template>
+      </el-table-column>
       <!-- 操作列 -->
       <el-table-column label="操作" width="160">
         <template slot-scope="scope">
@@ -71,6 +76,7 @@ export default {
     },
     // 打开新增弹窗
     openAddDialog() {
+      this.title = "新增分类";
       this.categoryDialogVisible = true;
     },
     // 取消弹窗
