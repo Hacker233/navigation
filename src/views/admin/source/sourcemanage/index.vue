@@ -47,6 +47,7 @@
           >
             <p>名称:{{ item.name }}</p>
             <p>下载链接:{{ item.link }}</p>
+            <p>提取码:{{ item.pass }}</p>
           </div>
         </template>
       </el-table-column>
@@ -117,6 +118,7 @@ export default {
           {
             name: "",
             link: "",
+            pass: ""
           },
         ], // 资源下载链接
         sourceScreen: [], // 资源截图

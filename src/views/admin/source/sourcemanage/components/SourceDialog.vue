@@ -114,6 +114,13 @@
             :maxlength="100"
             show-word-limit
           ></el-input>
+          <el-input
+            v-model="item.pass"
+            clearable
+            placeholder="请输入提取码"
+            :maxlength="100"
+            show-word-limit
+          ></el-input>
           <span
             class="addDownload"
             @click="addDownload"
@@ -176,6 +183,7 @@ export default {
           {
             name: "",
             link: "",
+            pass: "",
           },
         ], // 资源下载链接
         sourceScreen: [], // 资源截图
@@ -305,6 +313,7 @@ export default {
       this.form.sourceDownload.push({
         name: "",
         link: "",
+        pass: "",
       });
     },
     // 资源截图上传相关方法
