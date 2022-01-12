@@ -34,7 +34,13 @@ const ArticleManage = () => import("@/views/content/articleManage/index.vue"); /
 const Source = () => import("@/views/admin/source/source.vue"); // 资源管理
 const SourceManage = () =>
   import("@/views/admin/source/sourcemanage/index.vue"); // 资源管理
-const SourceCategory = () => import("@/views/admin/source/sourcecategory/index.vue"); // 资源分类
+const SourceCategory = () =>
+  import("@/views/admin/source/sourcecategory/index.vue"); // 资源分类
+
+/****************轮播管理菜单*****************/
+const Carsouel = () => import("@/views/admin/carsouel/carsouel.vue"); // 轮播管理
+const CarsouelManage = () =>
+  import("@/views/admin/carsouel/carsouelmanage/index.vue"); // 轮播管理首页
 
 Vue.use(VueRouter);
 
@@ -407,6 +413,34 @@ const routes = [
         component: SourceCategory,
         meta: {
           activeMenu: "/source/sourcecategory",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+    ],
+  },
+  // 轮播管理
+  {
+    path: "/carsouel",
+    name: "carsouel",
+    component: Carsouel,
+    meta: {
+      activeMenu: "/carsouel",
+      showRightTitle: true,
+      showBack: false,
+      auth: true,
+      keepAlive: false,
+    },
+    children: [
+      // 轮播管理
+      {
+        path: "carsouelmanage",
+        name: "carsouelmanage",
+        component: CarsouelManage,
+        meta: {
+          activeMenu: "/carsouel/carsouelmanage",
           showRightTitle: true,
           showBack: false,
           auth: true,
