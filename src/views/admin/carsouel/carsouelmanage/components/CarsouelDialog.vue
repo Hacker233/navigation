@@ -26,7 +26,7 @@
             show-word-limit
           ></el-input>
         </el-form-item>
-        <el-form-item label="轮播跳转链接" prop="carsouelPath">
+        <el-form-item label="轮播跳转链接">
           <el-input
             v-model="form.carsouelPath"
             clearable
@@ -35,7 +35,7 @@
             show-word-limit
           ></el-input>
         </el-form-item>
-        <el-form-item label="轮播跳转参数" prop="carsouelParams">
+        <el-form-item label="轮播跳转参数">
           <el-input
             v-model="form.carsouelParams"
             clearable
