@@ -73,7 +73,7 @@
 </template>
 <script>
 import env from "@/config/index";
-import { addCarsouel } from "@/http/api/carsouel";
+import { addCarsouel, updateCarsouel } from "@/http/api/carsouel";
 export default {
   props: {
     carsouelDialogVisible: { type: Boolean, default: false },
@@ -90,6 +90,7 @@ export default {
   data() {
     return {
       form: {
+        carsouelId: "",
         carsouelUrl: "", // 轮播图url
         carsouelPage: "", // 轮播图所属页面
         carsouelName: "", // 轮播图名称
@@ -136,7 +137,7 @@ export default {
           if (this.title === "新增轮播") {
             this.addCarsouelAsync();
           } else {
-            this.updateSourceAsync();
+            this.updateCarsouelAsync();
           }
         } else {
           return false;
@@ -163,23 +164,23 @@ export default {
       }
     },
     // 更新资源
-    // async updateSourceAsync() {
-    //   let params = this.form;
-    //   const data = await updateSource(params);
-    //   if (data.code === "00000") {
-    //     this.$message({
-    //       message: "更新成功",
-    //       type: "success",
-    //     });
-    //     this.$emit("confirmCloseDialog");
-    //   } else {
-    //     this.$message({
-    //       message: data.message,
-    //       type: "error",
-    //     });
-    //     this.$emit("closeDialog");
-    //   }
-    // },
+    async updateCarsouelAsync() {
+      let params = this.form;
+      const data = await updateCarsouel(params);
+      if (data.code === "00000") {
+        this.$message({
+          message: "更新成功",
+          type: "success",
+        });
+        this.$emit("confirmCloseDialog");
+      } else {
+        this.$message({
+          message: data.message,
+          type: "error",
+        });
+        this.$emit("closeDialog");
+      }
+    },
     // 上传轮播图地址
     uploadAddress() {
       return env.serverAddress + "/api/upload";
