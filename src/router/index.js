@@ -42,6 +42,15 @@ const Carsouel = () => import("@/views/admin/carsouel/carsouel.vue"); // 轮播�
 const CarsouelManage = () =>
   import("@/views/admin/carsouel/carsouelmanage/index.vue"); // 轮播管理首页
 
+/****************推荐管理菜单*****************/
+const Recommend = () => import("@/views/admin/recommend/recommend.vue"); // 推荐管理
+const RecommendToday = () =>
+  import("@/views/admin/recommend/recommendtoday/index.vue"); // 今日推荐
+const RecommendWebsite = () =>
+  import("@/views/admin/recommend/recommendwebsite/index.vue"); // 热门网站
+const RecommendSource = () =>
+  import("@/views/admin/recommend/recommendsource/index.vue"); // 精选资源
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -441,6 +450,60 @@ const routes = [
         component: CarsouelManage,
         meta: {
           activeMenu: "/carsouel/carsouelmanage",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+    ],
+  },
+  // 推荐管理
+  {
+    path: "/recommend",
+    name: "recommend",
+    component: Recommend,
+    meta: {
+      activeMenu: "/recommend",
+      showRightTitle: true,
+      showBack: false,
+      auth: true,
+      keepAlive: false,
+    },
+    children: [
+      // 今日推荐
+      {
+        path: "today",
+        name: "today",
+        component: RecommendToday,
+        meta: {
+          activeMenu: "/recommend/today",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+      // 热门网站
+      {
+        path: "website",
+        name: "website",
+        component: RecommendWebsite,
+        meta: {
+          activeMenu: "/recommend/website",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+      // 精选资源
+      {
+        path: "source",
+        name: "source",
+        component: RecommendSource,
+        meta: {
+          activeMenu: "/recommend/source",
           showRightTitle: true,
           showBack: false,
           auth: true,

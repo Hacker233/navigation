@@ -32,3 +32,12 @@ export const deleteSource = (params) => {
     params,
   });
 };
+
+// 查询所有资源
+export const querySourceAllNoPage = (params) => {
+  return axiosService({
+    url: "/api/source/querySourceAllNoPage",
+    method: "get",
+    params,
+  });
+};

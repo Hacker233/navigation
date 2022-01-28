@@ -59,3 +59,12 @@ export const queryWebsiteById = (params) => {
     params,
   });
 };
+
+// 查询全部网站
+export const queryAllWebsite = (params) => {
+  return axiosService({
+    url: "/api/website/queryAllWebsite",
+    method: "get",
+    params,
+  });
+};
