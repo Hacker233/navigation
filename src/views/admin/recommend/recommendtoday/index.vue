@@ -88,7 +88,7 @@ export default {
       let params = {
         hotTodayType: item.today_type,
         hotTodayProjectId: item.today_projectId,
-        hotTodayId: item.hot_todayId,
+        todayId: item.today_id,
       };
       const data = await deleteRecommendToday(params);
       if (data.code === "00000") {
