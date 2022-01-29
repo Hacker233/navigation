@@ -50,13 +50,9 @@
             <!-- 操作列 -->
             <el-table-column label="操作" width="80">
               <template slot-scope="scope">
-                <el-button
-                  v-if="!scope.row.is_recommend"
-                  size="mini"
-                  @click="addSource(scope.row)"
+                <el-button size="mini" @click="addSource(scope.row)"
                   >添加</el-button
                 >
-                <el-tag v-else>已推荐</el-tag>
               </template>
             </el-table-column>
           </el-table>
