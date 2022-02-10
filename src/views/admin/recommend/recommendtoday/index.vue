@@ -12,7 +12,6 @@
       row-key="socategory_id"
       border
       stripe
-      max-height="250"
     >
       <el-table-column prop="today_id" label="推荐ID"> </el-table-column>
       <el-table-column prop="today_projectId" label="项目id">
