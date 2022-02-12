@@ -8,7 +8,11 @@
       ]"
       @click="openCloseNav"
     >
-      <img v-if="collapse" class="pig-zhankai" src="@/assets/images/open-close.svg"/>
+      <img
+        v-if="collapse"
+        class="pig-zhankai"
+        src="@/assets/images/open-close.svg"
+      />
       <img v-else class="pig-zhankai" src="@/assets/images/open-close.svg" />
     </div>
     <div class="index-menu" @click="toHome">
@@ -57,16 +61,24 @@
             </el-menu-item>
           </el-submenu>
         </template>
+        <!-- 小程序二维码 -->
+        <div class="code-box">
+          <qr-code></qr-code>
+        </div>
       </el-menu>
     </div>
   </div>
 </template>
 <script>
+import QrCode from "../../components/QrCode/QrCode.vue";
 export default {
   data() {
     return {
       collapse: false,
     };
+  },
+  components: {
+    QrCode,
   },
   computed: {
     activeRouter() {
@@ -94,11 +106,11 @@ export default {
     // 跳转至首页
     toHome() {
       this.$router.push({
-        name: 'software',
+        name: "software",
         query: {
           menuId: 1,
-          menuIcon: 'pig-shouye'
-        }
+          menuIcon: "pig-shouye",
+        },
       });
     },
     // 展开或者收起菜单
@@ -154,6 +166,11 @@ export default {
     flex: 1;
     overflow: auto;
     padding-top: 50px;
+    .code-box {
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
   }
   .index-menu {
     width: 181px;
