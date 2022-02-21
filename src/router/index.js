@@ -23,6 +23,7 @@ const UserManage = () => import("@/views/admin/usermanage/usermanage.vue"); // �
 const PersonMenu = () => import("@/views/admin/personmenu/personmenu.vue"); // 用户菜单管理
 const Iconfont = () => import("@/views/admin/iconfont/iconfont.vue"); // 图标管理
 const TopMenu = () => import("@/views/admin/topMenu/topmenu.vue"); // 顶部菜单管理
+const TabBar = () => import("@/views/admin/tabbarmanage/tabbarmanage.vue"); // tabbar导航管理
 
 /****************内容管理菜单*****************/
 const Content = () => import("@/views/content/index.vue"); // 内容管理菜单
@@ -314,6 +315,19 @@ const routes = [
         component: TopMenu,
         meta: {
           activeMenu: "/admin/topmenu",
+          showRightTitle: true,
+          showBack: false,
+          auth: true,
+          keepAlive: false,
+        },
+      },
+      // tabbar导航管理
+      {
+        path: "tabbarmanage",
+        name: "tabbarmanage",
+        component: TabBar,
+        meta: {
+          activeMenu: "/admin/tabbarmanage",
           showRightTitle: true,
           showBack: false,
           auth: true,

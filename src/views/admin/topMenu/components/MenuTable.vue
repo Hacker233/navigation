@@ -71,7 +71,7 @@ export default {
     return {
       addSubMenudialogVisible: false, // 控制新增子菜单弹窗
       parentMenuId: "", // 父级id // 父级id
-      baseInfo: "", // 说是打开编辑页面,则是基础信息
+      baseInfo: "", // 打开编辑页面,则是基础信息
     };
   },
   components: {
