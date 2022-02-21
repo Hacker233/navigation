@@ -19,7 +19,7 @@
     </div>
     <!-- github图标 -->
     <github-card></github-card>
-  </div>
+  </div>  
 </template>
 <script>
 import NavBar from "@/components/NavBar/NavBar.vue";
