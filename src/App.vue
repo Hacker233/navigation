@@ -19,7 +19,32 @@
     </div>
     <!-- github图标 -->
     <github-card></github-card>
-  </div>  
+
+    <!-- 提示弹窗 -->
+    <el-dialog
+      title="91化简"
+      :visible.sync="dialogVisible"
+      width="555px"
+      class="record-dialog"
+    >
+      <div class="dialog-content">
+        <p>
+          <span>本网站最新推出：</span
+          >一款免费开源的简历制作神器，支持在线制作简历、自定义主题、一键导出超高清PDF简历文件等等。
+          除此之外，还免费提供海量精美word简历模板、PPT模板下载。
+        </p>
+        <div class="img-box">
+          <img src="./assets/images/91huajian.png" alt="" />
+        </div>
+      </div>
+      <div class="footer-box" slot="footer">
+        <el-checkbox v-model="checked" @change="handleChange"
+          >不在提示</el-checkbox
+        >
+        <el-button type="primary" @click="goHuajian">立即前往</el-button>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 <script>
 import NavBar from "@/components/NavBar/NavBar.vue";
@@ -35,12 +60,22 @@ export default {
   data() {
     return {
       isActive: true,
+      dialogVisible: false,
+      checked: false,
     };
   },
   components: {
     NavBar,
     RightTitle,
     GithubCard,
+  },
+  mounted() {
+    let isRecommend91 = localStorage.getItem("recommend91");
+    if(isRecommend91 == 'true') {
+      this.dialogVisible = false;
+    } else {
+      this.dialogVisible = true;
+    }
   },
   methods: {
     reload() {
@@ -51,6 +86,13 @@ export default {
     },
     load() {
       console.log("发起请求");
+    },
+    handleChange(value) {
+      localStorage.setItem("recommend91", value);
+    },
+    // 前往91化简
+    goHuajian() {
+      window.open("https://91huajian.cn");
     },
   },
 };
@@ -109,6 +151,35 @@ export default {
         text-decoration: none;
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+.record-dialog {
+  .el-dialog__body {
+    padding: 10px 20px;
+  }
+  .dialog-content {
+    p {
+      line-height: 2;
+      text-align: justify;
+      font-size: 16px;
+      span {
+        font-weight: 600;
+      }
+    }
+    .img-box {
+      margin-top: 20px;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .footer-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 </style>
