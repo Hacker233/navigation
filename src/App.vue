@@ -33,6 +33,7 @@
           >一款免费开源的简历制作神器，支持在线制作简历、自定义主题、一键导出超高清PDF简历文件等等。
           除此之外，还免费提供海量精美word简历模板、PPT模板下载。
         </p>
+        <a href="https://91huajian.cn" target="_blank" rel="noopener noreferrer">地址：91化简</a>
         <div class="img-box">
           <img src="./assets/images/91huajian.png" alt="" />
         </div>
@@ -164,9 +165,14 @@ export default {
       line-height: 2;
       text-align: justify;
       font-size: 16px;
+      margin-bottom: 10px;
       span {
         font-weight: 600;
       }
+    }
+    a {
+      text-decoration: none;
+      font-size: 16px;
     }
     .img-box {
       margin-top: 20px;
