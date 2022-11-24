@@ -35,14 +35,28 @@
           >
         </el-form-item>
         <el-form-item label="资源简介" prop="sourceAbstract">
-          <el-input
+          <!-- <el-input
             v-model="form.sourceAbstract"
             clearable
             placeholder="请输入资源简介"
             :rows="6"
             show-word-limit
             type="textarea"
-          ></el-input>
+          ></el-input> -->
+          <Editor
+            class="editor-container"
+            :editorId="editorId"
+            :defaultConfig="editorConfig"
+            :defaultContent="defaultContent"
+            :mode="mode"
+            @onCreated="onCreated"
+            @onChange="onChange"
+            @onDestroyed="onDestroyed"
+            @onFocus="onFocus"
+            @onBlur="onBlur"
+            @customAlert="customAlert"
+            @customPaste="customPaste"
+          />
         </el-form-item>
         <el-form-item label="添加标签">
           <el-tag
@@ -153,7 +167,10 @@
 <script>
 import env from "@/config/index";
 import { addSource, updateSource } from "@/http/api/source";
+import { Editor, getEditor, removeEditor } from "@wangeditor/editor-for-vue";
+import "@wangeditor/editor/dist/css/style.css";
 export default {
+  components: { Editor },
   props: {
     sourceDialogVisible: { type: Boolean, default: false },
     // 弹窗标题
@@ -201,6 +218,76 @@ export default {
           { required: true, message: "请写入资源简介", trigger: "blur" },
         ],
       },
+      editorId: "w-e-2",
+      toolbarConfig: {
+        /* 工具栏配置 */
+        excludeKeys: ["fullScreen"], // 需要去除的菜单
+      },
+      defaultContent: null,
+      editorConfig: {
+        placeholder: "开始你的创作吧",
+        scroll: false,
+        MENU_CONF: {
+          uploadImage: {
+            server: env.serverAddress + "/api/upload",
+            // form-data fieldName ，默认值 'wangeditor-uploaded-file'
+            fieldName: "file",
+            // 选择文件时的类型限制，默认为 ['image/*'] 。如不想限制，则设置为 []
+            allowedFileTypes: ["image/*"],
+            // 将 meta 拼接到 url 参数中，默认 false
+            metaWithUrl: false,
+            // 自定义增加 http  header
+            headers: {
+              Authorization: this.$store.state.token,
+            },
+            // 超时时间，默认为 10 秒
+            timeout: 20 * 1000, // 20 秒
+            // 小于 xx 就插入 base64 格式（而不上传），默认为 0
+            // base64LimitKB: 2 * 1024, // 5kb
+            // 自定义插入图片
+            customInsert(res, insertFn) {
+              let url = res.data.fileUrl;
+              let alt = res.data.fieldName;
+              let href = res.data.fileUrl;
+              // res 即服务端的返回结果
+              console.log("服务端返回结果", res);
+              // 从 res 中找到 url alt href ，然后插图图片
+              insertFn(url, alt, href);
+            },
+            /*******回调函数********/
+            // 上传之前触发
+            onBeforeUpload(files) {
+              // files 即选中的文件列表
+              console.log("上传之前触发", files);
+              return files;
+
+              // 返回值可选择：
+              // 1. 返回一个数组（files 或者 files 的一部分），则将上传返回结果中的文件
+              // 2. 返回 false ，则终止上传
+            },
+            // 上传进度的回调函数
+            onProgress(progress) {
+              // progress 是 0-100 的数字
+              console.log("progress", progress);
+            },
+            // 单个文件上传成功之后
+            onSuccess(file, res) {
+              console.log(`${file.name} 上传成功`, res);
+            },
+            // 单个文件上传失败
+            onFailed(file, res) {
+              console.log(`${file.name} 上传失败`, res);
+            },
+            // 上传错误，或者触发 timeout 超时
+            onError(file, err, res) {
+              console.log(`${file.name} 上传出错`, err, res);
+            },
+          },
+        },
+      },
+      mode: "default", // or 'simple'
+      htmlContent: "",
+      content: "",
     };
   },
   watch: {
@@ -330,6 +417,42 @@ export default {
     handleScreenRemove(file, fileList) {
       this.form.sourceScreen = fileList;
     },
+
+    // 编辑创建
+    onCreated() {},
+    onChange(editor) {
+      this.content = JSON.stringify(editor.children);
+      this.htmlContent = editor.getHtml();
+      this.form.sourceAbstract = this.htmlContent;
+    },
+    onDestroyed(editor) {
+      console.log("onDestroyed", editor);
+    },
+    // 编辑器聚焦
+    onFocus(editor) {
+      console.log("onFocus", editor);
+    },
+    // 编辑器失去焦点
+    onBlur(editor) {
+      console.log("onBlur", editor);
+    },
+    customAlert(info, type) {
+      window.alert(`customAlert in Vue demo\n${type}:\n${info}`);
+    },
+    customPaste(event) {
+      console.log(event);
+      return true; // 继续执行默认的粘贴行为
+    },
+  },
+
+  // 及时销毁 editor
+  beforeDestroy() {
+    const editor = getEditor(this.editorId);
+    if (editor == null) return;
+
+    // 销毁，并移除 editor
+    editor.destroy();
+    removeEditor(this.editorId);
   },
 };
 </script>
@@ -390,6 +513,21 @@ export default {
     cursor: pointer;
     &:hover {
       color: green;
+    }
+  }
+  .editor-container {
+    width: 100%;
+    min-height: 200px;
+    background-color: #fff;
+    ::v-deep .w-e-text-container {
+      min-height: 200px;
+      border: 1px solid #ccc;
+      .w-e-scroll {
+        min-height: 200px;
+        #w-e-textarea-1 {
+          min-height: 200px;
+        }
+      }
     }
   }
 }

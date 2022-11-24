@@ -24,6 +24,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="source_abstract" label="资源简介">
+        <template slot-scope="scope">
+          <div v-html="scope.row.source_abstract"></div>
+        </template>
       </el-table-column>
       <el-table-column prop="source_tags" label="资源标签">
         <template slot-scope="scope">
@@ -65,8 +68,7 @@
       </el-table-column>
       <el-table-column prop="source_create_date" label="资源发布时间">
       </el-table-column>
-      <el-table-column prop="source_views" label="浏览量">
-      </el-table-column>
+      <el-table-column prop="source_views" label="浏览量"> </el-table-column>
       <!-- 操作列 -->
       <el-table-column label="操作" width="160">
         <template slot-scope="scope">
@@ -122,7 +124,7 @@ export default {
           {
             name: "",
             link: "",
-            pass: ""
+            pass: "",
           },
         ], // 资源下载链接
         sourceScreen: [], // 资源截图
